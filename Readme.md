@@ -1,8 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Головин](https://up.htmlacademy.ru/javascript/18/user/200558).
-* Наставник: Алексей Белявский.
-(https://htmlacademy.ru/profile/id666435)
+* Наставник: Алексей Белявский(https://htmlacademy.ru/profile/id666435).
 ---
 
 _Не удаляйте и не обращайте внимание на файлы:_<br>
