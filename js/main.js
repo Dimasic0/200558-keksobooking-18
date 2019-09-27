@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 var NUMBER_TAGS = 8;
 var tags = [];
 var MIN_ADDRESS = 130;
@@ -24,12 +24,12 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
   var j = i--;
   while (i > 0 && j > 0) {
     if (tags[j].location.X === randomLocationX) {
-      var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
+      randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
     if (tags[j].location.Y === randomLocationY) {
-      var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
+      randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
