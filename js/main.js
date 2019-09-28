@@ -12,7 +12,6 @@ var clonedLabel;
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var elementMap = document.querySelector('.map');
-var PHOTO_ADDRESS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http:map__pin//o0.github.io/assets/images/tokyo/hotel3.jpg', 'http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg', 'http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg'];
 var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 
 function getRandomInRange(min, max) {
@@ -24,21 +23,21 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var j = i - 1;
   while (i > 0 && j > 0) {
-    if (tags[j].location.x >= randomLocationX-65 && tags[j].location.x <= randomLocationX+65) {
+    if (tags[j].location.x >= randomLocationX - 65 && tags[j].location.x <= randomLocationX + 65) {
       randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
-    if (tags[j].location.x >= randomLocationY-65 && tags[j].location.x <= randomLocationY+65) {
+    if (tags[j].location.x >= randomLocationY - 65 && tags[j].location.x <= randomLocationY + 65) {
       randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
-    if (tags[j].location.x < randomLocationX-65 && tags[j].location.x > randomLocationX+65  && tags[j].location.y < randomLocationY-65 && tags[j].location.y > randomLocationY+65) {
+    if (tags[j].location.x < randomLocationX - 65 && tags[j].location.x > randomLocationX + 65 && tags[j].location.y < randomLocationY - 65 && tags[j].location.y > randomLocationY + 65) {
       j--;
     }
   }
-  pictureNumber=i+1;
+  pictureNumber = i + 1;
   tags[i] = {
     author: {
       avatar: 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
@@ -55,7 +54,7 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       checkout: '12:00',
       features: features[i],
       description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user0'+pictureNumber+'.png',
+      photos: 'img/avatars/user0' + pictureNumber + '.png',
     },
 
     location: {
