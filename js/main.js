@@ -6,6 +6,7 @@ var MAX_ADDRESS = 630;
 var MIN_COORDINATE = 130;
 var MAX_COORDINATE = 630;
 var MIN_ROOMS = 2;
+var pictureNumber = 0;
 var MAX_ROOMS = 7;
 var clonedLabel;
 var mapPins = document.querySelector('.map__pins');
@@ -23,20 +24,21 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var j = i - 1;
   while (i > 0 && j > 0) {
-    if (tags[j].location.x === randomLocationX) {
+    if (tags[j].location.x >= randomLocationX-65 && tags[j].location.x <= randomLocationX+65) {
       randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
-    if (tags[j].location.y === randomLocationY) {
+    if (tags[j].location.x >= randomLocationY-65 && tags[j].location.x <= randomLocationY+65) {
       randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
-    if (tags[j].location.x !== randomLocationX && tags[j].location.y !== randomLocationY) {
+    if (tags[j].location.x < randomLocationX-65 && tags[j].location.x > randomLocationX+65  && tags[j].location.y < randomLocationY-65 && tags[j].location.y > randomLocationY+65) {
       j--;
     }
   }
+  pictureNumber=i+1;
   tags[i] = {
     author: {
       avatar: 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
@@ -53,7 +55,7 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       checkout: '12:00',
       features: features[i],
       description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: PHOTO_ADDRESS[i],
+      photos: 'img/avatars/user0'+pictureNumber+'.png',
     },
 
     location: {
@@ -62,8 +64,8 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
     }
   };
   clonedLabel = mapPin.cloneNode(true);
-  clonedLabel.setAttribute('style', 'left:' + tags[i].location.x + '; top:' + tags[i].location.y + ';');
-  clonedLabel.querySelector('img').src = tags[i].photos;
+  clonedLabel.setAttribute('style', 'left:' + tags[i].location.x + 'px; top:' + tags[i].location.y + 'px;');
+  clonedLabel.querySelector('img').src = tags[i].offer.photos;
   elementMap.insertBefore(clonedLabel, mapPins);
 
 }
