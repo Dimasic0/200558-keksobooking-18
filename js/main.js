@@ -28,7 +28,7 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       j = i - 1;
 
     }
-    if (tags[j].location.x >= randomLocationY - 65 && tags[j].location.x <= randomLocationY + 65) {
+    if (tags[j].location.y >= randomLocationY - 65 && tags[j].location.y <= randomLocationY + 65) {
       randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
