@@ -21,7 +21,7 @@ elementMap.classList.remove('map--faded');
 for (var i = 0; i < NUMBER_TAGS; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  var j = i-1;
+  var j = i - 1;
   while (i > 0 && j > 0) {
     if (tags[j].location.x === randomLocationX) {
       randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
@@ -56,7 +56,7 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       photos: PHOTO_ADDRESS[i],
     },
 
-   location: {
+    location: {
       x: randomLocationX,
       y: randomLocationY
     }
