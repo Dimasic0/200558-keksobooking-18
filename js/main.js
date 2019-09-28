@@ -21,19 +21,19 @@ elementMap.classList.remove('map--faded');
 for (var i = 0; i < NUMBER_TAGS; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  var j = i--;
+  var j = i-1;
   while (i > 0 && j > 0) {
-    if (tags[j].location.X === randomLocationX) {
+    if (tags[j].location.x === randomLocationX) {
       randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
-    if (tags[j].location.Y === randomLocationY) {
+    if (tags[j].location.y === randomLocationY) {
       randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
       j = i - 1;
 
     }
-    if (tags[j].location.X !== randomLocationX && tags[j].location.Y !== randomLocationY) {
+    if (tags[j].location.x !== randomLocationX && tags[j].location.y !== randomLocationY) {
       j--;
     }
   }
@@ -52,11 +52,11 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       checkin: '12:00',
       checkout: '12:00',
       features: features[i],
-      description: 'Есть газовая печка стиральная машина синии стены',
+      description: 'Есть газовая печка, стиральная машина, синие стены',
       photos: PHOTO_ADDRESS[i],
     },
 
-    location: {
+   location: {
       x: randomLocationX,
       y: randomLocationY
     }
