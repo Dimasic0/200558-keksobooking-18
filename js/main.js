@@ -13,30 +13,23 @@ var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var elementMap = document.querySelector('.map');
 var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
+var fragment = document.createDocumentFragment();
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function tagging(mark) {
+  clonedLabel = mapPin.cloneNode(true);
+  clonedLabel.setAttribute('style', 'left:' + mark.location.x + 'px; top:' + mark.location.y + 'px;');
+  clonedLabel.querySelector('img').src = mark.offer.photos;
+  return clonedLabel;
+}
+
 elementMap.classList.remove('map--faded');
 for (var i = 0; i < NUMBER_TAGS; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  var j = i - 1;
-  while (i > 0 && j > 0) {
-    if (tags[j].location.x >= randomLocationX - 65 && tags[j].location.x <= randomLocationX + 65) {
-      randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-      j = i - 1;
-
-    }
-    if (tags[j].location.y >= randomLocationY - 65 && tags[j].location.y <= randomLocationY + 65) {
-      randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-      j = i - 1;
-
-    }
-    if (tags[j].location.x < randomLocationX - 65 && tags[j].location.x > randomLocationX + 65 && tags[j].location.y < randomLocationY - 65 && tags[j].location.y > randomLocationY + 65) {
-      j--;
-    }
-  }
   pictureNumber = i + 1;
   tags[i] = {
     author: {
@@ -62,9 +55,8 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       y: randomLocationY
     }
   };
-  clonedLabel = mapPin.cloneNode(true);
-  clonedLabel.setAttribute('style', 'left:' + tags[i].location.x + 'px; top:' + tags[i].location.y + 'px;');
-  clonedLabel.querySelector('img').src = tags[i].offer.photos;
-  elementMap.insertBefore(clonedLabel, mapPins);
 
+  fragment.appendChild(tagging(tags[i]));
 }
+
+mapPins.appendChild(fragment);
