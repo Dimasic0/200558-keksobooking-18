@@ -1,6 +1,6 @@
 'use strict';
 
-var NUMBER_TAGS = 8;
+var NUMBER_TAGS = 7;
 var tags = [];
 var MIN_ADDRESS = 130;
 var MAX_ADDRESS = 630;
