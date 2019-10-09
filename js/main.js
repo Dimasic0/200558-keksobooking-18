@@ -1,4 +1,5 @@
 'use strict';
+
 var NUMBER_TAGS = 7;
 var tags = [];
 var MIN_ADDRESS = 130;
@@ -10,29 +11,30 @@ var pictureNumber;
 var MAX_ROOMS = 7;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
-var adForm=document.querySelector('.ad-form');
-var mapPinMain=document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var elementMap = document.querySelector('.map');
-var address=document.querySelector('#address');
+var address = document.querySelector('#address');
 var fieldset = document.querySelectorAll('fieldset');
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var fragment = document.createDocumentFragment();
 
-var mapFilter=document.querySelector('.map__filter');
-var any=mapFilter.querySelector('option[value="any"]');
-var palace=mapFilter.querySelector('option[value="palace"]');
-var flat=mapFilter.querySelector('option[value="flat"]');
-var house=mapFilter.querySelector('option[value="house"]');
-var bungalo=mapFilter.querySelector('option[value="bungalo"]');
+var mapFilter = document.querySelector('.map__filter');
+var any = mapFilter.querySelector('option[value="any"]');
+var palace = mapFilter.querySelector('option[value="palace"]');
+var flat = mapFilter.querySelector('option[value="flat"]');
+var house = mapFilter.querySelector('option[value="house"]');
+var bungalo = mapFilter.querySelector('option[value="bungalo"]');
+var price = document.querySelector('#price');
 for (var index_1 = 0; index_1 < 13; index_1++) {
   fieldset[index_1].disabled = true;
 }
 
-var x=Number.parseInt(mapPinMain.style.left)+32;
-  var y=Number.parseInt(mapPinMain.style.top)+32;
-  address.value='x:'+x+' y:'+y;
+var x = Number.parseInt(mapPinMain.style.left) + 32;
+var y = Number.parseInt(mapPinMain.style.top) + 32;
+address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -44,6 +46,24 @@ function makeMark(mark) {
   clonedLabel.setAttribute('style', 'left:' + mark.location.x + 'px; top:' + mark.location.y + 'px;');
   clonedLabel.querySelector('img').src = mark.offer.photos;
   return clonedLabel;
+}
+
+function cbsetPrice() {
+  if (any.selected === true) {
+    price.min = 0;
+  }
+  if (palace.selected === true) {
+    price.min = 10000;
+  }
+  if (flat.selected === true) {
+    price.min = 1000;
+  }
+  if (house.selected === true) {
+    price.min = 5000;
+  }
+  if (bungalo.selected === true) {
+    price.min = 0;
+  }
 }
 
 elementMap.classList.remove('map--faded');
@@ -79,33 +99,41 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
   fragment.appendChild(makeMark(tags[i]));
 }
 mapPins.appendChild(fragment);
-function pageActivation()
-{
+
+function pageActivation() {
   for (var index_1 = 0; index_1 < 13; index_1++) {
-  fieldset[index_1].disabled = false;
-}
+    fieldset[index_1].disabled = false;
+  }
   adForm.classList.remove('ad-form--disabled');
 }
-function onHomeLabelPress(evt)
-{
+
+function onHomeLabelPress(evt) {
   pageActivation();
-  var x=Number.parseInt(mapPinMain.style.left)+32;
-  var y=Number.parseInt(mapPinMain.style.top)+32;
-  address.value='x:'+x+' y:'+y;
+  var x = Number.parseInt(mapPinMain.style.left) + 32;
+  var y = Number.parseInt(mapPinMain.style.top) + 32;
+  address.value = 'x:' + x + ' y:' + y;
 }
 
-mapPinMain.addEventListener('mousedown',onHomeLabelPress);
+mapPinMain.addEventListener('mousedown', onHomeLabelPress);
 
-function onHomeLabelEnterPress(evt)
-{
-  console.log('ok');
-  if(evt.keyCode===ENTER_KEYCODE)
-    {
-      pageActivation();
-    }
+function onHomeLabelEnterPress(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    pageActivation();
+  }
 }
-  mapPinMain.addEventListener('keydown',onHomeLabelEnterPress);
-function onmapFilterСlick () {
-  console.log('ok');
+mapPinMain.addEventListener('keydown', onHomeLabelEnterPress);
+mapFilter.addEventListener('click', cbsetPrice);
+
+function onMapFilterKeydown(evt) {
+  if (evt.keyCode === 38 || evt.keyCode === 39 || evt.keyCode === 40 || evt.keyCode === 37) {
+    cbsetPrice();
+  }
 }
-any.addEventListener('click',onmapFilterСlick);
+mapFilter.addEventListener('focus', function () {
+
+  mapFilter.addEventListener('keydown', onMapFilterKeydown);
+});
+
+mapFilter.addEventListener('blur', function () {
+  mapFilter.removeEventListener('keydown', onMapFilterKeydown);
+});
