@@ -1,5 +1,4 @@
 'use strict';
-
 var NUMBER_TAGS = 7;
 var tags = [];
 var MIN_ADDRESS = 130;
@@ -9,11 +8,31 @@ var MAX_COORDINATE = 630;
 var MIN_ROOMS = 2;
 var pictureNumber;
 var MAX_ROOMS = 7;
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var adForm=document.querySelector('.ad-form');
+var mapPinMain=document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var elementMap = document.querySelector('.map');
+var address=document.querySelector('#address');
+var fieldset = document.querySelectorAll('fieldset');
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var fragment = document.createDocumentFragment();
+
+var mapFilter=document.querySelector('.map__filter');
+var any=mapFilter.querySelector('option[value="any"]');
+var palace=mapFilter.querySelector('option[value="palace"]');
+var flat=mapFilter.querySelector('option[value="flat"]');
+var house=mapFilter.querySelector('option[value="house"]');
+var bungalo=mapFilter.querySelector('option[value="bungalo"]');
+for (var index_1 = 0; index_1 < 13; index_1++) {
+  fieldset[index_1].disabled = true;
+}
+
+var x=Number.parseInt(mapPinMain.style.left)+32;
+  var y=Number.parseInt(mapPinMain.style.top)+32;
+  address.value='x:'+x+' y:'+y;
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -59,5 +78,34 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
 
   fragment.appendChild(makeMark(tags[i]));
 }
-
 mapPins.appendChild(fragment);
+function pageActivation()
+{
+  for (var index_1 = 0; index_1 < 13; index_1++) {
+  fieldset[index_1].disabled = false;
+}
+  adForm.classList.remove('ad-form--disabled');
+}
+function onHomeLabelPress(evt)
+{
+  pageActivation();
+  var x=Number.parseInt(mapPinMain.style.left)+32;
+  var y=Number.parseInt(mapPinMain.style.top)+32;
+  address.value='x:'+x+' y:'+y;
+}
+
+mapPinMain.addEventListener('mousedown',onHomeLabelPress);
+
+function onHomeLabelEnterPress(evt)
+{
+  console.log('ok');
+  if(evt.keyCode===ENTER_KEYCODE)
+    {
+      pageActivation();
+    }
+}
+  mapPinMain.addEventListener('keydown',onHomeLabelEnterPress);
+function onmapFilterСlick () {
+  console.log('ok');
+}
+any.addEventListener('click',onmapFilterСlick);
