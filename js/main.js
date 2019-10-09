@@ -9,7 +9,6 @@ var MAX_COORDINATE = 630;
 var MIN_ROOMS = 2;
 var pictureNumber;
 var MAX_ROOMS = 7;
-var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
@@ -101,8 +100,8 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
 mapPins.appendChild(fragment);
 
 function pageActivation() {
-  for (var index_1 = 0; index_1 < 13; index_1++) {
-    fieldset[index_1].disabled = false;
+  for (var i = 0; i < 13; i++) {
+    fieldset[i].disabled = false;
   }
   adForm.classList.remove('ad-form--disabled');
 }
