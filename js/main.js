@@ -106,10 +106,4 @@ function onHomeLabelPress() {
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
-
-function onHomeLabelEnterPress(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    pageActivation();
-  }
-}
 mapFilter.addEventListener('change', cbsetPrice);
