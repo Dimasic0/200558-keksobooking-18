@@ -31,8 +31,8 @@ for (var i = 0; i < 13; i++) {
   fieldset[i].disabled = true;
 }
 
-var x = Number.parseInt(mapPinMain.style.left) + 32;
-var y = Number.parseInt(mapPinMain.style.top) + 32;
+var x = Number.parseInt(mapPinMain.style.left,10) + 32;
+var y = Number.parseInt(mapPinMain.style.top,10) + 32;
 address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
@@ -66,7 +66,7 @@ function cbsetPrice() {
 }
 
 elementMap.classList.remove('map--faded');
-for (var i = 0; i < NUMBER_TAGS; i++) {
+for (i = 0; i < NUMBER_TAGS; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   pictureNumber = i + 1;
@@ -108,9 +108,6 @@ function pageActivation() {
 
 function onHomeLabelPress() {
   pageActivation();
-  var x = Number.parseInt(mapPinMain.style.left) + 32;
-  var y = Number.parseInt(mapPinMain.style.top) + 32;
-  address.value = 'x:' + x + ' y:' + y;
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
@@ -124,7 +121,6 @@ mapPinMain.addEventListener('keydown', onHomeLabelEnterPress);
 mapFilter.addEventListener('click', cbsetPrice);
 
 function onMapFilterKeydown(evt) {
-  console.log('lok');
   if (evt.keyCode === 38 || evt.keyCode === 39 || evt.keyCode === 40 || evt.keyCode === 37) {
     cbsetPrice();
   }
