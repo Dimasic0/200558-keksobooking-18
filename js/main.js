@@ -2,6 +2,7 @@
 
 var NUMBER_TAGS = 7;
 var tags = [];
+var ENTER_KEYCODE = 13;
 var MIN_ADDRESS = 130;
 var MAX_ADDRESS = 630;
 var MIN_COORDINATE = 130;
@@ -9,7 +10,6 @@ var MAX_COORDINATE = 630;
 var MIN_ROOMS = 2;
 var pictureNumber;
 var MAX_ROOMS = 7;
-var ENTER_KEYCODE = 13;
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
@@ -107,3 +107,11 @@ function onHomeLabelPress() {
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
 mapFilter.addEventListener('change', cbsetPrice);
+function onMapPinMainPressingEnter (evt)
+{
+  if(evt.keyCode===ENTER_KEYCODE)
+    {
+      pageActivation();
+    }
+}
+mapPinMain.addEventListener('keydown',onMapPinMainPressingEnter);
