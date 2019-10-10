@@ -27,8 +27,8 @@ var flat = mapFilter.querySelector('option[value="flat"]');
 var house = mapFilter.querySelector('option[value="house"]');
 var bungalo = mapFilter.querySelector('option[value="bungalo"]');
 var price = document.querySelector('#price');
-for (var index_1 = 0; index_1 < 13; index_1++) {
-  fieldset[index_1].disabled = true;
+for (var i = 0; i < 13; i++) {
+  fieldset[i].disabled = true;
 }
 
 var x = Number.parseInt(mapPinMain.style.left) + 32;
@@ -106,7 +106,7 @@ function pageActivation() {
   adForm.classList.remove('ad-form--disabled');
 }
 
-function onHomeLabelPress(evt) {
+function onHomeLabelPress() {
   pageActivation();
   var x = Number.parseInt(mapPinMain.style.left) + 32;
   var y = Number.parseInt(mapPinMain.style.top) + 32;
@@ -124,15 +124,9 @@ mapPinMain.addEventListener('keydown', onHomeLabelEnterPress);
 mapFilter.addEventListener('click', cbsetPrice);
 
 function onMapFilterKeydown(evt) {
+  console.log('lok');
   if (evt.keyCode === 38 || evt.keyCode === 39 || evt.keyCode === 40 || evt.keyCode === 37) {
     cbsetPrice();
   }
 }
-mapFilter.addEventListener('focus', function () {
-
-  mapFilter.addEventListener('keydown', onMapFilterKeydown);
-});
-
-mapFilter.addEventListener('blur', function () {
-  mapFilter.removeEventListener('keydown', onMapFilterKeydown);
-});
+mapFilter.addEventListener('keydown', onMapFilterKeydown);
