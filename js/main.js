@@ -21,11 +21,6 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var fragment = document.createDocumentFragment();
 
 var mapFilter = document.querySelector('.map__filter');
-var any = mapFilter.querySelector('option[value="any"]');
-var palace = mapFilter.querySelector('option[value="palace"]');
-var flat = mapFilter.querySelector('option[value="flat"]');
-var house = mapFilter.querySelector('option[value="house"]');
-var bungalo = mapFilter.querySelector('option[value="bungalo"]');
 var price = document.querySelector('#price');
 for (var i = 0; i < 13; i++) {
   fieldset[i].disabled = true;
@@ -47,20 +42,20 @@ function makeMark(mark) {
   return clonedLabel;
 }
 
-function cbsetPrice() {
-  if (any.selected === true) {
+function cbsetPrice(evt) {
+  if (evt.target.value === 'any') {
     price.min = 0;
   }
-  if (palace.selected === true) {
+  if (evt.target.value === 'palace') {
     price.min = 10000;
   }
-  if (flat.selected === true) {
+  if (evt.target.value === 'flat') {
     price.min = 1000;
   }
-  if (house.selected === true) {
+  if (evt.target.value === 'house') {
     price.min = 5000;
   }
-  if (bungalo.selected === true) {
+  if (evt.target.value === 'bungalo') {
     price.min = 0;
   }
 }
@@ -117,12 +112,4 @@ function onHomeLabelEnterPress(evt) {
     pageActivation();
   }
 }
-mapPinMain.addEventListener('keydown', onHomeLabelEnterPress);
-mapFilter.addEventListener('click', cbsetPrice);
-
-function onMapFilterKeydown(evt) {
-  if (evt.keyCode === 38 || evt.keyCode === 39 || evt.keyCode === 40 || evt.keyCode === 37) {
-    cbsetPrice();
-  }
-}
-mapFilter.addEventListener('keydown', onMapFilterKeydown);
+mapFilter.addEventListener('change', cbsetPrice);
