@@ -31,8 +31,8 @@ for (var i = 0; i < 13; i++) {
   fieldset[i].disabled = true;
 }
 
-var x = Number.parseInt(mapPinMain.style.left,10) + 32;
-var y = Number.parseInt(mapPinMain.style.top,10) + 32;
+var x = Number.parseInt(mapPinMain.style.left, 10) + 32;
+var y = Number.parseInt(mapPinMain.style.top, 10) + 32;
 address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
@@ -100,7 +100,7 @@ for (i = 0; i < NUMBER_TAGS; i++) {
 mapPins.appendChild(fragment);
 
 function pageActivation() {
-  for (var i = 0; i < 13; i++) {
+  for (i = 0; i < 13; i++) {
     fieldset[i].disabled = false;
   }
   adForm.classList.remove('ad-form--disabled');
