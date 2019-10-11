@@ -1,15 +1,18 @@
 'use strict';
 
-var NUMBER_TAGS = 7;
-var tags = [];
+var TAGS_NUMBER = 8;
 var ENTER_KEYCODE = 13;
 var MIN_ADDRESS = 130;
 var MAX_ADDRESS = 630;
 var MIN_COORDINATE = 130;
 var MAX_COORDINATE = 630;
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
-var pictureNumber;
 var MAX_ROOMS = 7;
+var LABEL_HALF = 32;
+var LABEL_HEIGHT = 87;
+var pictureNumber;
+var tags = [];
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
@@ -17,17 +20,15 @@ var mapPin = document.querySelector('.map__pin');
 var elementMap = document.querySelector('.map');
 var address = document.querySelector('#address');
 var fieldset = document.querySelectorAll('fieldset');
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var fragment = document.createDocumentFragment();
-
 var mapFilter = document.querySelector('.map__filter');
 var price = document.querySelector('#price');
-for (var i = 0; i < 13; i++) {
+for (var i = 0; i < fieldset.length; i++) {
   fieldset[i].disabled = true;
 }
 
-var x = Number.parseInt(mapPinMain.style.left, 10) + 32;
-var y = Number.parseInt(mapPinMain.style.top, 10) + 32;
+var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
+var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
@@ -42,26 +43,28 @@ function makeMark(mark) {
   return clonedLabel;
 }
 
-function cbsetPrice(evt) {
-  if (evt.target.value === 'any') {
-    price.min = 0;
-  }
-  if (evt.target.value === 'palace') {
-    price.min = 10000;
-  }
-  if (evt.target.value === 'flat') {
-    price.min = 1000;
-  }
-  if (evt.target.value === 'house') {
-    price.min = 5000;
-  }
-  if (evt.target.value === 'bungalo') {
-    price.min = 0;
+function onSetPrice(evt) {
+  switch (evt.target.value) {
+    case 'any':
+      price.min = 0;
+      break;
+    case 'palace':
+      price.min = 10000;
+      break;
+    case 'flat':
+      price.min = 1000;
+      break;
+    case 'house':
+      price.min = 5000;
+      break;
+    case 'bungalo':
+      price.min = 0;
+      break;
   }
 }
 
 elementMap.classList.remove('map--faded');
-for (i = 0; i < NUMBER_TAGS; i++) {
+for (i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   pictureNumber = i + 1;
@@ -106,7 +109,7 @@ function onHomeLabelPress() {
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
-mapFilter.addEventListener('change', cbsetPrice);
+mapFilter.addEventListener('change', onSetPrice);
 
 function onMapPinMainPressingEnter(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
