@@ -17,16 +17,12 @@ var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
-var elementMap = document.querySelector('.map');
+var map = document.querySelector('.map');
 var address = document.querySelector('#address');
 var fieldset = document.querySelectorAll('fieldset');
 var fragment = document.createDocumentFragment();
 var mapFilter = document.querySelector('.map__filter');
 var price = document.querySelector('#price');
-for (var i = 0; i < fieldset.length; i++) {
-  fieldset[i].disabled = true;
-}
-
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 address.value = 'x:' + x + ' y:' + y;
@@ -62,9 +58,17 @@ function onSetPrice(evt) {
       break;
   }
 }
-
-elementMap.classList.remove('map--faded');
-for (i = 0; i < TAGS_NUMBER; i++) {
+function pageActivation(property) {
+  for (i = 0; i < fieldset.length; i++) {
+    fieldset[i].disabled = property;
+  }
+  if(property===false)
+    {
+  adForm.classList.remove('ad-form--disabled');
+    }
+}
+map.classList.remove('map--faded');
+for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   pictureNumber = i + 1;
@@ -96,16 +100,9 @@ for (i = 0; i < TAGS_NUMBER; i++) {
   fragment.appendChild(makeMark(tags[i]));
 }
 mapPins.appendChild(fragment);
-
-function pageActivation() {
-  for (i = 0; i < 13; i++) {
-    fieldset[i].disabled = false;
-  }
-  adForm.classList.remove('ad-form--disabled');
-}
-
+pageActivation(true);
 function onHomeLabelPress() {
-  pageActivation();
+  pageActivation(false);
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
@@ -113,7 +110,7 @@ mapFilter.addEventListener('change', onSetPrice);
 
 function onMapPinMainPressingEnter(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    pageActivation();
+    pageActivation(false);
   }
 }
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
