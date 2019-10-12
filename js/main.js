@@ -25,8 +25,6 @@ var mapFilter = document.querySelector('.map__filter');
 var price = document.querySelector('#price');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
-var places = 1;
-var guests = 1;
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
@@ -121,13 +119,7 @@ function onMapPinMainPressingEnter(evt) {
 }
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
 
-function onRoomNumber(evt) {
-  console.log(evt.target.value);
-  console.log(capacity.value);
-}
-roomNumber.addEventListener('change', onRoomNumber);
 adFormSubmit.addEventListener('mousedown', function () {
-  console.log('lok');
   if (capacity.value > roomNumber.value) {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else {
