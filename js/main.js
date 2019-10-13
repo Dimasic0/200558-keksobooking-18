@@ -28,8 +28,7 @@ var capacity = document.querySelector('#capacity');
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
-var clonedLabel=[];
-var mapCard=document.querySelector('.popup');
+var mapCard = document.querySelector('.popup');
 address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
@@ -40,8 +39,7 @@ function makeMark(tags) {
   tags[i] = mapPin.cloneNode(true);
   tags[i].setAttribute('style', 'left:' + tags.location.x + 'px; top:' + tags.location.y + 'px;');
   tags[i].querySelector('img').src = tags.offer.photos;
-  tags[i].addEventListener('click',function ()
-  {
+  tags[i].addEventListener('click', function () {
 
   });
   return tags[i];
@@ -105,7 +103,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       y: randomLocationY
     }
   };
-    fragment.appendChild(makeMark(tags[i]));
+  fragment.appendChild(makeMark(tags[i]));
 }
 mapPins.appendChild(fragment);
 
@@ -132,7 +130,7 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
-mapPin.addEventListener('mousedown',function () {
+mapPin.addEventListener('mousedown', function () {
 
 });
 
