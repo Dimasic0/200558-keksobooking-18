@@ -39,9 +39,6 @@ function makeMark(tags) {
   tags[i] = mapPin.cloneNode(true);
   tags[i].setAttribute('style', 'left:' + tags.location.x + 'px; top:' + tags.location.y + 'px;');
   tags[i].querySelector('img').src = tags.offer.photos;
-  tags[i].addEventListener('click', function () {
-
-  });
   return tags[i];
 }
 
@@ -67,14 +64,19 @@ function onSetPrice(evt) {
 }
 
 function pageActivation(property) {
-  for (i = 0; i < fieldset.length; i++) {
-    fieldset[i].disabled = property;
-  }
-  if (property === false) {
-    adForm.classList.remove('ad-form--disabled');
+        for (i = 0; i < fieldset.length; i++) {
+             fieldset[i].disabled = property;
+      }
+     fieldset[3].disabled=true;
+  switch (property) {
+    case false:
+
+      adForm.classList.remove('ad-form--disabled');
+      map.classList.remove('map--faded');
+      mapPins.appendChild(fragment);
+      break;
   }
 }
-map.classList.remove('map--faded');
 for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
@@ -105,7 +107,6 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
   };
   fragment.appendChild(makeMark(tags[i]));
 }
-mapPins.appendChild(fragment);
 
 pageActivation(true);
 
@@ -130,8 +131,4 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
-mapPin.addEventListener('mousedown', function () {
-
-});
-
 map.appendChild(mapCard.cloneNode(true));
