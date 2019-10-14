@@ -28,18 +28,19 @@ var capacity = document.querySelector('#capacity');
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
-var mapCard = document.querySelector('.popup');
+var popup = document.querySelector('.popup');
+var label = [];
 address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function makeMark(tags) {
-  tags[i] = mapPin.cloneNode(true);
-  tags[i].setAttribute('style', 'left:' + tags.location.x + 'px; top:' + tags.location.y + 'px;');
-  tags[i].querySelector('img').src = tags.offer.photos;
-  return tags[i];
+function makeMark(tagOptions) {
+  label[i] = mapPin.cloneNode(true);
+  label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
+  label[i].querySelector('img').src = tagOptions.offer.photos;
+  return label[i];
 }
 
 function onSetPrice(evt) {
@@ -60,14 +61,13 @@ function onSetPrice(evt) {
       price.min = 0;
       break;
   }
-  console.log('lok');
 }
 
 function pageActivation(property) {
-        for (i = 0; i < fieldset.length; i++) {
-             fieldset[i].disabled = property;
-      }
-     fieldset[3].disabled=true;
+  for (i = 0; i < fieldset.length; i++) {
+    fieldset[i].disabled = property;
+  }
+  fieldset[3].disabled = true;
   switch (property) {
     case false:
 
@@ -131,4 +131,4 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
-map.appendChild(mapCard.cloneNode(true));
+map.appendChild(popup.cloneNode(true));
