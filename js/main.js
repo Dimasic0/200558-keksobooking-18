@@ -28,7 +28,7 @@ var capacity = document.querySelector('#capacity');
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
-var popup = document.querySelector('.popup');
+var popup = document.querySelector('.card').content.querySelector('.popup');
 var label = [];
 address.value = 'x:' + x + ' y:' + y;
 
