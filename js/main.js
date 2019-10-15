@@ -30,8 +30,8 @@ var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
 var popup = document.querySelector('.popup');
 var label = [];
-console.log(popup);
 address.value = 'x:' + x + ' y:' + y;
+
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -125,11 +125,10 @@ function onMapPinMainPressingEnter(evt) {
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
 
 adFormSubmit.addEventListener('mousedown', function () {
-  if (parseInt(capacity.value) > parseInt(roomNumber.value)) {
+  if (Number.parseInt(capacity.value) > Number.parseInt(roomNumber.value)) {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else {
     capacity.setCustomValidity('');
   }
 });
 map.appendChild(popup.cloneNode(true));
-
