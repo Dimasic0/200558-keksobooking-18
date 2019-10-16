@@ -28,8 +28,9 @@ var capacity = document.querySelector('#capacity');
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
-var popup = document.querySelector('.card').content.querySelector('.popup');
+var popup = document.querySelector('#card').content.querySelector('.popup');
 var label = [];
+var clonePopup;
 address.value = 'x:' + x + ' y:' + y;
 
 function getRandomInRange(min, max) {
@@ -74,9 +75,17 @@ function pageActivation(property) {
       adForm.classList.remove('ad-form--disabled');
       map.classList.remove('map--faded');
       mapPins.appendChild(fragment);
+      for (i=0; i<5; i++)
+        {
+          label[i].addEventListener('mousedown',function () {
+            clonePopup.querySelector('.popup__title').innerHTML=tags[i].offer.title;
+          });
+        }
       break;
   }
 }
+clonePopup = popup.cloneNode(true);
+map.appendChild(clonePopup);
 for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
@@ -125,10 +134,13 @@ function onMapPinMainPressingEnter(evt) {
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
 
 adFormSubmit.addEventListener('mousedown', function () {
-  if (Number.parseInt(capacity.value) > Number.parseInt(roomNumber.value)) {
+  if (Number.parseInt(capacity.value) > Number.parseInt(roomNumber.value) && roomNumber !== '100') {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
+  } else if (roomNumber.value !== '100') {
+    capacity.setCustomValidity('');
+  } else if (capacity.value !== '0') {
+    capacity.setCustomValidity('Не для госте.');
   } else {
     capacity.setCustomValidity('');
   }
 });
-map.appendChild(popup.cloneNode(true));
