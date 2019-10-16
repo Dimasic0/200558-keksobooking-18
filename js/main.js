@@ -41,7 +41,10 @@ function makeMark(tagOptions) {
   label[i] = mapPin.cloneNode(true);
   label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
   label[i].querySelector('img').src = tagOptions.offer.photos;
-  return label[i];
+  label[i].addEventListener('mousedown', function () {
+    clonePopup.querySelector('.popup__title').innerHTML = tagOptions.offer.title;
+  });
+  fragment.appendChild(label[i]);
 }
 
 function onSetPrice(evt) {
@@ -75,12 +78,6 @@ function pageActivation(property) {
       adForm.classList.remove('ad-form--disabled');
       map.classList.remove('map--faded');
       mapPins.appendChild(fragment);
-      for (i=0; i<5; i++)
-        {
-          label[i].addEventListener('mousedown',function () {
-            clonePopup.querySelector('.popup__title').innerHTML=tags[i].offer.title;
-          });
-        }
       break;
   }
 }
@@ -114,7 +111,8 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       y: randomLocationY
     }
   };
-  fragment.appendChild(makeMark(tags[i]));
+  makeMark(tags[i]);
+
 }
 
 pageActivation(true);
