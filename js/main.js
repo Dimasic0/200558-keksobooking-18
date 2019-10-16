@@ -109,10 +109,6 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
     }
   };
   makeMark(tags[i]);
-  label[i].addEventListener('mousedown', function () {
-    clonePopup.querySelector('.popup__title').innerHTML = tags[i].offer.title;
-    clonePopup.querySelector('.popup__text--price').innerHTML=tags[i].offer.price+'<span>/ночь</span>';
-  });
 }
 
 pageActivation(true);
@@ -142,3 +138,9 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
+for (var t=0; t<tags.length; t++)
+  {
+   label[t].addEventListener('mousedown', function () {
+     clonePopup.querySelector('.popup__text--price').innerHTML=100;
+   });
+  }
