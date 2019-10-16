@@ -41,9 +41,6 @@ function makeMark(tagOptions) {
   label[i] = mapPin.cloneNode(true);
   label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
   label[i].querySelector('img').src = tagOptions.offer.photos;
-  label[i].addEventListener('mousedown', function () {
-    clonePopup.querySelector('.popup__title').innerHTML = tagOptions.offer.title;
-  });
   fragment.appendChild(label[i]);
 }
 
@@ -112,7 +109,10 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
     }
   };
   makeMark(tags[i]);
-
+  label[i].addEventListener('mousedown', function () {
+    clonePopup.querySelector('.popup__title').innerHTML = tags[i].offer.title;
+    clonePopup.querySelector('.popup__text--price').innerHTML=tags[i].offer.price+'<span>/ночь</span>';
+  });
 }
 
 pageActivation(true);
@@ -132,7 +132,7 @@ function onMapPinMainPressingEnter(evt) {
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
 
 adFormSubmit.addEventListener('mousedown', function () {
-  if (Number.parseInt(capacity.value) > Number.parseInt(roomNumber.value) && roomNumber !== '100') {
+  if (Number.parseInt(capacity.value) > Number.parseInt(roomNumber.value) && roomNumber.value !== '100') {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else if (roomNumber.value !== '100') {
     capacity.setCustomValidity('');
