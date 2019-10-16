@@ -138,9 +138,8 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
-for (var t=0; t<tags.length; t++)
-  {
-   label[t].addEventListener('mousedown', function () {
-     clonePopup.querySelector('.popup__text--price').innerHTML=100;
-   });
-  }
+for (var t = 0; t < tags.length; t++) {
+  label[t].addEventListener('mousedown', function () {
+    clonePopup.querySelector('.popup__text--price').innerHTML = 100;
+  });
+}
