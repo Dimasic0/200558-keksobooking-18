@@ -139,6 +139,7 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
+
 function onDocumentPressedEnter(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     clonePopup.style.display = 'block';
@@ -146,13 +147,14 @@ function onDocumentPressedEnter(evt) {
     document.addEventListener('keydown', onDocumentPressedEsc);
   }
 }
+
 function onDocumentPressedEsc(evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        clonePopup.style.display = 'none';
-        document.removeEventListener('keydown', onDocumentPressedEsc);
-        document.addEventListener('keydown',onDocumentPressedEnter);
-      }
-    }
+  if (evt.keyCode === ESC_KEYCODE) {
+    clonePopup.style.display = 'none';
+    document.removeEventListener('keydown', onDocumentPressedEsc);
+    document.addEventListener('keydown', onDocumentPressedEnter);
+  }
+}
 for (var t = 0; t < tags.length; t++) {
 
   label[t].addEventListener('mousedown', function () {
