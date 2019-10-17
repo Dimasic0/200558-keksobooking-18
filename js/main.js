@@ -1,4 +1,5 @@
 'use strict';
+
 var ESC_KEYCODE = 27;
 var TAGS_NUMBER = 8;
 var ENTER_KEYCODE = 13;
@@ -9,6 +10,7 @@ var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
+var address_Field = 3;
 var LABEL_HALF = 32;
 var LABEL_HEIGHT = 87;
 var pictureNumber;
@@ -31,7 +33,7 @@ var adFormSubmit = document.querySelector('.ad-form__submit');
 var popup = document.querySelector('#card').content.querySelector('.popup');
 var label = [];
 var clonePopup;
-address.value = 'x:' + x + ' y:' + y;
+address.value = x + ' ' + y;
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -44,7 +46,7 @@ function makeMark(tagOptions) {
   fragment.appendChild(label[i]);
 }
 
-function onSetPrice(evt) {
+function onMapFilterChanged(evt) {
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
@@ -68,14 +70,12 @@ function pageActivation(property) {
   for (i = 0; i < fieldset.length; i++) {
     fieldset[i].disabled = property;
   }
-  fieldset[3].disabled = true;
-  switch (property) {
-    case false:
+  fieldset[address_Field].disabled = true;
+  if (property === false) {
 
-      adForm.classList.remove('ad-form--disabled');
-      map.classList.remove('map--faded');
-      mapPins.appendChild(fragment);
-      break;
+    adForm.classList.remove('ad-form--disabled');
+    map.classList.remove('map--faded');
+    mapPins.appendChild(fragment);
   }
 }
 clonePopup = popup.cloneNode(true);
@@ -119,7 +119,7 @@ function onHomeLabelPress() {
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
-mapFilter.addEventListener('change', onSetPrice);
+mapFilter.addEventListener('change', onMapFilterChanged);
 
 function onMapPinMainPressingEnter(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
@@ -129,12 +129,12 @@ function onMapPinMainPressingEnter(evt) {
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
 
 adFormSubmit.addEventListener('mousedown', function () {
-  if (Number.parseInt(capacity.value, 10) > Number.parseInt(roomNumber.value, 10) && roomNumber.value !== '100') {
+  if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else if (roomNumber.value !== '100') {
     capacity.setCustomValidity('');
   } else if (capacity.value !== '0') {
-    capacity.setCustomValidity('Не для госте.');
+    capacity.setCustomValidity('Не для гостей.');
   } else {
     capacity.setCustomValidity('');
   }
@@ -155,13 +155,15 @@ function onDocumentPressedEsc(evt) {
     document.addEventListener('keydown', onDocumentPressedEnter);
   }
 }
-for (var t = 0; t < tags.length; t++) {
 
-  label[t].addEventListener('mousedown', function () {
+mapPins.addEventListener('mousedown', function (evt) {
+  if(evt.target.tagName==='IMG' || evt.target.tagName==='BUTTON')
+  {
     clonePopup.style.display = 'block';
+    //  clonePopup.querySelector('.popup__text--price').innerHTML=tags[t].offer.price;
     document.addEventListener('keydown', onDocumentPressedEsc);
-  });
+  }
+});
 
-}
 
 document.addEventListener('keydown', onDocumentPressedEnter);
