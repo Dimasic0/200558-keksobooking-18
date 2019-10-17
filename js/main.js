@@ -129,7 +129,7 @@ function onMapPinMainPressingEnter(evt) {
 mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
 
 adFormSubmit.addEventListener('mousedown', function () {
-  if (Number.parseInt(capacity.value) > Number.parseInt(roomNumber.value) && roomNumber.value !== '100') {
+  if (Number.parseInt(capacity.value, 10) > Number.parseInt(roomNumber.value, 10) && roomNumber.value !== '100') {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else if (roomNumber.value !== '100') {
     capacity.setCustomValidity('');
