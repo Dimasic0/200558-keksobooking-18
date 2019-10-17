@@ -10,7 +10,7 @@ var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
-var address_Field = 3;
+var ADDRESS_FIELD = 3;
 var LABEL_HALF = 32;
 var LABEL_HEIGHT = 87;
 var pictureNumber;
@@ -70,7 +70,7 @@ function pageActivation(property) {
   for (i = 0; i < fieldset.length; i++) {
     fieldset[i].disabled = property;
   }
-  fieldset[address_Field].disabled = true;
+  fieldset[ADDRESS_FIELD].disabled = true;
   if (property === false) {
 
     adForm.classList.remove('ad-form--disabled');
@@ -157,8 +157,7 @@ function onDocumentPressedEsc(evt) {
 }
 
 mapPins.addEventListener('mousedown', function (evt) {
-  if(evt.target.tagName==='IMG' || evt.target.tagName==='BUTTON')
-  {
+  if (evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') {
     clonePopup.style.display = 'block';
     //  clonePopup.querySelector('.popup__text--price').innerHTML=tags[t].offer.price;
     document.addEventListener('keydown', onDocumentPressedEsc);
