@@ -1,5 +1,5 @@
 'use strict';
-
+var ESC_KEYCODE = 27;
 var TAGS_NUMBER = 8;
 var ENTER_KEYCODE = 13;
 var MIN_ADDRESS = 130;
@@ -79,6 +79,7 @@ function pageActivation(property) {
   }
 }
 clonePopup = popup.cloneNode(true);
+clonePopup.style.display = 'none';
 map.appendChild(clonePopup);
 for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
@@ -138,8 +139,27 @@ adFormSubmit.addEventListener('mousedown', function () {
     capacity.setCustomValidity('');
   }
 });
-for (var t = 0; t < tags.length; t++) {
-  label[t].addEventListener('mousedown', function () {
-    clonePopup.querySelector('.popup__text--price').innerHTML = 100;
-  });
+function onDocumentPressedEnter(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    clonePopup.style.display = 'block';
+    document.removeEventListener('keydown', onDocumentPressedEnter);
+    document.addEventListener('keydown', onDocumentPressedEsc);
+  }
 }
+function onDocumentPressedEsc(evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        clonePopup.style.display = 'none';
+        document.removeEventListener('keydown', onDocumentPressedEsc);
+        document.addEventListener('keydown',onDocumentPressedEnter);
+      }
+    }
+for (var t = 0; t < tags.length; t++) {
+
+  label[t].addEventListener('mousedown', function () {
+    clonePopup.style.display = 'block';
+    document.addEventListener('keydown', onDocumentPressedEsc);
+  });
+
+}
+
+document.addEventListener('keydown', onDocumentPressedEnter);
