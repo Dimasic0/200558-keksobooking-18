@@ -10,7 +10,6 @@ var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
-var ADDRESS_FIELD = 3;
 var LABEL_HALF = 32;
 var LABEL_HEIGHT = 87;
 var pictureNumber;
@@ -45,8 +44,7 @@ function makeMark(tagOptions) {
   label[i].querySelector('img').src = tagOptions.offer.photos;
   fragment.appendChild(label[i]);
 }
-
-function onMapFilterChanged(evt) {
+function onMapFilterChange(evt) {
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
@@ -66,13 +64,12 @@ function onMapFilterChanged(evt) {
   }
 }
 
-function pageActivation(property) {
-  for (i = 0; i < fieldset.length; i++) {
+function activatePage(property) {
+  for (var i = 0; i < fieldset.length; i++) {
     fieldset[i].disabled = property;
   }
-  fieldset[ADDRESS_FIELD].disabled = true;
-  if (property === false) {
-
+  address.disabled = true;
+  if (!property) {
     adForm.classList.remove('ad-form--disabled');
     map.classList.remove('map--faded');
     mapPins.appendChild(fragment);
@@ -112,21 +109,22 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
   makeMark(tags[i]);
 }
 
-pageActivation(true);
+activatePage(true);
+
 
 function onHomeLabelPress() {
-  pageActivation(false);
+  activatePage(false);
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
-mapFilter.addEventListener('change', onMapFilterChanged);
+mapFilter.addEventListener('change', onMapFilterChange);
 
-function onMapPinMainPressingEnter(evt) {
+function onMapPinMainPress(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    pageActivation(false);
+    activatePage(false);
   }
 }
-mapPinMain.addEventListener('keydown', onMapPinMainPressingEnter);
+mapPinMain.addEventListener('keydown', onMapPinMainPress);
 
 adFormSubmit.addEventListener('mousedown', function () {
   if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
