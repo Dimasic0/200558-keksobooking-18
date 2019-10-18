@@ -1,6 +1,5 @@
 'use strict';
 
-var ESC_KEYCODE = 27;
 var TAGS_NUMBER = 8;
 var ENTER_KEYCODE = 13;
 var MIN_ADDRESS = 130;
@@ -10,8 +9,6 @@ var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
-var LABEL_HALF = 32;
-var LABEL_HEIGHT = 87;
 var pictureNumber;
 var tags = [];
 var adForm = document.querySelector('.ad-form');
@@ -21,12 +18,6 @@ var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
 var fieldset = document.querySelectorAll('fieldset');
 var fragment = document.createDocumentFragment();
-var mapFilter = document.querySelector('.map__filter');
-//var price = document.querySelector('#price');
-var roomNumber = document.querySelector('#room_number');
-var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
-var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
-var adFormSubmit = document.querySelector('.ad-form__submit');
 var popup = document.querySelector('#card').content.querySelector('.popup');
 var label = [];
 var clonePopup;
