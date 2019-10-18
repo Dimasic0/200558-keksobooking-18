@@ -19,20 +19,17 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
-var address = document.querySelector('#address');
 var fieldset = document.querySelectorAll('fieldset');
 var fragment = document.createDocumentFragment();
 var mapFilter = document.querySelector('.map__filter');
-var price = document.querySelector('#price');
+//var price = document.querySelector('#price');
 var roomNumber = document.querySelector('#room_number');
-var capacity = document.querySelector('#capacity');
 var x = Number.parseInt(mapPinMain.style.left, 10) + LABEL_HALF;
 var y = Number.parseInt(mapPinMain.style.top, 10) + LABEL_HEIGHT;
 var adFormSubmit = document.querySelector('.ad-form__submit');
 var popup = document.querySelector('#card').content.querySelector('.popup');
 var label = [];
 var clonePopup;
-address.value = x + ' ' + y;
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -44,31 +41,10 @@ function makeMark(tagOptions) {
   label[i].querySelector('img').src = tagOptions.offer.photos;
   fragment.appendChild(label[i]);
 }
-function onMapFilterChange(evt) {
-  switch (evt.target.value) {
-    case 'any':
-      price.min = 0;
-      break;
-    case 'palace':
-      price.min = 10000;
-      break;
-    case 'flat':
-      price.min = 1000;
-      break;
-    case 'house':
-      price.min = 5000;
-      break;
-    case 'bungalo':
-      price.min = 0;
-      break;
-  }
-}
-
 function activatePage(property) {
   for (var i = 0; i < fieldset.length; i++) {
     fieldset[i].disabled = property;
   }
-  address.disabled = true;
   if (!property) {
     adForm.classList.remove('ad-form--disabled');
     map.classList.remove('map--faded');
@@ -117,7 +93,6 @@ function onHomeLabelPress() {
 }
 
 mapPinMain.addEventListener('mousedown', onHomeLabelPress);
-mapFilter.addEventListener('change', onMapFilterChange);
 
 function onMapPinMainPress(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
@@ -125,42 +100,3 @@ function onMapPinMainPress(evt) {
   }
 }
 mapPinMain.addEventListener('keydown', onMapPinMainPress);
-
-adFormSubmit.addEventListener('mousedown', function () {
-  if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
-    capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
-  } else if (roomNumber.value !== '100') {
-    capacity.setCustomValidity('');
-  } else if (capacity.value !== '0') {
-    capacity.setCustomValidity('Не для гостей.');
-  } else {
-    capacity.setCustomValidity('');
-  }
-});
-
-function onDocumentPressedEnter(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    clonePopup.style.display = 'block';
-    document.removeEventListener('keydown', onDocumentPressedEnter);
-    document.addEventListener('keydown', onDocumentPressedEsc);
-  }
-}
-
-function onDocumentPressedEsc(evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    clonePopup.style.display = 'none';
-    document.removeEventListener('keydown', onDocumentPressedEsc);
-    document.addEventListener('keydown', onDocumentPressedEnter);
-  }
-}
-
-mapPins.addEventListener('mousedown', function (evt) {
-  if (evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') {
-    clonePopup.style.display = 'block';
-    //  clonePopup.querySelector('.popup__text--price').innerHTML=tags[t].offer.price;
-    document.addEventListener('keydown', onDocumentPressedEsc);
-  }
-});
-
-
-document.addEventListener('keydown', onDocumentPressedEnter);
