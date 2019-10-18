@@ -1,34 +1,51 @@
 'use strict';
 
-var NUMBER_TAGS = 7;
-var tags = [];
+var TAGS_NUMBER = 8;
+var ENTER_KEYCODE = 13;
 var MIN_ADDRESS = 130;
 var MAX_ADDRESS = 630;
 var MIN_COORDINATE = 130;
 var MAX_COORDINATE = 630;
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
-var pictureNumber;
 var MAX_ROOMS = 7;
+var pictureNumber;
+var tags = [];
+var adForm = document.querySelector('.ad-form');
+var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
-var elementMap = document.querySelector('.map');
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
+var map = document.querySelector('.map');
+var fieldset = document.querySelectorAll('fieldset');
 var fragment = document.createDocumentFragment();
+var popup = document.querySelector('#card').content.querySelector('.popup');
+var label = [];
+var clonePopup;
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function makeMark(mark) {
-  var clonedLabel;
-  clonedLabel = mapPin.cloneNode(true);
-  clonedLabel.setAttribute('style', 'left:' + mark.location.x + 'px; top:' + mark.location.y + 'px;');
-  clonedLabel.querySelector('img').src = mark.offer.photos;
-  return clonedLabel;
+function makeMark(tagOptions) {
+  label[i] = mapPin.cloneNode(true);
+  label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
+  label[i].querySelector('img').src = tagOptions.offer.photos;
+  fragment.appendChild(label[i]);
 }
-
-elementMap.classList.remove('map--faded');
-for (var i = 0; i < NUMBER_TAGS; i++) {
+function activatePage(property) {
+  for (var i = 0; i < fieldset.length; i++) {
+    fieldset[i].disabled = property;
+  }
+  if (!property) {
+    adForm.classList.remove('ad-form--disabled');
+    map.classList.remove('map--faded');
+    mapPins.appendChild(fragment);
+  }
+}
+clonePopup = popup.cloneNode(true);
+clonePopup.style.display = 'none';
+map.appendChild(clonePopup);
+for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   pictureNumber = i + 1;
@@ -56,8 +73,21 @@ for (var i = 0; i < NUMBER_TAGS; i++) {
       y: randomLocationY
     }
   };
-
-  fragment.appendChild(makeMark(tags[i]));
+  makeMark(tags[i]);
 }
 
-mapPins.appendChild(fragment);
+activatePage(true);
+
+
+function onHomeLabelPress() {
+  activatePage(false);
+}
+
+mapPinMain.addEventListener('mousedown', onHomeLabelPress);
+
+function onMapPinMainPress(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activatePage(false);
+  }
+}
+mapPinMain.addEventListener('keydown', onMapPinMainPress);
