@@ -9,17 +9,14 @@ var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
-var pictureNumber;
-var tags = [];
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
-var fieldset = document.querySelectorAll('fieldset');
+var fieldsets = document.querySelectorAll('fieldset');
 var fragment = document.createDocumentFragment();
 var popup = document.querySelector('#card').content.querySelector('.popup');
-var label = [];
 var clonePopup;
 
 function getRandomInRange(min, max) {
@@ -27,10 +24,10 @@ function getRandomInRange(min, max) {
 }
 
 function makeMark(tagOptions) {
-  label[i] = mapPin.cloneNode(true);
-  label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
-  label[i].querySelector('img').src = tagOptions.offer.photos;
-  fragment.appendChild(label[i]);
+  var=label = mapPin.cloneNode(true);
+  label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
+  label.querySelector('img').src = tagOptions.offer.photos;
+  fragment.appendChild(label);
 }
 function activatePage(property) {
   for (var i = 0; i < fieldset.length; i++) {
@@ -48,8 +45,7 @@ map.appendChild(clonePopup);
 for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  pictureNumber = i + 1;
-  tags[i] = {
+  var tags[i] = {
     author: {
       avatar: 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
     },
@@ -65,7 +61,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       checkout: '12:00',
       features: FEATURES[i],
       description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user0' + pictureNumber + '.png',
+      photos: 'img/avatars/user0' + i + 1 + '.png',
     },
 
     location: {
@@ -73,7 +69,30 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       y: randomLocationY
     }
   };
-  makeMark(tags[i]);
+  makeMark( {
+    author: {
+      avatar: 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
+    },
+
+    offer: {
+      title: 'Заголовок объявления',
+      address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS),
+      price: 1000,
+      type: 'palace',
+      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
+      guests: getRandomInRange(1, 5),
+      checkin: '12:00',
+      checkout: '12:00',
+      features: FEATURES[i],
+      description: 'Есть газовая печка, стиральная машина, синие стены',
+      photos: 'img/avatars/user0' + i + 1 + '.png',
+    },
+
+    location: {
+      x: randomLocationX,
+      y: randomLocationY
+    }
+  };);
 }
 
 activatePage(true);
