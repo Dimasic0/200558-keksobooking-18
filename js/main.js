@@ -24,7 +24,7 @@ function getRandomInRange(min, max) {
 }
 
 function makeMark(tagOptions) {
-  var=label = mapPin.cloneNode(true);
+  var label = mapPin.cloneNode(true);
   label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
   label.querySelector('img').src = tagOptions.offer.photos;
   fragment.appendChild(label);
@@ -92,17 +92,14 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       x: randomLocationX,
       y: randomLocationY
     }
-  };);
+  });
 }
 
 activatePage(true);
 
-
-function onHomeLabelPress() {
-  activatePage(false);
-}
-
-mapPinMain.addEventListener('mousedown', onHomeLabelPress);
+mapPinMain.addEventListener('mousedown', function () {
+    activatePage(false);
+});
 
 function onMapPinMainPress(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
