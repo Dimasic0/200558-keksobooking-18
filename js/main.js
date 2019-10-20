@@ -9,6 +9,7 @@ var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
+var tags = [];
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
@@ -45,7 +46,7 @@ map.appendChild(clonePopup);
 for (var i = 0; i < TAGS_NUMBER; i++) {
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  var tags[i] = {
+  tags[i] = {
     author: {
       avatar: 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
     },
