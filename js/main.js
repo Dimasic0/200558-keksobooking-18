@@ -27,7 +27,7 @@ function getRandomInRange(min, max) {
 function makeMark(tagOptions) {
   var label = mapPin.cloneNode(true);
   label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
-  label.querySelector('img').src = tagOptions.offer.photos;
+  label.querySelector('img').src = tagOptions.author.avatar;
   fragment.appendChild(label);
 }
 function activatePage(property) {
