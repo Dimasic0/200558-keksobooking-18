@@ -30,6 +30,7 @@ function makeMark(tagOptions) {
   label.querySelector('img').src = tagOptions.author.avatar;
   fragment.appendChild(label);
 }
+
 function activatePage(property) {
   for (var i = 0; i < fieldsets.length; i++) {
     fieldsets[i].disabled = property;
@@ -38,6 +39,7 @@ function activatePage(property) {
     adForm.classList.remove('ad-form--disabled');
     map.classList.remove('map--faded');
     mapPins.appendChild(fragment);
+    mapPins.appendChild(popup);
   }
 }
 clonePopup = popup.cloneNode(true);
@@ -70,7 +72,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       y: randomLocationY
     }
   };
-  makeMark( {
+  makeMark({
     author: {
       avatar: 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
     },
@@ -99,7 +101,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
 activatePage(true);
 
 mapPinMain.addEventListener('mousedown', function () {
-    activatePage(false);
+  activatePage(false);
 });
 
 function onMapPinMainPress(evt) {
@@ -108,3 +110,8 @@ function onMapPinMainPress(evt) {
   }
 }
 mapPinMain.addEventListener('keydown', onMapPinMainPress);
+mapPins.onmousedown= function (evt) {
+  if (evt.target.tagName === 'BUTTON' || evt.target.tagName === 'IMG') {
+    console.log(evt);
+  }
+}
