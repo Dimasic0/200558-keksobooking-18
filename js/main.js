@@ -31,8 +31,8 @@ function makeMark(tagOptions) {
   fragment.appendChild(label);
 }
 function activatePage(property) {
-  for (var i = 0; i < fieldset.length; i++) {
-    fieldset[i].disabled = property;
+  for (var i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].disabled = property;
   }
   if (!property) {
     adForm.classList.remove('ad-form--disabled');
