@@ -110,7 +110,7 @@ function onMapPinMainPress(evt) {
   }
 }
 mapPinMain.addEventListener('keydown', onMapPinMainPress);
-mapPins.onmousedown= function (evt) {
+mapPins.onmousedown = function (evt) {
   if (evt.target.tagName === 'BUTTON' || evt.target.tagName === 'IMG') {
     console.log(evt);
   }
