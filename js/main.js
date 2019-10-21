@@ -123,10 +123,6 @@ var popupTextAddress=popup.querySelector('.popup__text--address'),
       }
 mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
-
-  mapPins.onmousedown = function (evt) {
-  if (evt.target.tagName === 'BUTTON' || evt.target.tagName === 'IMG') {
-    console.log(evt);
     popupTitle.innerHTML = tags[0].offer.title;
     popupTextAddress.textContent=tags[0].offer.address;
     popupTextPrice.textContent=tags[0].offer.price+'₽/ночь';
@@ -160,8 +156,6 @@ mapPinMain.addEventListener('mousedown', function () {
             break top;
         }
       }
-  }
-}
 });
 
 function onMapPinMainPress(evt) {
