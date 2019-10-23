@@ -8,6 +8,8 @@ var MIN_COORDINATE = 130;
 var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
 var CONVENIENCE_NAMES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var MIN_ROOMS = 2;
+var MAX_ROOMS = 7;
 var popup = document.querySelector('#card').content.querySelector('.popup');
 var popupTitle = popup.querySelector('.popup__title');
 var popupTextAddress = popup.querySelector('.popup__text--address');
@@ -28,8 +30,6 @@ var CONVENIENCE_ICOM = [
   popupFeaturesContainer.querySelector('.popup__feature--elevator'),
   popupFeaturesContainer.querySelector('.popup__feature--conditioner')
 ];
-var MIN_ROOMS = 2;
-var MAX_ROOMS = 7;
 var tags = [];
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
