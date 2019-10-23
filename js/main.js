@@ -6,8 +6,7 @@ var MIN_ADDRESS = 130;
 var MAX_ADDRESS = 630;
 var MIN_COORDINATE = 130;
 var MAX_COORDINATE = 630;
-var FEATURES = ['wifi', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
-var CONVENIENCE_NAMES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
 var popup = document.querySelector('#card').content.querySelector('.popup');
@@ -84,7 +83,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       guests: getRandomInRange(1, 5),
       checkin: '12:00',
       checkout: '12:00',
-      features: FEATURES[i],
+      features: FEATURES[getRandomInRange(0,FEATURES.length)],
       description: 'Есть газовая печка, стиральная машина, синие стены',
       photos: 'img/avatars/user0' + (i + 1) + '.png',
     },
@@ -108,7 +107,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       guests: getRandomInRange(1, 5),
       checkin: '12:00',
       checkout: '12:00',
-      features: FEATURES[i],
+      features: getRandomInRange(0,FEATURES.length),
       description: 'Есть газовая печка, стиральная машина, синие стены',
       photos: 'img/avatars/user0' + (i + 1) + '.png',
     },
