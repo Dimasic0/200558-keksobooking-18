@@ -68,7 +68,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       checkout: '12:00',
       features: FEATURES[i],
       description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user' + i + 1 + '.png',
+      photos: 'img/avatars/user' + (i + 1) + '.png',
     },
 
     location: {
@@ -92,7 +92,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       checkout: '12:00',
       features: FEATURES[i],
       description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user0' + i + 1 + '.png',
+      photos: 'img/avatars/user0' + (i + 1) + '.png',
     },
 
     location: {
@@ -109,18 +109,18 @@ var popupTextPrice = popup.querySelector('.popup__text--price');
 var popupType = popup.querySelector('.popup__type');
 var popupTextCapacity = popup.querySelector('.popup__text--capacity');
 var popupTextTime = popup.querySelector('.popup__text--time');
-var popupFeatures = popup.querySelector('.popup__features');
-var popupFeature = popupFeatures.querySelectorAll('.popup__feature');
+var popupFeaturesContainer = popup.querySelector('.popup__features');
+var popupFeature = popupFeaturesContainer.querySelectorAll('.popup__feature');
 var popupDescription = popup.querySelector('.popup__description');
 var popupPhoto = popup.querySelector('.popup__photo');
 var popupAvatar = popup.querySelector('.popup__avatar');
 convenienceIcon = [
-  popupFeatures.querySelector('.popup__feature--wifi'),
-  popupFeatures.querySelector('.popup__feature--dishwasher'),
-  popupFeatures.querySelector('.popup__feature--parking'),
-  popupFeatures.querySelector('.popup__feature--washer'),
-  popupFeatures.querySelector('.popup__feature--elevator'),
-  popupFeatures.querySelector('.popup__feature--conditioner')
+  popupFeaturesContainer.querySelector('.popup__feature--wifi'),
+  popupFeaturesContainer.querySelector('.popup__feature--dishwasher'),
+  popupFeaturesContainer.querySelector('.popup__feature--parking'),
+  popupFeaturesContainer.querySelector('.popup__feature--washer'),
+  popupFeaturesContainer.querySelector('.popup__feature--elevator'),
+  popupFeaturesContainer.querySelector('.popup__feature--conditioner')
 ];
 for (i = 0; i < popupFeature.length; i++) {
   popupFeature[i].style.display = 'none';
