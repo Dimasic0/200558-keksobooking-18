@@ -115,12 +115,12 @@ var popupDescription = popup.querySelector('.popup__description');
 var popupPhoto = popup.querySelector('.popup__photo');
 var popupAvatar = popup.querySelector('.popup__avatar');
 convenienceIcon = [
-  popupFeaturesContainer.querySelector('.popup__feature--wifi'),
-  popupFeaturesContainer.querySelector('.popup__feature--dishwasher'),
-  popupFeaturesContainer.querySelector('.popup__feature--parking'),
-  popupFeaturesContainer.querySelector('.popup__feature--washer'),
-  popupFeaturesContainer.querySelector('.popup__feature--elevator'),
-  popupFeaturesContainer.querySelector('.popup__feature--conditioner')
+  document.querySelector('.popup__features').querySelector('.popup__feature--wifi'),
+  document.querySelector('.popup__features').querySelector('.popup__feature--dishwasher'),
+  document.querySelector('.popup__features').querySelector('.popup__feature--parking'),
+  document.querySelector('.popup__features').querySelector('.popup__feature--washer'),
+  document.querySelector('.popup__features').querySelector('.popup__feature--elevator'),
+  document.querySelector('.popup__features').querySelector('.popup__feature--conditioner')
 ];
 for (i = 0; i < popupFeature.length; i++) {
   popupFeature[i].style.display = 'none';
@@ -147,16 +147,16 @@ mapPinMain.addEventListener('mousedown', function () {
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout;
   do {
-    for (i = 0; i < convenienceName.length; i++) {
+     for (i = 0; i < convenienceName.length; i++) {
 
-      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + convenienceName[i].length) === convenienceName[i]) {
-        convenienceIcon[i].style.display = 'inline-block';
-        wordBeginnings += convenienceName[i].length;
-        i = 0;
-      }
-      while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
-        wordBeginnings++;
-      }
+     if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + convenienceName[i].length) === convenienceName[i]) {
+         convenienceIcon[i].style.display = 'inline-block';
+         wordBeginnings += convenienceName[i].length;
+         i = 0;
+       }
+       while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
+         wordBeginnings++;
+       }
     }
   } while (wordBeginnings < FEATURES[0].length);
   popupDescription.textContent = tags[0].offer.description;
