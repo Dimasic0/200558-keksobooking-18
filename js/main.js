@@ -7,8 +7,27 @@ var MAX_ADDRESS = 630;
 var MIN_COORDINATE = 130;
 var MAX_COORDINATE = 630;
 var FEATURES = ['wifi', 'parking', 'washer', 'elevator', 'conditioner', 'wifi parking', 'wifi washer'];
-var convenienceName = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var convenienceIcon = [];
+var CONVENIENCE_NAMES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var popup = document.querySelector('#card').content.querySelector('.popup');
+var popupTitle = popup.querySelector('.popup__title');
+var popupTextAddress = popup.querySelector('.popup__text--address');
+var popupTextPrice = popup.querySelector('.popup__text--price');
+var popupType = popup.querySelector('.popup__type');
+var popupTextCapacity = popup.querySelector('.popup__text--capacity');
+var popupTextTime = popup.querySelector('.popup__text--time');
+var popupFeaturesContainer = popup.querySelector('.popup__features');
+var popupFeature = popupFeaturesContainer.querySelectorAll('.popup__feature');
+var popupDescription = popup.querySelector('.popup__description');
+var popupPhoto = popup.querySelector('.popup__photo');
+var popupAvatar = popup.querySelector('.popup__avatar');
+var CONVENIENCE_ICOM = [
+  popupFeaturesContainer.querySelector('.popup__feature--wifi'),
+  popupFeaturesContainer.querySelector('.popup__feature--dishwasher'),
+  popupFeaturesContainer.querySelector('.popup__feature--parking'),
+  popupFeaturesContainer.querySelector('.popup__feature--washer'),
+  popupFeaturesContainer.querySelector('.popup__feature--elevator'),
+  popupFeaturesContainer.querySelector('.popup__feature--conditioner')
+];
 var MIN_ROOMS = 2;
 var MAX_ROOMS = 7;
 var tags = [];
@@ -20,7 +39,6 @@ var map = document.querySelector('.map');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var fragment = document.createDocumentFragment();
-var popup = document.querySelector('#card').content.querySelector('.popup');
 var clonePopup;
 var wordBeginnings = 0;
 
@@ -68,7 +86,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       checkout: '12:00',
       features: FEATURES[i],
       description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user' + (i + 1) + '.png',
+      photos: 'img/avatars/user0' + (i + 1) + '.png',
     },
 
     location: {
@@ -103,25 +121,6 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
 }
 
 activatePage(true);
-var popupTitle = popup.querySelector('.popup__title');
-var popupTextAddress = popup.querySelector('.popup__text--address');
-var popupTextPrice = popup.querySelector('.popup__text--price');
-var popupType = popup.querySelector('.popup__type');
-var popupTextCapacity = popup.querySelector('.popup__text--capacity');
-var popupTextTime = popup.querySelector('.popup__text--time');
-var popupFeaturesContainer = popup.querySelector('.popup__features');
-var popupFeature = popupFeaturesContainer.querySelectorAll('.popup__feature');
-var popupDescription = popup.querySelector('.popup__description');
-var popupPhoto = popup.querySelector('.popup__photo');
-var popupAvatar = popup.querySelector('.popup__avatar');
-convenienceIcon = [
-  document.querySelector('.popup__features').querySelector('.popup__feature--wifi'),
-  document.querySelector('.popup__features').querySelector('.popup__feature--dishwasher'),
-  document.querySelector('.popup__features').querySelector('.popup__feature--parking'),
-  document.querySelector('.popup__features').querySelector('.popup__feature--washer'),
-  document.querySelector('.popup__features').querySelector('.popup__feature--elevator'),
-  document.querySelector('.popup__features').querySelector('.popup__feature--conditioner')
-];
 for (i = 0; i < popupFeature.length; i++) {
   popupFeature[i].style.display = 'none';
 }
@@ -147,16 +146,16 @@ mapPinMain.addEventListener('mousedown', function () {
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout;
   do {
-     for (i = 0; i < convenienceName.length; i++) {
+    for (i = 0; i < CONVENIENCE_NAMES.length; i++) {
 
-     if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + convenienceName[i].length) === convenienceName[i]) {
-         convenienceIcon[i].style.display = 'inline-block';
-         wordBeginnings += convenienceName[i].length;
-         i = 0;
-       }
-       while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
-         wordBeginnings++;
-       }
+      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + CONVENIENCE_NAMES[i].length) === CONVENIENCE_NAMES[i]) {
+        CONVENIENCE_ICOM[i].style.display = 'inline-block';
+        wordBeginnings += CONVENIENCE_NAMES[i].length;
+        i = 0;
+      }
+      while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
+        wordBeginnings++;
+      }
     }
   } while (wordBeginnings < FEATURES[0].length);
   popupDescription.textContent = tags[0].offer.description;
