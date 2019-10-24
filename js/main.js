@@ -52,15 +52,13 @@ function makeMark(tagOptions) {
   fragment.appendChild(label);
 }
 
-function generateRandomAmenities () {
-   for (var i=0; i<FEATURES.length; i++)
-     {
-      var randomString;
-       if(getRandomInRange(0,1)===1)
-         {
-           randomString+=FEATURES[i]+ ' ';
-         }
-     }
+function generateRandomAmenities() {
+  for (var i = 0; i < FEATURES.length; i++) {
+    var randomString;
+    if (getRandomInRange(0, 1) === 1) {
+      randomString += FEATURES[i] + ' ';
+    }
+  }
   return randomString;
 }
 
