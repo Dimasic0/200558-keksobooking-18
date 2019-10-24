@@ -52,8 +52,20 @@ function makeMark(tagOptions) {
   fragment.appendChild(label);
 }
 
+function generateRandomAmenities () {
+   for (var i=0; i<FEATURES.length; i++)
+     {
+      var randomString;
+       if(getRandomInRange(0,1)===1)
+         {
+           randomString+=FEATURES[i]+ ' ';
+         }
+     }
+  return randomString;
+}
+
 function activatePage(property) {
-  for (var i = 0; i < fieldsets.length; i++) {
+  for (i = 0; i < fieldsets.length; i++) {
     fieldsets[i].disabled = property;
   }
   if (!property) {
@@ -83,7 +95,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       guests: getRandomInRange(1, 5),
       checkin: '12:00',
       checkout: '12:00',
-      features: FEATURES[getRandomInRange(0,FEATURES.length)],
+      features: generateRandomAmenities(),
       description: 'Есть газовая печка, стиральная машина, синие стены',
       photos: 'img/avatars/user0' + (i + 1) + '.png',
     },
@@ -93,30 +105,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) {
       y: randomLocationY
     }
   };
-  makeMark({
-    author: {
-      avatar: 'img/avatars/user0' + (i + 1) + '.png'
-    },
-
-    offer: {
-      title: 'Заголовок объявления',
-      address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS),
-      price: 1000,
-      type: 'palace',
-      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
-      guests: getRandomInRange(1, 5),
-      checkin: '12:00',
-      checkout: '12:00',
-      features: getRandomInRange(0,FEATURES.length),
-      description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user0' + (i + 1) + '.png',
-    },
-
-    location: {
-      x: randomLocationX,
-      y: randomLocationY
-    }
-  });
+  makeMark(tags[i]);
 }
 
 activatePage(true);
@@ -145,18 +134,18 @@ mapPinMain.addEventListener('mousedown', function () {
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout;
   do {
-    for (i = 0; i < CONVENIENCE_NAMES.length; i++) {
+    for (i = 0; i < FEATURES.length; i++) {
 
-      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + CONVENIENCE_NAMES[i].length) === CONVENIENCE_NAMES[i]) {
+      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + FEATURES[i].length) === FEATURES[i]) {
         CONVENIENCE_ICOM[i].style.display = 'inline-block';
-        wordBeginnings += CONVENIENCE_NAMES[i].length;
+        wordBeginnings += FEATURES[i].length;
         i = 0;
       }
       while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
         wordBeginnings++;
       }
     }
-  } while (wordBeginnings < FEATURES[0].length);
+  } while (wordBeginnings < tags[0].offer.features.length);
   popupDescription.textContent = tags[0].offer.description;
   popupPhoto.src = tags[0].offer.photos;
   popupAvatar.src = tags[0].author.avatar;
