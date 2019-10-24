@@ -1,27 +1,27 @@
 'use strict';
 
-var TAGS_NUMBER = 8;
-var ENTER_KEYCODE = 13;
-var MIN_ADDRESS = 130;
-var MAX_ADDRESS = 630;
-var MIN_COORDINATE = 130;
-var MAX_COORDINATE = 630;
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var MIN_ROOMS = 2;
-var MAX_ROOMS = 7;
-var popup = document.querySelector('#card').content.querySelector('.popup');
-var popupTitle = popup.querySelector('.popup__title');
-var popupTextAddress = popup.querySelector('.popup__text--address');
-var popupTextPrice = popup.querySelector('.popup__text--price');
-var popupType = popup.querySelector('.popup__type');
-var popupTextCapacity = popup.querySelector('.popup__text--capacity');
-var popupTextTime = popup.querySelector('.popup__text--time');
-var popupFeaturesContainer = popup.querySelector('.popup__features');
-var popupFeature = popupFeaturesContainer.querySelectorAll('.popup__feature');
-var popupDescription = popup.querySelector('.popup__description');
-var popupPhoto = popup.querySelector('.popup__photo');
-var popupAvatar = popup.querySelector('.popup__avatar');
-var CONVENIENCE_ICOM = [
+var TAGS_NUMBER = 8; // колличество меток
+var ENTER_KEYCODE = 13; // Unicode клавише ENTER
+var MIN_ADDRESS = 130; // минималный адрес
+var MAX_ADDRESS = 630; // максимальный адрес
+var MIN_COORDINATE = 130; // минимальная координата
+var MAX_COORDINATE = 630; // максимальная координата
+var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner']; // виды удобств
+var MIN_ROOMS = 2; // минимальное количество комнат
+var MAX_ROOMS = 7; // максимальное количество комнат
+var popup = document.querySelector('#card').content.querySelector('.popup'); // карточка
+var popupTitle = popup.querySelector('.popup__title'); // заголовок в карточке
+var popupTextAddress = popup.querySelector('.popup__text--address'); // адрес
+var popupTextPrice = popup.querySelector('.popup__text--price'); // цена
+var popupType = popup.querySelector('.popup__type'); // тип в карточке
+var popupTextCapacity = popup.querySelector('.popup__text--capacity'); // комнаты
+var popupTextTime = popup.querySelector('.popup__text--time'); // время заезда и выезда
+var popupFeaturesContainer = popup.querySelector('.popup__features'); // список типов
+var popupFeature = popupFeaturesContainer.querySelectorAll('.popup__feature'); // типы
+var popupDescription = popup.querySelector('.popup__description'); // описание
+var popupPhoto = popup.querySelector('.popup__photo'); // фото в карточке
+var popupAvatar = popup.querySelector('.popup__avatar'); // аватар
+var CONVENIENCE_ICOM = [ // удобство
   popupFeaturesContainer.querySelector('.popup__feature--wifi'),
   popupFeaturesContainer.querySelector('.popup__feature--dishwasher'),
   popupFeaturesContainer.querySelector('.popup__feature--parking'),
@@ -29,129 +29,128 @@ var CONVENIENCE_ICOM = [
   popupFeaturesContainer.querySelector('.popup__feature--elevator'),
   popupFeaturesContainer.querySelector('.popup__feature--conditioner')
 ];
-var tags = [];
-var adForm = document.querySelector('.ad-form');
-var mapPinMain = document.querySelector('.map__pin--main');
+var tags = []; // даные меток
+var adForm = document.querySelector('.ad-form'); // форма.
+var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var fragment = document.createDocumentFragment();
-var clonePopup;
-var wordBeginnings = 0;
+var wordBeginnings = 0; // индекс начала строки.
 
-function getRandomInRange(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomInRange(min, max) { // генератор рандомных чисел
+  return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
 }
 
 function makeMark(tagOptions) {
   var label = mapPin.cloneNode(true);
   label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
-  label.querySelector('img').src = tagOptions.author.avatar;
-  fragment.appendChild(label);
+  label.querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
+  fragment.appendChild(label); // вставляем метку в
 }
 
-function generateRandomAmenities() {
+function generateRandomAmenities() { // генератор удобств.
   for (var i = 0; i < FEATURES.length; i++) {
-    var randomString;
-    if (getRandomInRange(0, 1) === 1) {
-      randomString += FEATURES[i] + ' ';
+    var randomString; // переменная для рандомного числа
+    if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
+      randomString += FEATURES[i] + ' '; // записывает удобство
     }
   }
-  return randomString;
+  return randomString; // возвращает в строку удобств
 }
 
-function activatePage(property) {
+function activatePage(property) { // функция выдает состояние сайта.
   for (i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].disabled = property;
+    fieldsets[i].disabled = property; // разрешает или запрещает изменять форму.
   }
-  if (!property) {
-    adForm.classList.remove('ad-form--disabled');
-    map.classList.remove('map--faded');
-    map.insertBefore(fragment, mapFiltersContainer);
-    mapPins.appendChild(popup);
+  if (!property) { // если нужно активировать сайт то
+    adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
+    map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
+    map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
+    mapPins.appendChild(popup); // вставляет карточку
   }
 }
-clonePopup = popup.cloneNode(true);
-clonePopup.style.display = 'none';
-map.appendChild(clonePopup);
-for (var i = 0; i < TAGS_NUMBER; i++) {
-  var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE);
-  tags[i] = {
+var clonePopup = popup.cloneNode(true); // клонирует карточку
+clonePopup.style.display = 'none'; // убирает карточку
+map.appendChild(clonePopup); // вставляет клон
+for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
+  var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
+  var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
+  tags[i] = {// данные о метке
     author: {
-      avatar: 'img/avatars/user0' + (i + 1) + '.png'
+      avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
 
     offer: {
-      title: 'Заголовок объявления',
-      address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS),
-      price: 1000,
-      type: 'palace',
-      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
-      guests: getRandomInRange(1, 5),
-      checkin: '12:00',
-      checkout: '12:00',
-      features: generateRandomAmenities(),
-      description: 'Есть газовая печка, стиральная машина, синие стены',
-      photos: 'img/avatars/user0' + (i + 1) + '.png',
+      title: 'Заголовок объявления', // заголовок
+      address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS), // адрес
+      price: 1000, // цена
+      type: 'palace', // тип
+      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
+      guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
+      checkin: '12:00', // время заезда
+      checkout: '12:00', // время выезда
+      features: generateRandomAmenities(), // удобство
+      description: 'Есть газовая печка, стиральная машина, синие стены', // описание
+      photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
     },
 
     location: {
-      x: randomLocationX,
-      y: randomLocationY
+      x: randomLocationX, // координата х
+      y: randomLocationY //  координата у
     }
   };
-  makeMark(tags[i]);
+  makeMark(tags[i]); // создаем метки
 }
 
-activatePage(true);
+activatePage(true); //
 for (i = 0; i < popupFeature.length; i++) {
-  popupFeature[i].style.display = 'none';
+  popupFeature[i].style.display = 'none'; // отключить
 }
-mapPinMain.addEventListener('mousedown', function () {
+mapPinMain.addEventListener('mousedown', function () { //
   activatePage(false);
-  popupTitle.innerHTML = tags[0].offer.title;
-  popupTextAddress.textContent = tags[0].offer.address;
-  popupTextPrice.textContent = tags[0].offer.price + '₽/ночь';
-  switch (tags[0].offer.type) {
-    case 'flat':
-      popupType.textContent = 'Квартира';
+  popupTitle.innerHTML = tags[0].offer.title; // Заголовок в карточке
+  popupTextAddress.textContent = tags[0].offer.address; // адрес в карточке
+  popupTextPrice.textContent = tags[0].offer.price + '₽/ночь'; // цена в карточке
+  switch (tags[0].offer.type) { // тип жилья
+    case 'flat': // если жилью квартира то
+      popupType.textContent = 'Квартира'; // выводим в метку слово <квартира>
       break;
-    case 'bungalo':
-      popupType.textContent = 'Бунгало';
+    case 'bungalo': // если жильё Бунгало то
+      popupType.textContent = 'Бунгало'; // выводим в метку слово <Бунгало>
       break;
-    case 'house':
-      popupType.textContent = 'Дом';
+    case 'house': // если жилью дом то
+      popupType.textContent = 'Дом'; // выводим слово <Дом>
       break;
     case 'palace':
-      popupType.textContent = 'Дворец';
+      popupType.textContent = 'Дворец'; // Выводим слово <дворец>
       break;
   }
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
-  popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout;
+  popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
   do {
     for (i = 0; i < FEATURES.length; i++) {
 
-      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + FEATURES[i].length) === FEATURES[i]) {
+      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + FEATURES[i].length) === FEATURES[i]) { // сравниваем удобство
         CONVENIENCE_ICOM[i].style.display = 'inline-block';
         wordBeginnings += FEATURES[i].length;
-        i = 0;
+        i = 0; // начинаем заново сравнивать
       }
       while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
-        wordBeginnings++;
+        wordBeginnings++; // прибавляют индекс
       }
     }
-  } while (wordBeginnings < tags[0].offer.features.length);
-  popupDescription.textContent = tags[0].offer.description;
-  popupPhoto.src = tags[0].offer.photos;
-  popupAvatar.src = tags[0].author.avatar;
+  } while (wordBeginnings < tags[0].offer.features.length); // если индекс обрабатываемого символа не меньше конечного, то
+  popupDescription.textContent = tags[0].offer.description; // Написать описание
+  popupPhoto.src = tags[0].offer.photos; // фото на карте
+  popupAvatar.src = tags[0].author.avatar; // аватарка на карте
 });
 
 function onMapPinMainPress(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    activatePage(false);
+  if (evt.keyCode === ENTER_KEYCODE) { // если нажал на enter
+    activatePage(false); // активировать сайт
   }
 }
-mapPinMain.addEventListener('keydown', onMapPinMainPress);
+mapPinMain.addEventListener('keydown', onMapPinMainPress); // если нажимаю enter
