@@ -78,7 +78,7 @@ map.appendChild(clonePopup); // вставляет клон
 for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
-  tags[i] = {//данные о метке
+  tags[i] = {// данные о метке
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
