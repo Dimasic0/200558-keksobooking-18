@@ -29,7 +29,7 @@ var CONVENIENCE_ICOM = [ // удобство
   popupFeaturesContainer.querySelector('.popup__feature--elevator'),
   popupFeaturesContainer.querySelector('.popup__feature--conditioner')
 ];
-CONVENIENCE_ICOM[0].style.display='inline-block';
+CONVENIENCE_ICOM[0].style.display = 'inline-block';
 var tags = []; // даные меток
 var adForm = document.querySelector('.ad-form'); // форма.
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
@@ -39,7 +39,6 @@ var map = document.querySelector('.map');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var fragment = document.createDocumentFragment();
-var wordBeginnings = 0; // индекс начала строки.
 
 function getRandomInRange(min, max) { // генератор рандомных чисел
   return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
@@ -52,17 +51,17 @@ function makeMark(tagOptions) {
   fragment.appendChild(label); // вставляем метку в
 }
 
-function generateRandomAmenities() { // генератор удобств.
-  var index_1=0;
+/* function generateRandomAmenities() { // генератор удобств.
+  var index_1 = 0;
   for (var i = 0; i < FEATURES.length; i++) {
-    var randomString=[]; // переменная для рандомного числа
+    var randomString = []; // переменная для рандомного числа
     if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
       randomString[index_1] = FEATURES[i]; // записывает удобство
       index_1++;
     }
   }
   return randomString; // возвращает в строку удобств
-}
+}*/
 
 function activatePage(property) { // функция выдает состояние сайта.
   for (i = 0; i < fieldsets.length; i++) {
@@ -132,12 +131,11 @@ mapPinMain.addEventListener('mousedown', function () {
   }
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
-  for (var index_1=0; index_1<tags[0].offer.features.length; index_1++) {
+  for (var INDEX_1 = 0; INDEX_1 < tags[0].offer.features.length; INDEX_1++) {
     for (i = 0; i < FEATURES.length; i++) {
-         if(FEATURES.offer.features[index_1]===FEATURES[i])
-           {
-              CONVENIENCE_ICOM[i].style.display='inline-block';
-           }
+      if (FEATURES.offer.features[INDEX_1] === FEATURES[i]) {
+        CONVENIENCE_ICOM[i].style.display = 'inline-block';
+      }
     }
   }
   popupDescription.textContent = tags[0].offer.description; // Написать описание
