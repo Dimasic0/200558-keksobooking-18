@@ -51,17 +51,17 @@ function makeMark(tagOptions) {
   fragment.appendChild(label); // вставляем метку в
 }
 
-/* function generateRandomAmenities() { // генератор удобств.
-  var index_1 = 0;
+function generateRandomAmenities() { // генератор удобств.
+  var INDEX_1 = 0;
+  var randomString = []; // переменная для рандомного числа
   for (var i = 0; i < FEATURES.length; i++) {
-    var randomString = []; // переменная для рандомного числа
     if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
-      randomString[index_1] = FEATURES[i]; // записывает удобство
-      index_1++;
+      randomString[INDEX_1] = FEATURES[i]; // записывает удобство
+      INDEX_1++;
     }
   }
   return randomString; // возвращает в строку удобств
-}*/
+}
 
 function activatePage(property) { // функция выдает состояние сайта.
   for (i = 0; i < fieldsets.length; i++) {
@@ -94,7 +94,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
       guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
       checkin: '12:00', // время заезда
       checkout: '12:00', // время выезда
-      features: ['wifi', 'dishwasher'], // удобство
+      features: generateRandomAmenities(), // удобство
       description: 'Есть газовая печка, стиральная машина, синие стены', // описание
       photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
     },
@@ -133,7 +133,7 @@ mapPinMain.addEventListener('mousedown', function () {
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
   for (var INDEX_1 = 0; INDEX_1 < tags[0].offer.features.length; INDEX_1++) {
     for (i = 0; i < FEATURES.length; i++) {
-      if (FEATURES.offer.features[INDEX_1] === FEATURES[i]) {
+      if (tags[0].offer.features[INDEX_1] === FEATURES[i]) {
         CONVENIENCE_ICOM[i].style.display = 'inline-block';
       }
     }
