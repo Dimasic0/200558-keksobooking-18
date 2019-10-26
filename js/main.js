@@ -29,6 +29,7 @@ var CONVENIENCE_ICOM = [ // удобство
   popupFeaturesContainer.querySelector('.popup__feature--elevator'),
   popupFeaturesContainer.querySelector('.popup__feature--conditioner')
 ];
+CONVENIENCE_ICOM[0].style.display='inline-block';
 var tags = []; // даные меток
 var adForm = document.querySelector('.ad-form'); // форма.
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
@@ -52,10 +53,12 @@ function makeMark(tagOptions) {
 }
 
 function generateRandomAmenities() { // генератор удобств.
+  var index_1=0;
   for (var i = 0; i < FEATURES.length; i++) {
-    var randomString; // переменная для рандомного числа
+    var randomString=[]; // переменная для рандомного числа
     if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
-      randomString += FEATURES[i] + ' '; // записывает удобство
+      randomString[index_1] = FEATURES[i]; // записывает удобство
+      index_1++;
     }
   }
   return randomString; // возвращает в строку удобств
@@ -92,7 +95,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
       guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
       checkin: '12:00', // время заезда
       checkout: '12:00', // время выезда
-      features: generateRandomAmenities(), // удобство
+      features: ['wifi', 'dishwasher'], // удобство
       description: 'Есть газовая печка, стиральная машина, синие стены', // описание
       photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
     },
@@ -104,12 +107,11 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
   };
   makeMark(tags[i]); // создаем метки
 }
-
 activatePage(true); //
 for (i = 0; i < popupFeature.length; i++) {
   popupFeature[i].style.display = 'none'; // отключить
 }
-mapPinMain.addEventListener('mousedown', function () { //
+mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
   popupTitle.innerHTML = tags[0].offer.title; // Заголовок в карточке
   popupTextAddress.textContent = tags[0].offer.address; // адрес в карточке
@@ -130,19 +132,14 @@ mapPinMain.addEventListener('mousedown', function () { //
   }
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
-  do {
+  for (var index_1=0; index_1<tags[0].offer.features.length; index_1++) {
     for (i = 0; i < FEATURES.length; i++) {
-
-      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + FEATURES[i].length) === FEATURES[i]) { // сравниваем удобство
-        CONVENIENCE_ICOM[i].style.display = 'inline-block';
-        wordBeginnings += FEATURES[i].length;
-        i = 0; // начинаем заново сравнивать
-      }
-      while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
-        wordBeginnings++; // прибавляют индекс
-      }
+         if(FEATURES.offer.features[index_1]===FEATURES[i])
+           {
+              CONVENIENCE_ICOM[i].style.display='inline-block';
+           }
     }
-  } while (wordBeginnings < tags[0].offer.features.length); // если индекс обрабатываемого символа не меньше конечного, то
+  }
   popupDescription.textContent = tags[0].offer.description; // Написать описание
   popupPhoto.src = tags[0].offer.photos; // фото на карте
   popupAvatar.src = tags[0].author.avatar; // аватарка на карте
