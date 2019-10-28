@@ -20,14 +20,7 @@ var popupFeaturesContainer = popup.querySelector('.popup__features'); // спи�
 var popupDescription = popup.querySelector('.popup__description'); // описание
 var popupPhoto = popup.querySelector('.popup__photo'); // фото в карточке
 var popupAvatar = popup.querySelector('.popup__avatar'); // аватар
-var CONVENIENCE_ICOM = [ // удобство
-  popupFeaturesContainer.querySelector('.popup__feature--wifi'),
-  popupFeaturesContainer.querySelector('.popup__feature--dishwasher'),
-  popupFeaturesContainer.querySelector('.popup__feature--parking'),
-  popupFeaturesContainer.querySelector('.popup__feature--washer'),
-  popupFeaturesContainer.querySelector('.popup__feature--elevator'),
-  popupFeaturesContainer.querySelector('.popup__feature--conditioner')
-];
+var popupFeatures=popupFeaturesContainer.querySelectorAll('.popup__feature');
 var tags = []; // даные меток
 var adForm = document.querySelector('.ad-form'); // форма.
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
@@ -128,7 +121,7 @@ mapPinMain.addEventListener('mousedown', function () {
   for (var INDEX_1 = 0; INDEX_1 < tags[0].offer.features.length; INDEX_1++) {
     for (i = 0; i < FEATURES.length; i++) {
       if (tags[0].offer.features[INDEX_1] === FEATURES[i]) {
-        facilities.appendChild(CONVENIENCE_ICOM[i]);
+        facilities.appendChild(popupFeatures[i]);
       }
     }
   }
