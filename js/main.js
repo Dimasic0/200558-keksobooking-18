@@ -62,12 +62,12 @@ function activatePage(property) { // функция выдает состоян�
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
     map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
     map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
-    popupClone.style.display='block';
+    popupClone.style.display = 'block';
     mapPins.appendChild(popupClone); // вставляет карточку
   }
 }
 popupFeaturesContainer.innerHTML = null; // отключить
-popupClone.style.display='none';
+popupClone.style.display = 'none';
 mapPins.appendChild(popupClone); // вставляет клон
 for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
