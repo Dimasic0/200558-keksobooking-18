@@ -2,7 +2,7 @@
 
 var TAGS_NUMBER = 8; // колличество меток
 var ENTER_KEYCODE = 13; // Unicode клавише ENTER
-var MIN_ADDRESS = 130; // минималный адрес
+var MIN_ADDRESS = 135; // минималный адрес
 var MAX_ADDRESS = 630; // максимальный адрес
 var MIN_COORDINATE = 130; // минимальная координата
 var MAX_COORDINATE = 630; // максимальная координата
