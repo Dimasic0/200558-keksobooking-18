@@ -17,7 +17,6 @@ var popupType = popup.querySelector('.popup__type'); // тип в карточк
 var popupTextCapacity = popup.querySelector('.popup__text--capacity'); // комнаты
 var popupTextTime = popup.querySelector('.popup__text--time'); // время заезда и выезда
 var popupFeaturesContainer = popup.querySelector('.popup__features'); // список типов
-var popupFeatures = popupFeaturesContainer.querySelectorAll('.popup__feature'); // типы
 var popupDescription = popup.querySelector('.popup__description'); // описание
 var popupPhoto = popup.querySelector('.popup__photo'); // фото в карточке
 var popupAvatar = popup.querySelector('.popup__avatar'); // аватар
@@ -29,7 +28,6 @@ var CONVENIENCE_ICOM = [ // удобство
   popupFeaturesContainer.querySelector('.popup__feature--elevator'),
   popupFeaturesContainer.querySelector('.popup__feature--conditioner')
 ];
-//CONVENIENCE_ICOM[0].style.display = 'inline-block';
 var tags = []; // даные меток
 var adForm = document.querySelector('.ad-form'); // форма.
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
@@ -39,7 +37,8 @@ var map = document.querySelector('.map');
 var fieldsets = document.querySelectorAll('fieldset');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var fragment = document.createDocumentFragment();
-var facilities=document.createDocumentFragment();
+var facilities = document.createDocumentFragment();
+
 function getRandomInRange(min, max) { // генератор рандомных чисел
   return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
 }
@@ -52,12 +51,10 @@ function makeMark(tagOptions) {
 }
 
 function generateRandomAmenities() { // генератор удобств.
-  //var INDEX_1 = 0;
   var features = []; // переменная для рандомного числа
   for (var i = 0; i < FEATURES.length; i++) {
     if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
       features[features.length] = FEATURES[i]; // записывает удобство
-      //INDEX_1++;
     }
   }
   return features; // возвращает в строку удобств
@@ -84,7 +81,6 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
-
     offer: {
       title: 'Заголовок объявления', // заголовок
       address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS), // адрес
@@ -107,7 +103,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
   makeMark(tags[i]); // создаем метки
 }
 activatePage(true); //
-  popupFeaturesContainer.innerHTML  = null; // отключить
+popupFeaturesContainer.innerHTML = null; // отключить
 mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
   popupTitle.innerHTML = tags[0].offer.title; // Заголовок в карточке
@@ -132,7 +128,7 @@ mapPinMain.addEventListener('mousedown', function () {
   for (var INDEX_1 = 0; INDEX_1 < tags[0].offer.features.length; INDEX_1++) {
     for (i = 0; i < FEATURES.length; i++) {
       if (tags[0].offer.features[INDEX_1] === FEATURES[i]) {
-      facilities.appendChild(CONVENIENCE_ICOM[i]);
+        facilities.appendChild(CONVENIENCE_ICOM[i]);
       }
     }
   }
