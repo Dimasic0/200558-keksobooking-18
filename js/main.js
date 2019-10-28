@@ -10,13 +10,14 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var MIN_ROOMS = 2; // минимальное количество комнат
 var MAX_ROOMS = 7; // максимальное количество комнат
 var popup = document.querySelector('#card').content.querySelector('.popup'); // карточка
+var popupClone = popup.cloneNode(true); // клонирует карточку
 var popupTitle = popup.querySelector('.popup__title'); // заголовок в карточке
 var popupTextAddress = popup.querySelector('.popup__text--address'); // адрес
 var popupTextPrice = popup.querySelector('.popup__text--price'); // цена
 var popupType = popup.querySelector('.popup__type'); // тип в карточке
 var popupTextCapacity = popup.querySelector('.popup__text--capacity'); // комнаты
 var popupTextTime = popup.querySelector('.popup__text--time'); // время заезда и выезда
-var popupFeaturesContainer = popup.querySelector('.popup__features'); // список типов
+var popupFeaturesContainer = popupClone.querySelector('.popup__features'); // список типов
 var popupDescription = popup.querySelector('.popup__description'); // описание
 var popupPhoto = popup.querySelector('.popup__photo'); // фото в карточке
 var popupAvatar = popup.querySelector('.popup__avatar'); // аватар
@@ -61,12 +62,13 @@ function activatePage(property) { // функция выдает состоян�
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
     map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
     map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
-    mapPins.appendChild(popup); // вставляет карточку
+    popupClone.style.display='block';
+    mapPins.appendChild(popupClone); // вставляет карточку
   }
 }
-var popupClone = popup.cloneNode(true); // клонирует карточку
-popupClone.style.display = 'none'; // убирает карточку
-map.appendChild(popupClone); // вставляет клон
+popupFeaturesContainer.innerHTML = null; // отключить
+popupClone.style.display='none';
+mapPins.appendChild(popupClone); // вставляет клон
 for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
@@ -96,7 +98,6 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
   makeMark(tags[i]); // создаем метки
 }
 activatePage(true); //
-popupFeaturesContainer.innerHTML = null; // отключить
 mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
   popupTitle.innerHTML = tags[0].offer.title; // Заголовок в карточке
