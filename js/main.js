@@ -27,8 +27,9 @@ var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
-var fieldset = document.querySelectorAll('fieldset');
+var fieldset = [document.querySelector('#avatar'),document.querySelector('#title'),document.querySelector('#address'),document.querySelector('#type'),document.querySelector('#price'),document.querySelector('#timein'),document.querySelector('#timeout'),document.querySelector('#room_number'),document.querySelector('#capacity'),document.querySelector('.feature__checkbox'),document.querySelector('#images'),document.querySelector('#description'),document.querySelector('.ad-form__submit'),document.querySelector('.ad-form__reset')];
 var mapFiltersContainer = document.querySelector('.map__filters-container');
+var address=document.querySelector('#address');
 var fragment = document.createDocumentFragment();
 var facilities = document.createDocumentFragment();
 
@@ -58,6 +59,7 @@ function activatePage(property) { // функция выдает состоян�
     fieldset[i].disabled = property; // разрешает или запрещает изменять форму.
   }
   if (!property) { // если нужно активировать сайт то
+    address.disabled=true;
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
     map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
     map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
@@ -118,9 +120,9 @@ mapPinMain.addEventListener('mousedown', function () {
   }
   popupCloneTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupCloneTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
-  for (var index1 = 0; index1 < tags[0].offer.features.length; index1++) {
+  for (var j = 0; j < tags[0].offer.features.length; j++) {
     for (i = 0; i < FEATURES.length; i++) {
-      if (tags[0].offer.features[index1] === FEATURES[i]) {
+      if (tags[0].offer.features[j] === FEATURES[i]) {
         popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + FEATURES[i] + '"></li>');
       }
     }
