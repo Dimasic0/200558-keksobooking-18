@@ -27,9 +27,9 @@ var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
-var fieldset = [document.querySelector('#avatar'),document.querySelector('#title'),document.querySelector('#address'),document.querySelector('#type'),document.querySelector('#price'),document.querySelector('#timein'),document.querySelector('#timeout'),document.querySelector('#room_number'),document.querySelector('#capacity'),document.querySelector('.feature__checkbox'),document.querySelector('#images'),document.querySelector('#description'),document.querySelector('.ad-form__submit'),document.querySelector('.ad-form__reset')];
+var fieldset = [document.querySelector('#avatar'), document.querySelector('#title'), document.querySelector('#address'), document.querySelector('#type'), document.querySelector('#price'), document.querySelector('#timein'), document.querySelector('#timeout'), document.querySelector('#room_number'), document.querySelector('#capacity'), document.querySelector('#images'), document.querySelector('#description'), document.querySelector('.ad-form__submit'), document.querySelector('.ad-form__reset'), document.querySelector('#feature-wifi'), document.querySelector('#feature-dishwasher'), document.querySelector('#feature-parking'), document.querySelector('#feature-washer'), document.querySelector('#feature-elevator'), document.querySelector('#feature-conditioner')];
 var mapFiltersContainer = document.querySelector('.map__filters-container');
-var address=document.querySelector('#address');
+var address = document.querySelector('#address');
 var fragment = document.createDocumentFragment();
 var facilities = document.createDocumentFragment();
 
@@ -59,7 +59,7 @@ function activatePage(property) { // функция выдает состоян�
     fieldset[i].disabled = property; // разрешает или запрещает изменять форму.
   }
   if (!property) { // если нужно активировать сайт то
-    address.disabled=true;
+    address.disabled = true;
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
     map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
     map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
