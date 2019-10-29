@@ -11,16 +11,16 @@ var MIN_ROOMS = 2; // минимальное количество комнат
 var MAX_ROOMS = 7; // максимальное количество комнат
 var popup = document.querySelector('#card').content.querySelector('.popup'); // карточка
 var popupClone = popup.cloneNode(true); // клонирует карточку
-var popupTitle = popup.querySelector('.popup__title'); // заголовок в карточке
-var popupTextAddress = popup.querySelector('.popup__text--address'); // адрес
-var popupTextPrice = popup.querySelector('.popup__text--price'); // цена
-var popupType = popup.querySelector('.popup__type'); // тип в карточке
-var popupTextCapacity = popup.querySelector('.popup__text--capacity'); // комнаты
-var popupTextTime = popup.querySelector('.popup__text--time'); // время заезда и выезда
+var popupTitle = popupClone.querySelector('.popup__title'); // заголовок в карточке
+var popupTextAddress = popupClone.querySelector('.popup__text--address'); // адрес
+var popupTextPrice = popupClone.querySelector('.popup__text--price'); // цена
+var popupType = popupClone.querySelector('.popup__type'); // тип в карточке
+var popupTextCapacity = popupClone.querySelector('.popup__text--capacity'); // комнаты
+var popupTextTime = popupClone.querySelector('.popup__text--time'); // время заезда и выезда
 var popupFeaturesContainer = popupClone.querySelector('.popup__features'); // список типов
-var popupDescription = popup.querySelector('.popup__description'); // описание
-var popupPhoto = popup.querySelector('.popup__photo'); // фото в карточке
-var popupAvatar = popup.querySelector('.popup__avatar'); // аватар
+var popupDescription = popupClone.querySelector('.popup__description'); // описание
+var popupPhoto = popupClone.querySelector('.popup__photo'); // фото в карточке
+var popupAvatar = popupClone.querySelector('.popup__avatar'); // аватар
 var tags = []; // даные меток
 var adForm = document.querySelector('.ad-form'); // форма.
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
@@ -118,9 +118,9 @@ mapPinMain.addEventListener('mousedown', function () {
   }
   popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
   popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
-  for (var INDEX_1 = 0; INDEX_1 < tags[0].offer.features.length; INDEX_1++) {
+  for (var index1 = 0; index1 < tags[0].offer.features.length; index1++) {
     for (i = 0; i < FEATURES.length; i++) {
-      if (tags[0].offer.features[INDEX_1] === FEATURES[i]) {
+      if (tags[0].offer.features[index1] === FEATURES[i]) {
         popupFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + FEATURES[i] + '"></li>');
       }
     }
