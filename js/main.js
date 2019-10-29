@@ -28,7 +28,7 @@ var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
-var fieldsets = document.querySelectorAll('fieldset');
+var fieldset = document.querySelectorAll('fieldset');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var fragment = document.createDocumentFragment();
 var facilities = document.createDocumentFragment();
@@ -55,8 +55,8 @@ function generateRandomAmenities() { // генератор удобств.
 }
 
 function activatePage(property) { // функция выдает состояние сайта.
-  for (i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].disabled = property; // разрешает или запрещает изменять форму.
+  for (i = 0; i < fieldset.length; i++) {
+    fieldset[i].disabled = property; // разрешает или запрещает изменять форму.
   }
   if (!property) { // если нужно активировать сайт то
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
@@ -122,7 +122,7 @@ mapPinMain.addEventListener('mousedown', function () {
   for (var INDEX_1 = 0; INDEX_1 < tags[0].offer.features.length; INDEX_1++) {
     for (i = 0; i < FEATURES.length; i++) {
       if (tags[0].offer.features[INDEX_1] === FEATURES[i]) {
-        facilities.appendChild(popupFeatures[i]);
+        popupFeaturesContainer.insertAdjacentHTML('beforeEnd','<li class="popup__feature popup__feature--'+FEATURES[i]+'"></li>');
       }
     }
   }
