@@ -55,8 +55,8 @@ function generateRandomAmenities() { // генератор удобств.
 }
 
 function activatePage(property) { // функция выдает состояние сайта.
-  for (i = 0; i < fieldset.length; i++) {
-    fieldset[i].disabled = property; // разрешает или запрещает изменять форму.
+  for (i = 0; i < adFormFieldsets.length; i++) {
+    adFormFieldsets[i].disabled = property; // разрешает или запрещает изменять форму.
   }
   if (!property) { // если нужно активировать сайт то
     address.disabled = true;
@@ -101,9 +101,9 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
 activatePage(true); //
 mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
-  var tagsOffer=tags[0].offer;
+  var tagsOffer = tags[0].offer;
   popupCloneTitle.innerHTML = tagsOffer.title; // Заголовок в карточке
-  popupCloneTextAddress.textContent = tagsOffer.offer.address; // адрес в карточке
+  popupCloneTextAddress.textContent = tagsOffer.address; // адрес в карточке
   popupCloneTextPrice.textContent = tagsOffer.price + '₽/ночь'; // цена в карточке
   switch (tagsOffer.type) { // тип жилья
     case 'flat': // если жилью квартира то
