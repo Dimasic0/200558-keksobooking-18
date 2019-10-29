@@ -27,7 +27,7 @@ var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
-var fieldset = [document.querySelector('#avatar'), document.querySelector('#title'), document.querySelector('#address'), document.querySelector('#type'), document.querySelector('#price'), document.querySelector('#timein'), document.querySelector('#timeout'), document.querySelector('#room_number'), document.querySelector('#capacity'), document.querySelector('#images'), document.querySelector('#description'), document.querySelector('.ad-form__submit'), document.querySelector('.ad-form__reset'), document.querySelector('#feature-wifi'), document.querySelector('#feature-dishwasher'), document.querySelector('#feature-parking'), document.querySelector('#feature-washer'), document.querySelector('#feature-elevator'), document.querySelector('#feature-conditioner')];
+var adFormFieldsets = adForm.querySelectorAll('fieldset');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var address = document.querySelector('#address');
 var fragment = document.createDocumentFragment();
@@ -101,10 +101,11 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
 activatePage(true); //
 mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
-  popupCloneTitle.innerHTML = tags[0].offer.title; // Заголовок в карточке
-  popupCloneTextAddress.textContent = tags[0].offer.address; // адрес в карточке
-  popupCloneTextPrice.textContent = tags[0].offer.price + '₽/ночь'; // цена в карточке
-  switch (tags[0].offer.type) { // тип жилья
+  var tagsOffer=tags[0].offer;
+  popupCloneTitle.innerHTML = tagsOffer.title; // Заголовок в карточке
+  popupCloneTextAddress.textContent = tagsOffer.offer.address; // адрес в карточке
+  popupCloneTextPrice.textContent = tagsOffer.price + '₽/ночь'; // цена в карточке
+  switch (tagsOffer.type) { // тип жилья
     case 'flat': // если жилью квартира то
       popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
       break;
@@ -118,19 +119,19 @@ mapPinMain.addEventListener('mousedown', function () {
       popupCloneType.textContent = 'Дворец'; // Выводим слово <дворец>
       break;
   }
-  popupCloneTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
-  popupCloneTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout; // врема заезда и выезда
+  popupCloneTextCapacity.textContent = tagsOffer.rooms + ' комнаты для ' + tagsOffer.guests + ' гостей';
+  popupCloneTextTime.textContent = 'Заезд после ' + tagsOffer.checkin + ' выезд до ' + tagsOffer.checkout; // врема заезда и выезда
   for (var j = 0; j < tags[0].offer.features.length; j++) {
     for (i = 0; i < FEATURES.length; i++) {
-      if (tags[0].offer.features[j] === FEATURES[i]) {
+      if (tagsOffer.features[j] === FEATURES[i]) {
         popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + FEATURES[i] + '"></li>');
       }
     }
   }
   popupCloneFeaturesContainer.appendChild(facilities);
-  popupCloneDescription.textContent = tags[0].offer.description; // Написать описание
-  popupClonePhoto.src = tags[0].offer.photos; // фото на карте
-  popupCloneAvatar.src = tags[0].author.avatar; // аватарка на карте
+  popupCloneDescription.textContent = tagsOffer.description; // Написать описание
+  popupClonePhoto.src = tagsOffer.photos; // фото на карте
+  popupCloneAvatar.src = tagsOffer.avatar; // аватарка на карте
 });
 
 function onMapPinMainPress(evt) {
