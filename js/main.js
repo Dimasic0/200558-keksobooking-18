@@ -25,12 +25,14 @@ var popupClonePhoto = popupClone.querySelector('.popup__photo'); // фото в 
 var popupCloneAvatar = popupClone.querySelector('.popup__avatar'); // аватар
 var tags = []; // даные меток
 var adForm = document.querySelector('.ad-form'); // форма.
+var propertyTypes = ['flat', 'bungalo', 'house', 'palace'];
+var minimumPrices = [1000, 0, 5000, 10000];
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
 var map = document.querySelector('.map');
+var headers = ['Квартира в центре Москвы', 'Квартира на улице Севастопольской', 'Квартира на улице Бабушкиной', 'Дом на улице Севастопольской', 'Дом на улице Гаврирова ', 'Квартира на улице Яблоновской', 'Квартира на улице Рашпилевской', 'Квартира на улице Белозёрной'];
 var adFormFieldsets = adForm.querySelectorAll('fieldset');
-var capacity = document.querySelector('#capacity');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var address = document.querySelector('#address');
 var adFormSubmit = document.querySelector('.ad-form__submit');
@@ -39,32 +41,38 @@ var facilities = document.createDocumentFragment();
 var capacity = document.querySelector('#capacity');
 var roomNumber = document.querySelector('#room_number');
 var timein = document.querySelector('#timein');
+var description = ['Есть телевизор, газовая плита, стиральная машина.', 'Есть диван, мебельная стенка, микроволновая печь.', 'Есть телевизор, кровать, шкаф для одежды', 'Есть кухонный гарнитур, холодильник, электрическая плита.', 'Есть кровать, тумба, микроволновая печь.', 'Есть стиральная машина, телевизор', 'Есть диван, шкаф для одежды', 'Есть холодильник, микроволновая печь'];
+var timeArrivals = [12, 13, 14, 12, 13, 14, 12, 13];
 var timeout = document.querySelector('#timeout');
 var mapFilter = document.querySelector('.map__filter');
-var mapFilterAny=mapFilter.querySelector('option[value="any"]');
-var mapFilterPalace=mapFilter.querySelector('option[value="palace"]');
-var mapFilterFlat=mapFilter.querySelector('option[value="flat"]');
-var mapFilterhouse=mapFilter.querySelector('option[value="house"]');
-var mapFilterbungalo=mapFilter.querySelector('option[value="bungalo"]');
-var activeSite=false;
+var mapFilterAny = mapFilter.querySelector('option[value="any"]');
+var mapFilterPalace = mapFilter.querySelector('option[value="palace"]');
+var mapFilterFlat = mapFilter.querySelector('option[value="flat"]');
+var mapFilterhouse = mapFilter.querySelector('option[value="house"]');
+var mapFilterbungalo = mapFilter.querySelector('option[value="bungalo"]');
+var tagNumber;
+var minimumPrice = 0;
+
 function getRandomInRange(min, max) { // генератор рандомных чисел
   return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
 }
 
 function makeMark(tagOptions) {
   var label = mapPin.cloneNode(true);
-  label.dataset.index=i+1;
+  label.dataset.index = i + 1;
   label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
   label.querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
-  label.querySelector('img').dataset.index=i+1;
+  label.querySelector('img').dataset.index = i + 1;
   fragment.appendChild(label); // вставляем метку в
 }
 
 function generateRandomAmenities() { // генератор удобств.
   var features = []; // переменная для рандомного числа
+  var t = 0;
   for (var i = 0; i < FEATURES.length; i++) {
     if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
-      features[features.length] = FEATURES[i]; // записывает удобство
+      features[t] = FEATURES[i]; // записывает удобство
+      t++;
     }
   }
   return features; // возвращает в строку удобств
@@ -75,15 +83,6 @@ function activatePage(property) { // функция выдает состоян�
     adFormFieldsets[i].disabled = property; // разрешает или запрещает изменять форму.
   }
   if (!property) { // если нужно активировать сайт то
-    function onDocumentPressedEnter(evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    popupClone.style.display = 'block';
-  }
-    if (evt.keyCode === ESC_KEYCODE) {
-    popupClone.style.display = 'none';
-  }
-}
-document.onkeydown = onDocumentPressedEnter;
     address.disabled = true;
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
     map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
@@ -92,27 +91,29 @@ document.onkeydown = onDocumentPressedEnter;
     mapPins.appendChild(popupClone); // вставляет карточку
   }
 }
+address.value = Number.parseInt(mapPinMain.style.left + mapPinMain.style.width / 2) + ' ' + Number.parseInt(mapPinMain.style.top + mapPinMain.style.height);
 popupCloneFeaturesContainer.innerHTML = null; // отключить
 popupClone.style.display = 'none';
 mapPins.appendChild(popupClone); // вставляет клон
 for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
-  tags[i] = {// данные о метке
+  var checkTime = timeArrivals[getRandomInRange(0, 7)];
+  tags[i] = { // данные о метке
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
     offer: {
-      title: 'Заголовок объявления', // заголовок
+      title: headers[i], // заголовок
       address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS), // адрес
-      price: 1000, // цена
-      type: 'palace', // тип
+      price: 100, // цена
+      type: propertyTypes[getRandomInRange(0, propertyTypes.length - 1)], // тип
       rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
       guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
-      checkin: '12:00', // время заезда
-      checkout: '12:00', // время выезда
+      checkin: checkTime, // время заезда
+      checkout: checkTime, // время выезда
       features: generateRandomAmenities(), // удобство
-      description: 'Есть газовая печка, стиральная машина, синие стены', // описание
+      description: description[getRandomInRange(0, 7)], // описание
       photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
     },
 
@@ -121,14 +122,29 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
       y: randomLocationY //  координата у
     }
   };
+  for (var k = 0; k < propertyTypes.length; k++) {
+    if (tags[i].offer.type === FEATURES[k]) {
+      minimumPrice = minimumPrices[k];
+    }
+  }
+  tags[i].offer.price = getRandomInRange(minimumPrice, 1000000);
   makeMark(tags[i]); // создаем метки
 }
 activatePage(true); //
 mapPinMain.onkeydown = function (evt) {
-  if(evt.keyCode===ENTER_KEYCODE)
+  if (evt.keyCode === ENTER_KEYCODE) {
     activatePage(false);
-}
-mapPinMain.addEventListener('mousedown', function () {
+    document.onkeydown = function (pressedKey) {
+      if (pressedKey.keyCode === ENTER_KEYCODE) {
+        popupClone.style.display = 'block';
+      }
+      if (pressedKey.keyCode === ESC_KEYCODE) {
+        popupClone.style.display = 'none';
+      }
+    };
+  }
+};
+/*mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
   popupCloneFeaturesContainer.innerHTML = null;
   var tagsOffer = tags[0].offer;
@@ -162,7 +178,7 @@ mapPinMain.addEventListener('mousedown', function () {
   popupCloneDescription.textContent = tagsOffer.description; // Написать описание
   popupClonePhoto.src = tagsOffer.photos; // фото на карте
   popupCloneAvatar.src = tagsOffer.avatar; // аватарка на карте
-});
+});*/
 
 function onMapPinMainPress(evt) {
   if (evt.keyCode === ENTER_KEYCODE) { // если нажал на enter
@@ -171,45 +187,42 @@ function onMapPinMainPress(evt) {
 }
 
 type.onchange = function (evt) {
-  mapFilterAny.selected=false;
-  mapFilterPalace.selected=false;
-  mapFilterFlat.selected=false;
-  mapFilterhouse.selected=false;
-  mapFilterbungalo.selected=false;
+  mapFilterAny.selected = false;
+  mapFilterPalace.selected = false;
+  mapFilterFlat.selected = false;
+  mapFilterhouse.selected = false;
+  mapFilterbungalo.selected = false;
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
-      mapFilterAny.selected=true;
+      mapFilterAny.selected = true;
       break;
     case 'palace':
       price.min = 10000;
-      mapFilterPalace.selected=true;
+      mapFilterPalace.selected = true;
       break;
     case 'flat':
       price.min = 1000;
-      mapFilterFlat.selected=true;
+      mapFilterFlat.selected = true;
       break;
     case 'house':
       price.min = 5000;
-      mapFilterhouse.selected=true;
+      mapFilterhouse.selected = true;
       break;
     case 'bungalo':
       price.min = 0;
-      mapFilterbungalo.selected=true;
+      mapFilterbungalo.selected = true;
       break;
   }
-}
+};
 
 
 timein.onchange = function (evt) {
-   console.log(evt.target.value);
-  timeout.querySelector('option[value="' + evt.target.value +
-'"]').selected=true;
-}
-timeout.onchange = function (evt)
-{
-  timein.querySelector('option[value="' + evt.target.value + '"]').selected=true;
-}
+  timeout.querySelector('option[value="' + evt.target.value + '"]').selected = true;
+};
+timeout.onchange = function (evt) {
+  timein.querySelector('option[value="' + evt.target.value + '"]').selected = true;
+};
 
 mapPinMain.addEventListener('keydown', onMapPinMainPress); // если нажимаю enter
 adFormSubmit.onmousedown = function () {
@@ -222,64 +235,52 @@ adFormSubmit.onmousedown = function () {
   } else {
     capacity.setCustomValidity('');
   }
-}
-var popupTitle = popupClone.querySelector('.popup__title');
-var popupTextAddress = popupClone.querySelector('.popup__text--address'),
-  popupTextPrice = popupClone.querySelector('.popup__text--price'),
-  popupType = popupClone.querySelector('.popup__type'),
-  popupTextCapacity = popup.querySelector('.popup__text--capacity'),
-  popupTextTime = popupClone.querySelector('.popup__text--time'),
-  popupFeatures = popupClone.querySelector('.popup__features'),
-  popupFeature = popupFeatures.querySelectorAll('.popup__feature'),
-  popupDescription = popupClone.querySelector('.popup__description'),
-  popupPhoto = popupClone.querySelector('.popup__photo'),
-  popupAvatar = popupClone.querySelector('.popup__avatar');
+};
+var popupFeatures = popupClone.querySelector('.popup__features');
 
 map.onmousedown = function (evt) {
-  if ((evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && activeSite===true)  {
-    popup.style.display = 'block';
-    document.addEventListener('keydown', onDocumentPressedEsc);
-    popupTitle.innerHTML = tags[0].offer.title;
-  popupTextAddress.textContent = tags[0].offer.address;
-  popupTextPrice.textContent = tags[0].offer.price + '₽/ночь';
-  switch (tags[0].offer.type) {
-    case 'flat':
-      popupType.textContent = 'Квартира';
-      break;
-    case 'bungalo':
-      popupType.textContent = 'Бунгало';
-      break;
-    case 'house':
-      popupType.textContent = 'Дом';
-    case 'palace':
-      popupType.textContent = 'Дворец';
-      break;
-  }
-  popupTextCapacity.textContent = tags[0].offer.rooms + ' комнаты для ' + tags[0].offer.guests + ' гостей';
-  popupTextTime.textContent = 'Заезд после ' + tags[0].offer.checkin + ' выезд до ' + tags[0].offer.checkout;
-  do {
-    for (i = 0; i < convenienceName.length; i++) {
-
-      if (tags[0].offer.features.substring(wordBeginnings, wordBeginnings + convenienceName[i].length) === convenienceName[i]) {
-        convenienceIcon[i].style.display = 'inline-block';
-        wordBeginnings += convenienceName[i].length;
-        i = 0;
-      }
-      while (tags[0].offer.features.charAt(wordBeginnings) === ' ') {
-        wordBeginnings++;
+  if (evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') {
+    activatePage(false);
+    tagNumber = evt.target.dataset.index;
+    popupCloneFeaturesContainer.innerHTML = null;
+    // var tagsOffer = tags[tagNumber - 1].offer;
+    popupCloneTitle.innerHTML = tags[tagNumber - 1].offer.title; // Заголовок в карточке
+    popupCloneTextAddress.textContent = tags[tagNumber - 1].offer.address; // адрес в карточке
+    popupCloneTextPrice.textContent = tags[tagNumber - 1].offer.price + '₽/ночь'; // цена в карточке
+    switch (tags[tagNumber - 1].offer.type) { // тип жилья
+      case 'flat': // если жилью квартира то
+        popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
+        break;
+      case 'bungalo': // если жильё Бунгало то
+        popupCloneType.textContent = 'Бунгало'; // выводим в метку слово <Бунгало>
+        break;
+      case 'house': // если жилью дом то
+        popupCloneType.textContent = 'Дом'; // выводим слово <Дом>
+        break;
+      case 'palace':
+        popupCloneType.textContent = 'Дворец'; // Выводим слово <дворец>
+        break;
+    }
+    popupCloneTextCapacity.textContent = tags[tagNumber - 1].offer.rooms + ' комнаты для ' + tags[tagNumber - 1].offer.guests + ' гостей';
+    popupCloneTextTime.textContent = 'Заезд после ' + tags[tagNumber - 1].offer.checkin + ' выезд до ' + tags[tagNumber - 1].offer.checkout; // врема заезда и выезда
+    for (var j = 0; j < tags[0].offer.features.length; j++) {
+      for (i = 0; i < FEATURES.length; i++) {
+        if (tags[tagNumber - 1].offer.features[j] === FEATURES[i]) {
+          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + FEATURES[i] + '"></li>');
+        }
       }
     }
-  } while (wordBeginnings < convenienceName[0].length)
-  popupDescription.textContent = tags[0].offer.description;
-  popupPhoto.src = tags[0].offer.photos;
-  popupAvatar.src = tags[0].author.avatar;
+    popupCloneFeaturesContainer.appendChild(facilities);
+    popupCloneDescription.textContent = tags[tagNumber - 1].offer.description; // Написать описание
+    popupClonePhoto.src = tags[tagNumber - 1].author.avatar; // фото на карте
+    popupCloneAvatar.src = tags[tagNumber - 1].author.avatar; // аватарка на карте
   }
-}
+};
 mapPinMain.onmousedown = function () {
   activatePage(false);
-}
+};
 
-mapFilter.onchange = function onMapFilterChange (evt) {
+mapFilter.onchange = function onMapFilterChange(evt) {
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
@@ -297,4 +298,4 @@ mapFilter.onchange = function onMapFilterChange (evt) {
       price.min = 0;
       break;
   }
-}
+};
