@@ -87,7 +87,6 @@ function activatePage(property) { // функция выдает состоян�
     adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
     map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
     map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
-    popupClone.style.display = 'block';
     mapPins.appendChild(popupClone); // вставляет карточку
   }
 }
@@ -130,55 +129,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
   tags[i].offer.price = getRandomInRange(minimumPrice, 1000000);
   makeMark(tags[i]); // создаем метки
 }
-activatePage(true); //
-mapPinMain.onkeydown = function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    activatePage(false);
-    document.onkeydown = function (pressedKey) {
-      if (pressedKey.keyCode === ENTER_KEYCODE) {
-        popupClone.style.display = 'block';
-      }
-      if (pressedKey.keyCode === ESC_KEYCODE) {
-        popupClone.style.display = 'none';
-      }
-    };
-  }
-};
-/*mapPinMain.addEventListener('mousedown', function () {
-  activatePage(false);
-  popupCloneFeaturesContainer.innerHTML = null;
-  var tagsOffer = tags[0].offer;
-  popupCloneTitle.innerHTML = tagsOffer.title; // Заголовок в карточке
-  popupCloneTextAddress.textContent = tagsOffer.address; // адрес в карточке
-  popupCloneTextPrice.textContent = tagsOffer.price + '₽/ночь'; // цена в карточке
-  switch (tagsOffer.type) { // тип жилья
-    case 'flat': // если жилью квартира то
-      popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
-      break;
-    case 'bungalo': // если жильё Бунгало то
-      popupCloneType.textContent = 'Бунгало'; // выводим в метку слово <Бунгало>
-      break;
-    case 'house': // если жилью дом то
-      popupCloneType.textContent = 'Дом'; // выводим слово <Дом>
-      break;
-    case 'palace':
-      popupCloneType.textContent = 'Дворец'; // Выводим слово <дворец>
-      break;
-  }
-  popupCloneTextCapacity.textContent = tagsOffer.rooms + ' комнаты для ' + tagsOffer.guests + ' гостей';
-  popupCloneTextTime.textContent = 'Заезд после ' + tagsOffer.checkin + ' выезд до ' + tagsOffer.checkout; // врема заезда и выезда
-  for (var j = 0; j < tags[0].offer.features.length; j++) {
-    for (i = 0; i < FEATURES.length; i++) {
-      if (tagsOffer.features[j] === FEATURES[i]) {
-        popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + FEATURES[i] + '"></li>');
-      }
-    }
-  }
-  popupCloneFeaturesContainer.appendChild(facilities);
-  popupCloneDescription.textContent = tagsOffer.description; // Написать описание
-  popupClonePhoto.src = tagsOffer.photos; // фото на карте
-  popupCloneAvatar.src = tagsOffer.avatar; // аватарка на карте
-});*/
+activatePage(true);
 
 function onMapPinMainPress(evt) {
   if (evt.keyCode === ENTER_KEYCODE) { // если нажал на enter
@@ -223,7 +174,16 @@ timein.onchange = function (evt) {
 timeout.onchange = function (evt) {
   timein.querySelector('option[value="' + evt.target.value + '"]').selected = true;
 };
-
+document.onclick = function () {
+  document.onkeydown = function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      popupClone.style.display = 'block';
+    }
+    if (evt.keyCode === ESC_KEYCODE) {
+      popupClone.style.display = 'none';
+    }
+  };
+};
 mapPinMain.addEventListener('keydown', onMapPinMainPress); // если нажимаю enter
 adFormSubmit.onmousedown = function () {
   if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
@@ -239,11 +199,11 @@ adFormSubmit.onmousedown = function () {
 var popupFeatures = popupClone.querySelector('.popup__features');
 
 map.onmousedown = function (evt) {
-  if (evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') {
+  tagNumber = evt.target.dataset.index;
+  if ((evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && tagNumber > 0) {
     activatePage(false);
-    tagNumber = evt.target.dataset.index;
+    popupClone.style.display = 'block';
     popupCloneFeaturesContainer.innerHTML = null;
-    // var tagsOffer = tags[tagNumber - 1].offer;
     popupCloneTitle.innerHTML = tags[tagNumber - 1].offer.title; // Заголовок в карточке
     popupCloneTextAddress.textContent = tags[tagNumber - 1].offer.address; // адрес в карточке
     popupCloneTextPrice.textContent = tags[tagNumber - 1].offer.price + '₽/ночь'; // цена в карточке
