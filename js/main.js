@@ -143,6 +143,7 @@ type.onchange = function (evt) {
   mapFilterFlat.selected = false;
   mapFilterhouse.selected = false;
   mapFilterbungalo.selected = false;
+  console.log(price);
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
