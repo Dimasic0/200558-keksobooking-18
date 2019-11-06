@@ -52,7 +52,7 @@ var mapFilterhouse = mapFilter.querySelector('option[value="house"]');
 var mapFilterbungalo = mapFilter.querySelector('option[value="bungalo"]');
 var tagNumber;
 var minimumPrice = 0;
-
+var price = document.querySelector('#price');
 function getRandomInRange(min, max) { // генератор рандомных чисел
   return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
 }
@@ -90,7 +90,8 @@ function activatePage(property) { // функция выдает состоян�
     mapPins.appendChild(popupClone); // вставляет карточку
   }
 }
-address.value = Number.parseInt(mapPinMain.style.left + mapPinMain.style.width / 2) + ' ' + Number.parseInt(mapPinMain.style.top + mapPinMain.style.height);
+
+address.value = Number.parseInt(mapPinMain.style.left + mapPinMain.style.width / 2, 10) + ' ' + Number.parseInt(mapPinMain.style.top + mapPinMain.style.height, 10);
 popupCloneFeaturesContainer.innerHTML = null; // отключить
 popupClone.style.display = 'none';
 mapPins.appendChild(popupClone); // вставляет клон
@@ -98,7 +99,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
   var checkTime = timeArrivals[getRandomInRange(0, 7)];
-  tags[i] = { // данные о метке
+  tags[i] = {
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
@@ -137,13 +138,13 @@ function onMapPinMainPress(evt) {
   }
 }
 
-type.onchange = function (evt) {
+type.addEventListener('change', function (evt) {
   mapFilterAny.selected = false;
   mapFilterPalace.selected = false;
   mapFilterFlat.selected = false;
   mapFilterhouse.selected = false;
   mapFilterbungalo.selected = false;
-  console.log(price);
+
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
@@ -166,16 +167,16 @@ type.onchange = function (evt) {
       mapFilterbungalo.selected = true;
       break;
   }
-};
+});
 
 
-timein.onchange = function (evt) {
+timein.addEventListener('change', function (evt) {
   timeout.querySelector('option[value="' + evt.target.value + '"]').selected = true;
-};
-timeout.onchange = function (evt) {
+});
+timeout.addEventListener('change', function (evt) {
   timein.querySelector('option[value="' + evt.target.value + '"]').selected = true;
-};
-document.onclick = function () {
+});
+document.addEventListener('click', function () {
   document.onkeydown = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       popupClone.style.display = 'block';
@@ -184,7 +185,7 @@ document.onclick = function () {
       popupClone.style.display = 'none';
     }
   };
-};
+});
 mapPinMain.addEventListener('keydown', onMapPinMainPress); // если нажимаю enter
 adFormSubmit.onmousedown = function () {
   if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
@@ -197,9 +198,8 @@ adFormSubmit.onmousedown = function () {
     capacity.setCustomValidity('');
   }
 };
-var popupFeatures = popupClone.querySelector('.popup__features');
 
-map.onmousedown = function (evt) {
+map.addEventListener('mousedown', function (evt) {
   tagNumber = evt.target.dataset.index;
   if ((evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && tagNumber > 0) {
     activatePage(false);
@@ -236,12 +236,12 @@ map.onmousedown = function (evt) {
     popupClonePhoto.src = tags[tagNumber - 1].author.avatar; // фото на карте
     popupCloneAvatar.src = tags[tagNumber - 1].author.avatar; // аватарка на карте
   }
-};
-mapPinMain.onmousedown = function () {
+});
+mapPinMain.addEventListener('mousedown', function () {
   activatePage(false);
-};
+});
 
-mapFilter.onchange = function onMapFilterChange(evt) {
+mapFilter.addEventListener('change', function onMapFilterChange(evt) {
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
@@ -259,4 +259,4 @@ mapFilter.onchange = function onMapFilterChange(evt) {
       price.min = 0;
       break;
   }
-};
+});
