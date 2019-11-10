@@ -95,6 +95,7 @@ address.value = Number.parseInt(mapPinMain.style.left + mapPinMain.style.width /
 popupCloneFeaturesContainer.innerHTML = null; // отключить
 popupClone.style.display = 'none';
 mapPins.appendChild(popupClone); // вставляет клон
+var popupClose = document.querySelector('.popup__close');
 for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
@@ -105,7 +106,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
     },
     offer: {
       title: headers[i], // заголовок
-      address: getRandomInRange(MIN_ADDRESS, MAX_ADDRESS) + ',' + getRandomInRange(MIN_ADDRESS, MAX_ADDRESS), // адрес
+      address: randomLocationX + ',' + randomLocationY , // адрес
       price: 100, // цена
       type: propertyTypes[getRandomInRange(0, propertyTypes.length - 1)], // тип
       rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
@@ -176,18 +177,28 @@ timein.addEventListener('change', function (evt) {
 timeout.addEventListener('change', function (evt) {
   timein.querySelector('option[value="' + evt.target.value + '"]').selected = true;
 });
-document.addEventListener('click', function () {
-  document.onkeydown = function (evt) {
+  document.addEventListener('keydown', onDocumentPressedEnter);
+function onDocumentPressedEnter(evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       popupClone.style.display = 'block';
     }
+  }
+document.addEventListener('keydown', function onDocumentPressedEsc (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       popupClone.style.display = 'none';
     }
-  };
 });
 mapPinMain.addEventListener('keydown', onMapPinMainPress); // если нажимаю enter
-adFormSubmit.onmousedown = function () {
+popupClose.addEventListener('keydown', function (evt) {
+    console.log('ok');
+    document.removeEventListener('keydown', onDocumentPressedEnter);
+    if(evt.keyCode===13)
+    {
+        console.log(popupClone);
+        popupClone.style.display='none';
+    }
+});
+adFormSubmit.addEventListener('mousedown',  function () {
   if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else if (roomNumber.value !== '100') {
@@ -197,7 +208,7 @@ adFormSubmit.onmousedown = function () {
   } else {
     capacity.setCustomValidity('');
   }
-};
+});
 
 map.addEventListener('mousedown', function (evt) {
   tagNumber = evt.target.dataset.index;
