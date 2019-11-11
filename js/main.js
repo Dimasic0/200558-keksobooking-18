@@ -57,6 +57,8 @@ var price = document.querySelector('#price');
 function getRandomInRange(min, max) { // генератор рандомных чисел
     return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
 }
+var string = 'Петя пошел в лес';
+console.log(string.substring(0, 6));
 
 function makeMark(tagOptions) {
     var label = mapPin.cloneNode(true);
