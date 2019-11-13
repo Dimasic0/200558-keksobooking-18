@@ -266,5 +266,5 @@ mapFilter.addEventListener('change', function onMapFilterChange(evt) {
     case 'bungalo':
       price.min = 0;
       break;
-  } 
+  }
 });
