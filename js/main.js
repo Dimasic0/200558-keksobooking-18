@@ -122,25 +122,24 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
   var checkTime = timeArrivals[getRandomInRange(0, 7)];
   tags[i] = {
     author: {
-	  avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
+      avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
     offer: {
-	  title: headers[i], // заголовок
-	  address: randomLocationX + ',' + randomLocationY, // адрес
-	  price: 100, // цена
-	  type: propertyTypes[getRandomInRange(0, propertyTypes.length - 1)], // тип
-	  rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
-	  guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
-	  checkin: checkTime, // время заезда
-	  checkout: checkTime, // время выезда
-	  features: generateRandomFeatures(), // удобство
-	  description: description[getRandomInRange(0, 7)], // описание
-	  photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
-	  },
-
+      title: headers[i], // заголовок
+      address: randomLocationX + ',' + randomLocationY, // адрес
+      price: 100, // цена
+      type: propertyTypes[getRandomInRange(0, propertyTypes.length - 1)], // тип
+      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
+      guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
+      checkin: checkTime, // время заезда
+      checkout: checkTime, // время выезда
+      features: generateRandomFeatures(), // удобство
+      description: description[getRandomInRange(0, 7)], // описание
+      photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
+    },
     location: {
-	  x: randomLocationX, // координата х
-	  y: randomLocationY //  координата у
+      x: randomLocationX, // координата х
+      y: randomLocationY //  координата у
     }
   };
   for (var k = 0; k < propertyTypes.length; k++) {
@@ -163,19 +162,19 @@ type.addEventListener('change', function (evt) {
   switch (evt.target.value) {
     case 'any':
       price.min = 0;
-	  break;
+      break;
     case 'palace':
       price.min = 10000;
-	  break;
+      break;
     case 'flat':
       price.min = 1000;
-	  break;
+      break;
     case 'house':
       price.min = 5000;
       break;
     case 'bungalo':
       price.min = 0;
-	  break;
+      break;
   }
 });
 
@@ -224,56 +223,56 @@ map.addEventListener('mousedown', function (evt) {
     popupCloneFeaturesContainer.innerHTML = null;
     popupCloneTitle.innerHTML = tags[tagNumber - 1].offer.title; // Заголовок в карточке
     popupCloneTextAddress.textContent = tags[tagNumber - 1].offer.address; // адрес в карточке
-	popupCloneTextPrice.textContent = tags[tagNumber - 1].offer.price + '₽/ночь'; // цена в карточке
-	switch (tags[tagNumber - 1].offer.type) { // тип жилья
-	  case 'flat': // если жилью квартира то
-	    popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
-		break;
-	  case 'bungalo': // если жильё Бунгало то
-	    popupCloneType.textContent = 'Бунгало'; // выводим в метку слово <Бунгало>
-		break;
-	  case 'house': // если жилью дом то
-	    popupCloneType.textContent = 'Дом'; // выводим слово <Дом>
-	    break;
-	  case 'palace':
-	    popupCloneType.textContent = 'Дворец'; // Выводим слово <дворец>
-		break;
+    popupCloneTextPrice.textContent = tags[tagNumber - 1].offer.price + '₽/ночь'; // цена в карточке
+    switch (tags[tagNumber - 1].offer.type) { // тип жилья
+      case 'flat': // если жилью квартира то
+        popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
+        break;
+      case 'bungalo': // если жильё Бунгало то
+        popupCloneType.textContent = 'Бунгало'; // выводим в метку слово <Бунгало>
+        break;
+      case 'house': // если жилью дом то
+        popupCloneType.textContent = 'Дом'; // выводим слово <Дом>
+        break;
+      case 'palace':
+        popupCloneType.textContent = 'Дворец'; // Выводим слово <дворец>
+        break;
     }
     popupCloneTextCapacity.textContent = tags[tagNumber - 1].offer.rooms + ' комнаты для ' + tags[tagNumber - 1].offer.guests + ' гостей';
     popupCloneTextTime.textContent = 'Заезд после ' + tags[tagNumber - 1].offer.checkin + ' выезд до ' + tags[tagNumber - 1].offer.checkout; // врема заезда и выезда
     for (var j = 0; j < tags[0].offer.features.length; j++) {
       for (i = 0; i < features.length; i++) {
-	    if (tags[tagNumber - 1].offer.features[j] === features[i]) {
-		  popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[i] + '"></li>');
-		}
-	  }
-	}
-	popupCloneFeaturesContainer.appendChild(features);
-	popupCloneDescription.textContent = tags[tagNumber - 1].offer.description; // Написать описание
-	popupClonePhoto.src = tags[tagNumber - 1].author.avatar; // фото на карте
-	popupCloneAvatar.src = tags[tagNumber - 1].author.avatar; // аватарка на карте
+        if (tags[tagNumber - 1].offer.features[j] === features[i]) {
+          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[i] + '"></li>');
+        }
+      }
+    }
+    popupCloneFeaturesContainer.appendChild(features);
+    popupCloneDescription.textContent = tags[tagNumber - 1].offer.description; // Написать описание
+    popupClonePhoto.src = tags[tagNumber - 1].author.avatar; // фото на карте
+    popupCloneAvatar.src = tags[tagNumber - 1].author.avatar; // аватарка на карте
   }
 });
 mapPinMain.addEventListener('mousedown', function () {
-	activatePage(false);
+  activatePage(false);
 });
 
 mapFilter.addEventListener('change', function onMapFilterChange(evt) {
   switch (evt.target.value) {
     case 'any':
-	  price.min = 0;
-	  break;
-	case 'palace':
-	  price.min = 10000;
-	  break;
-	case 'flat':
-	  price.min = 1000;
-	  break;
-	case 'house':
-	  price.min = 5000;
-	  break;
-	case 'bungalo':
-	  price.min = 0;
+      price.min = 0;
       break;
-	}
+    case 'palace':
+      price.min = 10000;
+      break;
+    case 'flat':
+      price.min = 1000;
+      break;
+    case 'house':
+      price.min = 5000;
+      break;
+    case 'bungalo':
+      price.min = 0;
+      break;
+  }
 });
