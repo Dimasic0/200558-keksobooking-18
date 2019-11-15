@@ -4,7 +4,7 @@ var ENTER_KEYCODE = 13; // Unicode клавише ENTER
 var ESC_KEYCODE = 27;
 var MIN_COORDINATE = 130; // минимальная координата
 var MAX_COORDINATE = 630; // максимальная координата
-var features = [
+var actualFeatures = [
   'wifi',
   'dishwasher',
   'parking',
@@ -61,7 +61,7 @@ var timein = document.querySelector('#timein');
 var description = [
   'Есть телевизор, газовая плита, стиральная машина.',
   'Есть диван, мебельная стенка, микроволновая печь.',
-  'Есть телевизор, кровать, шкаф для одежды', 
+  'Есть телевизор, кровать, шкаф для одежды',
   'Есть кухонный гарнитур, холодильник, электрическая плита.',
   'Есть кровать, тумба, микроволновая печь.',
   'Есть стиральная машина, телевизор',
@@ -143,7 +143,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
     }
   };
   for (var k = 0; k < propertyTypes.length; k++) {
-    if (tags[i].offer.type === features[k]) {
+    if (tags[i].offer.type === actualFeatures[k]) {
       minimumPrice = minimumPrices[k];
     }
   }
@@ -241,13 +241,13 @@ map.addEventListener('mousedown', function (evt) {
     popupCloneTextCapacity.textContent = tags[tagNumber - 1].offer.rooms + ' комнаты для ' + tags[tagNumber - 1].offer.guests + ' гостей';
     popupCloneTextTime.textContent = 'Заезд после ' + tags[tagNumber - 1].offer.checkin + ' выезд до ' + tags[tagNumber - 1].offer.checkout; // врема заезда и выезда
     for (var j = 0; j < tags[0].offer.features.length; j++) {
-      for (i = 0; i < features.length; i++) {
-        if (tags[tagNumber - 1].offer.features[j] === features[i]) {
-          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[i] + '"></li>');
+      for (i = 0; i < actualFeatures.length; i++) {
+        if (tags[tagNumber - 1].offer.features[j] === actualFeatures[i]) {
+          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + actualFeatures[i] + '"></li>');
         }
       }
     }
-    popupCloneFeaturesContainer.appendChild(features);
+    popupCloneFeaturesContainer.appendChild(actualFeatures);
     popupCloneDescription.textContent = tags[tagNumber - 1].offer.description; // Написать описание
     popupClonePhoto.src = tags[tagNumber - 1].author.avatar; // фото на карте
     popupCloneAvatar.src = tags[tagNumber - 1].author.avatar; // аватарка на карте
