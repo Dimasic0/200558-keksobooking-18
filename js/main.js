@@ -12,6 +12,7 @@ var features = [
   'elevator',
   'conditioner'
 ]; // виды удобств
+var prices=[1000,1500,500,3200,1100,5000,4500,3200]
 var MIN_ROOMS = 2; // минимальное количество комнат
 var MAX_ROOMS = 7; // максимальное количество комнат
 var popup = document.querySelector('#card').content.querySelector('.popup'); // карточка
@@ -90,12 +91,15 @@ function makeMark(tagOptions) {
 
 function generateRandomFeatures() { // генератор удобств.
   var actualFeatures = []; // переменная для рандомного числа
-  for (var i = 0; i < actualFeatures.length; i++) {
+  var g=0;
+  for (var i = 0; i < features.length; i++) {
     if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
-      actualFeatures[actualFeatures.length] = features[i]; // записывает удобство
+      actualFeatures[g] = features[i]; // записывает удобство
+	  g++;
     }
   }
-  return features; // возвращает в строку удобств
+	console.log(actualFeatures);
+  return actualFeatures; // возвращает в строку удобств
 }
 
 function activatePage(property) { // функция выдает состояние сайта.
@@ -127,8 +131,8 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
     offer: {
       title: headers[i], // заголовок
       address: randomLocationX + ',' + randomLocationY, // адрес
-      price: 100, // цена
-      type: propertyTypes[getRandomInRange(0, propertyTypes.length - 1)], // тип
+      price: prices[i], // цена
+      type: propertyTypes[getRandomInRange(0,3)], // тип
       rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
       guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
       checkin: checkTime, // время заезда
@@ -142,13 +146,6 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
       y: randomLocationY //  координата у
     }
   };
-  for (var k = 0; k < propertyTypes.length; k++) {
-    if (tags[i].offer.type === propertyTypes[k]) {
-      minimumPrice = minimumPrices[k];
-      break;
-    } 
-  }
-  tags[i].offer.price = getRandomInRange(minimumPrice, 1000000);
   makeMark(tags[i]); // создаем метки
 }
 activatePage(true);
@@ -219,13 +216,14 @@ adFormSubmit.addEventListener('mousedown', function () {
 map.addEventListener('mousedown', function (evt) {
   tagNumber = evt.target.dataset.index;
   if ((evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && tagNumber > 0) {
+	 console.log(getRandomInRange(0,1));
     activatePage(false);
     popupClone.style.display = 'block';
     popupCloneFeaturesContainer.innerHTML = null;
     popupCloneTitle.innerHTML = tags[tagNumber - 1].offer.title; // Заголовок в карточке
     popupCloneTextAddress.textContent = tags[tagNumber - 1].offer.address; // адрес в карточке
     popupCloneTextPrice.textContent = tags[tagNumber - 1].offer.price + '₽/ночь'; // цена в карточке
-    switch (tags[tagNumber - 1].offer.type) { // тип жилья
+    switch (tags[tagNumber - 1].offer.type[i]) { // тип жилья
       case 'flat': // если жилью квартира то
         popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
         break;
@@ -245,7 +243,7 @@ map.addEventListener('mousedown', function (evt) {
     for (var j = 0; j < tags[0].offer.features.length; j++) {
       for (i = 0; i < features.length; i++) {
         if (tags[tagNumber - 1].offer.features[j] === features[i]) {
-          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[i] + '"></li>');
+          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[j] + '"></li>');
         }
       }
     }
