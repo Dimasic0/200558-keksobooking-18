@@ -12,7 +12,7 @@ var features = [
   'elevator',
   'conditioner'
 ]; // виды удобств
-var prices=[1000,1500,500,3200,1100,5000,4500,3200];
+var prices = [1000, 1500, 500, 3200, 1100, 5000, 4500, 3200];
 var MIN_ROOMS = 2; // минимальное количество комнат
 var MAX_ROOMS = 7; // максимальное количество комнат
 var popup = document.querySelector('#card').content.querySelector('.popup'); // карточка
@@ -36,7 +36,6 @@ var propertyTypes = [
   'house',
   'palace'
 ];
-var minimumPrices = [1000, 0, 5000, 10000];
 var mapPinMain = document.querySelector('.map__pin--main'); // кнопка
 var mapPins = document.querySelector('.map__pins');
 var mapPin = document.querySelector('.map__pin');
@@ -73,7 +72,6 @@ var timeArrivals = [12, 13, 14, 12, 13, 14, 12, 13];
 var timeout = document.querySelector('#timeout');
 var mapFilter = document.querySelector('.map__filter');
 var tagNumber;
-var minimumPrice = 0;
 var price = document.querySelector('#price');
 
 function getRandomInRange(min, max) { // генератор рандомных чисел
@@ -94,10 +92,9 @@ function generateRandomFeatures() {
     if (getRandomInRange(0, 1)) {
       actualFeatures[actualFeatures.length] = features[i];
     }
+  }
+  return actualFeatures;
 }
-return actualFeatures;
-}
-console.log(generateRandomFeatures());
 function activatePage(property) { // функция выдает состояние сайта.
   for (i = 0; i < adFormFieldsets.length; i++) {
     adFormFieldsets[i].disabled = property; // разрешает или запрещает изменять форму.
@@ -128,7 +125,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
       title: headers[i], // заголовок
       address: randomLocationX + ',' + randomLocationY, // адрес
       price: prices[i], // цена
-      type: propertyTypes[getRandomInRange(0,3)], // тип
+      type: propertyTypes[getRandomInRange(0, 3)], // тип
       rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
       guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
       checkin: checkTime, // время заезда
@@ -235,7 +232,6 @@ map.addEventListener('mousedown', function (evt) {
     }
     popupCloneTextCapacity.textContent = tags[tagNumber - 1].offer.rooms + ' комнаты для ' + tags[tagNumber - 1].offer.guests + ' гостей';
     popupCloneTextTime.textContent = 'Заезд после ' + tags[tagNumber - 1].offer.checkin + ' выезд до ' + tags[tagNumber - 1].offer.checkout; // врема заезда и выезда
-	  console.log(tags[0].offer.features[0]);
     for (var j = 0; j < tags[0].offer.features.length; j++) {
       for (i = 0; i < features.length; i++) {
         if (tags[tagNumber - 1].offer.features[j] === features[i]) {
@@ -243,7 +239,6 @@ map.addEventListener('mousedown', function (evt) {
         }
       }
     }
-   // popupCloneFeaturesContainer.appendChild(actualFeatures);
     popupCloneDescription.textContent = tags[tagNumber - 1].offer.description; // Написать описание
     popupClonePhoto.src = tags[tagNumber - 1].author.avatar; // фото на карте
     popupCloneAvatar.src = tags[tagNumber - 1].author.avatar; // аватарка на карте
