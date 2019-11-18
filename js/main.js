@@ -12,7 +12,7 @@ var features = [
   'elevator',
   'conditioner'
 ]; // виды удобств
-var prices=[1000,1500,500,3200,1100,5000,4500,3200]
+var prices=[1000,1500,500,3200,1100,5000,4500,3200];
 var MIN_ROOMS = 2; // минимальное количество комнат
 var MAX_ROOMS = 7; // максимальное количество комнат
 var popup = document.querySelector('#card').content.querySelector('.popup'); // карточка
@@ -88,20 +88,16 @@ function makeMark(tagOptions) {
   label.querySelector('img').dataset.index = i + 1;
   fragment.appendChild(label); // вставляем метку в
 }
-
-function generateRandomFeatures() { // генератор удобств.
-  var actualFeatures = []; // переменная для рандомного числа
-  var g=0;
+function generateRandomFeatures() {
+  var actualFeatures = [];
   for (var i = 0; i < features.length; i++) {
-    if (getRandomInRange(0, 1) === 1) { // если нужно добавить это удобство
-      actualFeatures[g] = features[i]; // записывает удобство
-	  g++;
+    if (getRandomInRange(0, 1)) {
+      actualFeatures[actualFeatures.length] = features[i];
     }
-  }
-	console.log(actualFeatures);
-  return actualFeatures; // возвращает в строку удобств
 }
-
+return actualFeatures;
+}
+console.log(generateRandomFeatures());
 function activatePage(property) { // функция выдает состояние сайта.
   for (i = 0; i < adFormFieldsets.length; i++) {
     adFormFieldsets[i].disabled = property; // разрешает или запрещает изменять форму.
@@ -179,6 +175,7 @@ type.addEventListener('change', function (evt) {
 timein.addEventListener('change', function (evt) {
   timeout.querySelector('option[value="' + evt.target.value + '"]').selected = true;
 });
+
 timeout.addEventListener('change', function (evt) {
   timein.querySelector('option[value="' + evt.target.value + '"]').selected = true;
 });
@@ -216,7 +213,6 @@ adFormSubmit.addEventListener('mousedown', function () {
 map.addEventListener('mousedown', function (evt) {
   tagNumber = evt.target.dataset.index;
   if ((evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && tagNumber > 0) {
-	 console.log(getRandomInRange(0,1));
     activatePage(false);
     popupClone.style.display = 'block';
     popupCloneFeaturesContainer.innerHTML = null;
@@ -243,7 +239,7 @@ map.addEventListener('mousedown', function (evt) {
     for (var j = 0; j < tags[0].offer.features.length; j++) {
       for (i = 0; i < features.length; i++) {
         if (tags[tagNumber - 1].offer.features[j] === features[i]) {
-          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[j] + '"></li>');
+          popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[i] + '"></li>');
         }
       }
     }
