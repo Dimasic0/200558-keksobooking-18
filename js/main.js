@@ -68,7 +68,7 @@ var description = [
   'Есть диван, шкаф для одежды',
   'Есть холодильник, микроволновая печь'
 ];
-var timeArrivals = [12, 13, 14, 12, 13, 14, 12, 13];
+var timeArrivals = [12, 13, 14];
 var timeout = document.querySelector('#timeout');
 var mapFilter = document.querySelector('.map__filter');
 var tagNumber;
@@ -116,14 +116,14 @@ var popupClose = document.querySelector('.popup__close');
 for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
   var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
   var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
-  var checkTime = timeArrivals[getRandomInRange(0, 7)];
+  var checkTime = timeArrivals[getRandomInRange(0, 2)];
   tags[i] = {
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
     },
     offer: {
       title: headers[i], // заголовок
-      address: randomLocationX + ',' + randomLocationY, // адрес
+      address: randomLocationX + ' ' + randomLocationY, // адрес
       price: prices[i], // цена
       type: propertyTypes[getRandomInRange(0, 3)], // тип
       rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
@@ -143,7 +143,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
 }
 activatePage(true);
 
-function onMapPinMainPress(evt) {
+function onMapPinMainPressEnter(evt) {
   if (evt.keyCode === ENTER_KEYCODE) { // если нажал на enter
     activatePage(false); // активировать сайт
   }
@@ -188,10 +188,10 @@ document.addEventListener('keydown', function (evt) {
     popupClone.style.display = 'none';
   }
 });
-mapPinMain.addEventListener('keydown', onMapPinMainPress); // если нажимаю enter
+mapPinMain.addEventListener('keydown', onMapPinMainPressEnter); // если нажимаю enter
 popupClose.addEventListener('keydown', function (evt) {
   document.removeEventListener('keydown', onDocumentPressedEnter);
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEYCODE) {
     popupClone.style.display = 'none';
   }
 });
