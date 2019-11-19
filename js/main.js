@@ -170,15 +170,15 @@ type.addEventListener('change', function (evt) {
 });
 
 timein.addEventListener('change', function (evt) {
-  timeout.querySelector('option[value="' + evt.target.value + '"]').selected = true;
+	timeout.value = evt.target.value;
 });
 
 timeout.addEventListener('change', function (evt) {
-  timein.querySelector('option[value="' + evt.target.value + '"]').selected = true;
+	timein.value = evt.target.value;
 });
-document.addEventListener('keydown', onDocumentPressedEnter);
+document.addEventListener('keydown', onDocumentPressEnter);
 
-function onDocumentPressedEnter(evt) {
+function onDocumentPressEnter(evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     popupClone.style.display = 'block';
   }
@@ -190,13 +190,20 @@ document.addEventListener('keydown', function (evt) {
 });
 mapPinMain.addEventListener('keydown', onMapPinMainPressEnter); // если нажимаю enter
 popupClose.addEventListener('keydown', function (evt) {
-  document.removeEventListener('keydown', onDocumentPressedEnter);
+  document.removeEventListener('keydown', onDocumentPressEnter);
   if (evt.keyCode === ENTER_KEYCODE) {
     popupClone.style.display = 'none';
   }
 });
-adFormSubmit.addEventListener('mousedown', function () {
-  if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
+capacity.addEventListener('change',function () {
+	dataValidation();
+});
+roomNumber.addEventListener('change',function () {
+	dataValidation();
+});
+function dataValidation ()
+{
+	if (+capacity.value > +roomNumber.value && +roomNumber.value !== '100') {
     capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
   } else if (roomNumber.value !== '100') {
     capacity.setCustomValidity('');
@@ -205,6 +212,9 @@ adFormSubmit.addEventListener('mousedown', function () {
   } else {
     capacity.setCustomValidity('');
   }
+}
+adFormSubmit.addEventListener('mousedown', function () {
+  dataValidation()
 });
 function openCardAnnouncement() {
   activatePage(false);
