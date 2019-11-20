@@ -123,7 +123,7 @@ for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста �
     },
     offer: {
       title: headers[i], // заголовок
-      address: randomLocationX + ' ' + randomLocationY, // адрес
+      address: randomLocationX + ', ' + randomLocationY, // адрес
       price: prices[i], // цена
       type: propertyTypes[getRandomInRange(0, 3)], // тип
       rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
@@ -252,14 +252,14 @@ function openCardAnnouncement() {
 
 map.addEventListener('keydown', function (evt) {
   tagNumber = evt.target.dataset.index;
-  if (evt.keyCode === ENTER_KEYCODE && (evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && tagNumber > 0) {
+  if (evt.keyCode === ENTER_KEYCODE && (evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
     openCardAnnouncement();
   }
 });
 
 map.addEventListener('mousedown', function (evt) {
   tagNumber = evt.target.dataset.index;
-  if ((evt.target.tagName === 'IMG' || evt.target.tagName === 'BUTTON') && tagNumber > 0) {
+  if ((evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
     openCardAnnouncement();
   }
 });
