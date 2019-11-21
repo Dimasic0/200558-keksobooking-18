@@ -1,4 +1,5 @@
 'use strict';
+
 var TAGS_NUMBER = 8; // колличество меток
 var ENTER_KEYCODE = 13; // Unicode клавише ENTER
 var ESC_KEYCODE = 27;
