@@ -79,54 +79,54 @@ var y=0;
 var popupClose = document.querySelector('.popup__close');
 (function () {
   function getRandomInRange(min, max) { // генератор рандомных чисел
-  return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
+    return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
 }
 
-function makeMark(tagOptions) {
-  label = mapPin.cloneNode(true);
-  label.dataset.index = i + 1;
-  label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
-  label.querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
-  label.querySelector('img').dataset.index = i + 1;
+  function makeMark(tagOptions) {
+    label = mapPin.cloneNode(true);
+    label.dataset.index = i + 1;
+    label.setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
+    label.querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
+    label.querySelector('img').dataset.index = i + 1;
     fragment.appendChild(label); // вставляем метку в
-}
- 
-    function generateRandomFeatures() {
-  var actualFeatures = [];
-  for (var i = 0; i < features.length; i++) {
-    if (getRandomInRange(0, 1)) {
-      actualFeatures[actualFeatures.length] = features[i];
-    }
   }
-  return actualFeatures;
-}
-    
-for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
-  var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
-  var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
-  var checkTime = timeArrivals[getRandomInRange(0, 2)];
-  tags[i] = {
-    author: {
-      avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
-    },
-    offer: {
-      title: headers[i], // заголовок
-      address: randomLocationX + ', ' + randomLocationY, // адрес
-      price: prices[i], // цена
-      type: propertyTypes[getRandomInRange(0, 3)], // тип
-      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
-      guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
-      checkin: checkTime, // время заезда
-      checkout: checkTime, // время выезда
-      features: generateRandomFeatures(), // удобство
-      description: description[getRandomInRange(0, 7)], // описание
-      photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
-    },
-    location: {
-      x: randomLocationX, // координата х
-      y: randomLocationY //  координата у
+ 
+  function generateRandomFeatures() {
+    var actualFeatures = [];
+    for (var i = 0; i < features.length; i++) {
+      if (getRandomInRange(0, 1)) {
+        actualFeatures[actualFeatures.length] = features[i];
+      }
     }
-  };
-  makeMark(tags[i]); // создаем метки
+    return actualFeatures;
+  }
+    
+  for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
+    var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
+    var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
+    var checkTime = timeArrivals[getRandomInRange(0, 2)];
+    tags[i] = {
+      author: {
+        avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
+      },
+      offer: {
+        title: headers[i], // заголовок
+        address: randomLocationX + ', ' + randomLocationY, // адрес
+        price: prices[i], // цена
+        type: propertyTypes[getRandomInRange(0, 3)], // тип
+        rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
+        guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
+        checkin: checkTime, // время заезда
+        checkout: checkTime, // время выезда
+        features: generateRandomFeatures(), // удобство
+        description: description[getRandomInRange(0, 7)], // описание
+        photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
+      },
+      location: {
+        x: randomLocationX, // координата х
+        y: randomLocationY //  координата у
+      }
+    };
+    makeMark(tags[i]); // создаем метки
 }
 })();
