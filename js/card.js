@@ -1,12 +1,13 @@
+'use strict';
 (function () {
-    var popupCloneFeaturesContainer = window.data.popupClone.querySelector('.popup__features'); // список типов
-    var ESC_KEYCODE = 27;
-    var tagNumber;
+  var popupCloneFeaturesContainer = window.data.popupClone.querySelector('.popup__features'); // список типов
+  var ESC_KEYCODE = 27;
+  var tagNumber;
   function openCardAnnouncement() {
-    activatePage(false); 
+    window.data.activatePage(false);
     window.data.popupClone.style.display = 'block';
     popupCloneFeaturesContainer.innerHTML = null;
-    var popupCloneTitle =  window.data.popupClone.querySelector('.popup__title'); // заголовок в карточке
+    var popupCloneTitle = window.data.popupClone.querySelector('.popup__title'); // заголовок в карточке
     popupCloneTitle.innerHTML = window.data.tags[tagNumber - 1].offer.title; // Заголовок в карточке
     var popupCloneTextAddress = window.data.popupClone.querySelector('.popup__text--address'); // адрес
     popupCloneTextAddress.textContent = window.data.tags[tagNumber - 1].offer.address; // адрес в карточке
@@ -26,7 +27,7 @@
       case 'palace':
         popupCloneType.textContent = 'Дворец'; // Выводим слово <дворец>
         break;
-  }
+    }
     var popupCloneTextCapacity = window.data.popupClone.querySelector('.popup__text--capacity'); // комнаты
     popupCloneTextCapacity.textContent = window.data.tags[tagNumber - 1].offer.rooms + ' комнаты для ' + window.data.tags[tagNumber - 1].offer.guests + ' гостей';
     var popupCloneTextTime = window.data.popupClone.querySelector('.popup__text--time'); // время заезда и выезда
@@ -45,25 +46,21 @@
     var popupCloneAvatar = window.data.popupClone.querySelector('.popup__avatar'); // аватар
     popupCloneAvatar.src = window.data.tags[tagNumber - 1].author.avatar; // аватарка на карте
   }
-    
-    window.data.map.addEventListener('keydown', function (evt) {
+  window.data.map.addEventListener('keydown', function (evt) {
     tagNumber = evt.target.dataset.index;
-    if (evt.keyCode === ENTER_KEYCODE && (evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
+    if (evt.keyCode === window.data.ENTER_KEYCODE && (evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
       openCardAnnouncement();
-  }
-});
-
+    }
+  });
   window.data.map.addEventListener('mousedown', function (evt) {
-  tagNumber = evt.target.dataset.index;
-  if ((evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
-    openCardAnnouncement();
-  }
-});
-    
+    tagNumber = evt.target.dataset.index;
+    if ((evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
+      openCardAnnouncement();
+    }
+  });
   document.addEventListener('keydown', onDocumentPressEnter);
-
   function onDocumentPressEnter(evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
+    if (evt.keyCode === window.data.ENTER_KEYCODE) {
       window.data.popupClone.style.display = 'block';
     }
   }
@@ -72,11 +69,11 @@
       window.data.popupClone.style.display = 'none';
     }
   });
-var popupClose = window.data.popupClone.querySelector('.popup__close');
+  var popupClose = window.data.popupClone.querySelector('.popup__close');
   popupClose.addEventListener('keydown', function (evt) {
     document.removeEventListener('keydown', onDocumentPressEnter);
-      if (evt.keyCode === ENTER_KEYCODE) {
-        window.data.popupClone.style.display = 'none';
-      }
-  });    
+    if (evt.keyCode === window.data.ENTER_KEYCODE) {
+      window.data.popupClone.style.display = 'none';
+    }
+  });
 })();

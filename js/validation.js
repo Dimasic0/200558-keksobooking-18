@@ -1,3 +1,4 @@
+'use strict';
 (function () {
   var capacity = document.querySelector('#capacity');
   capacity.addEventListener('change', function () {
@@ -17,7 +18,7 @@
     } else {
       capacity.setCustomValidity('');
     }
-}
+  }
   var adFormSubmit = document.querySelector('.ad-form__submit');
   adFormSubmit.addEventListener('mousedown', function () {
     dataValidation();

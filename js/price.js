@@ -1,11 +1,12 @@
+'use strict';
 (function () {
-    var price = document.querySelector('#price');
-    var mapFilter = document.querySelector('.map__filter');
+  var price = document.querySelector('#price');
+  var mapFilter = document.querySelector('.map__filter');
   mapFilter.addEventListener('change', function onMapFilterChange(evt) {
     switch (evt.target.value) {
       case 'any':
         price.min = 0;
-      break;
+        break;
       case 'palace':
         price.min = 10000;
         break;
@@ -18,9 +19,9 @@
       case 'bungalo':
         price.min = 0;
         break;
-  }
-});
-    var type = document.querySelector('#type');
+    }
+  });
+  var type = document.querySelector('#type');
   type.addEventListener('change', function (evt) {
     switch (evt.target.value) {
       case 'any':
@@ -38,6 +39,6 @@
       case 'bungalo':
         price.min = 0;
         break;
-  }
+    }
   });
 })();
