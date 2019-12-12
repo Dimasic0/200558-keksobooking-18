@@ -1,12 +1,15 @@
 'use strict';
+
 (function () {
   var popupCloneFeaturesContainer = window.data.popupClone.querySelector('.popup__features'); // список типов
   var ESC_KEYCODE = 27;
   var tagNumber;
+
   function openCardAnnouncement() {
     window.data.activatePage(false);
     window.data.popupClone.style.display = 'block';
     popupCloneFeaturesContainer.innerHTML = null;
+
     var popupCloneTitle = window.data.popupClone.querySelector('.popup__title'); // заголовок в карточке
     popupCloneTitle.innerHTML = window.data.tags[tagNumber - 1].offer.title; // Заголовок в карточке
     var popupCloneTextAddress = window.data.popupClone.querySelector('.popup__text--address'); // адрес
@@ -14,6 +17,7 @@
     var popupCloneTextPrice = window.data.popupClone.querySelector('.popup__text--price'); // цена
     popupCloneTextPrice.textContent = window.data.tags[tagNumber - 1].offer.price + '₽/ночь'; // цена в карточке
     var popupCloneType = window.data.popupClone.querySelector('.popup__type'); // тип в карточке
+
     switch (window.data.tags[tagNumber - 1].offer.type[i]) { // тип жилья
       case 'flat': // если жилью квартира то
         popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
@@ -54,6 +58,7 @@
   });
   window.data.map.addEventListener('mousedown', function (evt) {
     tagNumber = evt.target.dataset.index;
+
     if ((evt.target.classList.contains('map__pin--main') || evt.target.classList.contains('map__picture') || evt.target.classList.contains('map__svg')) && tagNumber > 0) {
       openCardAnnouncement();
     }

@@ -2,6 +2,7 @@
 (function () {
   var adForm = document.querySelector('.ad-form'); // форма.
   var adFormFieldsets = adForm.querySelectorAll('fieldset');
+
   window.data = {
     map: document.querySelector('.map'),
     popup: document.querySelector('#card').content.querySelector('.popup'),
@@ -9,7 +10,6 @@
     features: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
     tags: [],
     fragment: document.createDocumentFragment(),
-    ENTER_KEYCODE: 13,
     mapPins: document.querySelector('.map__pins'),
     activatePage: function (property) { // функция выдает состояние сайта.
       for (var i = 0; i < adFormFieldsets.length; i++) {
