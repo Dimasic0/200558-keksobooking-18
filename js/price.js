@@ -21,6 +21,7 @@
         break;
     }
   });
+
   var type = document.querySelector('#type');
   type.addEventListener('change', function (evt) {
     switch (evt.target.value) {

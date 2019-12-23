@@ -4,6 +4,7 @@
   capacity.addEventListener('change', function () {
     dataValidation();
   });
+
   var roomNumber = document.querySelector('#room_number');
   roomNumber.addEventListener('change', function () {
     dataValidation();
@@ -19,6 +20,7 @@
       capacity.setCustomValidity('');
     }
   }
+
   var adFormSubmit = document.querySelector('.ad-form__submit');
   adFormSubmit.addEventListener('mousedown', function () {
     dataValidation();
