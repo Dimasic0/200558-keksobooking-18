@@ -10,7 +10,7 @@
   var popupClone = document.querySelector('#card').content.querySelector('.popup').cloneNode(true);
   var fragment = document.createDocumentFragment();
   var coordinates;
-
+  var decimalPlaces=0;
   window.data = {
     map: map,
     popup: document.querySelector('#card').content.querySelector('.popup'),
@@ -27,16 +27,16 @@
       for (var i = 0; i < adFormFieldsets.length; i++) {
         adFormFieldsets[i].disabled = isActive; // разрешает или запрещает изменять форму.
       }
-      if (!isActive) { // если нужно активировать сайт то
-        address.disabled = true;
+      if (isActive) { 
+         coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2)).toFixed(decimalPlaces) + ' ' + (parseFloat(mapPinStyle.top) + (parseFloat(mapPinStyle.height) / 2)).toFixed(decimalPlaces);
+      } else {// если нужно активировать сайт то
+		address.disabled = true;
         adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
         map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
         var mapFiltersContainer = document.querySelector('.map__filters-container');
         map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
         mapPins.appendChild(popupClone); // вставляет карточку
-        coordinates = String(Number.parseFloat(mapPinStyle.left) + (Number.parseFloat(mapPinStyle.width) / 2)) + ' ' + String(Number.parseFloat(mapPinStyle.top) + Number.parseFloat(mapPinStyle.height));
-      } else {
-        coordinates = String(Number.parseFloat(mapPinStyle.left) + (Number.parseFloat(mapPinStyle.width) / 2)) + ' ' + String(Number.parseFloat(mapPinStyle.top) + (Number.parseFloat(mapPinStyle.height) / 2));
+        coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2)).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) + parseFloat(mapPinStyle.height));
       }
       address.value = coordinates;
     }
