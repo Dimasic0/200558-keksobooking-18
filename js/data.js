@@ -28,7 +28,7 @@
         adFormFieldsets[i].disabled = isActive; // разрешает или запрещает изменять форму.
       }
       if (isActive) {
-        coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2)).toFixed(decimalPlaces) + ' ' + (parseFloat(mapPinStyle.top) + (parseFloat(mapPinStyle.height) / 2)).toFixed(decimalPlaces);
+        coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2)+2).toFixed(decimalPlaces) + ' ' + (parseFloat(mapPinStyle.top) + (parseFloat(mapPinStyle.height) / 2)-3).toFixed(decimalPlaces);
       } else { // если нужно активировать сайт то
         address.disabled = true;
         adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
@@ -36,7 +36,7 @@
         var mapFiltersContainer = document.querySelector('.map__filters-container');
         map.insertBefore(fragment, mapFiltersContainer); // вставляет метки
         mapPins.appendChild(popupClone); // вставляет карточку
-        coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2)).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) + parseFloat(mapPinStyle.height));
+        coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2)+2).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) + parseFloat(mapPinStyle.height)-3);
       }
       address.value = coordinates;
     }

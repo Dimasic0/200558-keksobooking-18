@@ -6,7 +6,7 @@
   var ESC_KEYCODE = 27;
   var tagNumber;
   var features = [];
-  for (var i = 0; i <= window.data.features.length; i++) {
+  for (var i = 0; i < window.data.features.length; i++) {
     features[i] = window.data.features[i];
   }
   function openCardAnnouncement() {

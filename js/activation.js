@@ -14,7 +14,7 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   mapPinMain.addEventListener('keydown', onMapPinMainPressEnter); // если нажимаю enter
   function onMapPinMainPressEnter(evt) {
-    var ENTER_KEYCODE = window.data.ENTER_KEYCODE;
+    var ENTER_KEYCODE = 13;
     if (evt.keyCode === ENTER_KEYCODE) { // если нажал на enter
       activatePage(false); // активировать сайт
     }

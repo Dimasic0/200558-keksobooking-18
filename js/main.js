@@ -38,10 +38,15 @@
   var mapPin = window.data.mapPin;
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
-  address.value = Number.parseInt(mapPinStyle.width / 2, 10) + ' ' + Number.parseInt(mapPinStyle.top / 2, 10);
+  var features=[];
+  address.value = Number.parseInt(mapPinStyle.width, 10) / 2 + ' ' + Number.parseInt(mapPinStyle.top, 10) / 2;
   function getRandomInRange(min, max) { // генератор рандомных чисел
     return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
   }
+	for(var i=0; i<window.data.features.lenght; i++)
+		{
+		  features[i]=window.data.features;
+		}
   function makeMark(tagOptions) {
     window.data.label[i] = mapPin.cloneNode(true);
     window.data.label[i].dataset.index = i + 1;
@@ -91,7 +96,7 @@
   }
   function generateRandomFeatures() {
     var actualFeatures = [];
-    for (var i = 0; i < window.data.features.length; i++) {
+    for (var i = 0; i < getRandomInRange(0,window.data.features.length); i++) {
       if (getRandomInRange(0, 1)) {
         actualFeatures[actualFeatures.length] = window.data.features[i];
       }
@@ -125,5 +130,5 @@
       }
     };
     makeMark(window.data.tags[i]); // создаем метки
-  }
+  }	
 })();
