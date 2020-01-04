@@ -39,20 +39,26 @@
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
   var features=[];
-  address.value = Number.parseInt(mapPinStyle.width, 10) / 2 + ' ' + Number.parseInt(mapPinStyle.top, 10) / 2;
+  var number;
+  var randomNumber=true;
+  var zero=0;
+  var one=1;
+  var two=2;
+  var map=document.querySelector('.map');
+  var mapStyle = getComputedStyle(map);
   function getRandomInRange(min, max) { // генератор рандомных чисел
     return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
   }
-	for(var i=0; i<window.data.features.lenght; i++)
-		{
-		  features[i]=window.data.features;
-		}
+  for(var i=zero; i<window.data.features.lenght; i++)
+  {
+    features[i]=window.data.features;
+  }
   function makeMark(tagOptions) {
     window.data.label[i] = mapPin.cloneNode(true);
-    window.data.label[i].dataset.index = i + 1;
+    window.data.label[i].dataset.index = i + one;
     window.data.label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
     window.data.label[i].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
-    window.data.label[i].querySelector('img').dataset.index = i + 1;
+    window.data.label[i].querySelector('img').dataset.index = i + one;
     mapPin.addEventListener('mousedown', function (coordinate) {
       y = coordinate.clientY;
       x = coordinate.clientX;
@@ -62,28 +68,28 @@
           mapPin.style.left = '1137px';
           y = position.clientY;
           x = position.clientX;
-        } else if ((Number.parseInt(mapPinStyle.left, 10) > -3 && Number.parseInt(mapPinStyle.top, 10) > 2 && Number.parseInt(mapPinStyle.top, 10) < 627) || (Number.parseInt(mapPinStyle.left, 10) <= -1 && position.clientX - x >= 0)) {
-          mapPin.style.top = Number.parseInt(mapPinStyle.top, 10) + (position.clientY - y) + 'px';
-          mapPin.style.left = Number.parseInt(mapPinStyle.left, 10) + (position.clientX - x) + 'px';
+        } else if (parseFloat(mapPinStyle.left) > -3 && parseFloat(mapPinStyle.top) > 2 && parseFloat(mapPinStyle.top) < parseFloat(mapStyle.height)-parseFloat(mapPinStyle.height)+1 || (parseFloat(mapPinStyle.left) <= -1 && position.clientX - x >= 0)) {
+          mapPin.style.top = parseFloat(mapPinStyle.top) + (position.clientY - y) + 'px';
+          mapPin.style.left = parseFloat(mapPinStyle.left) + (position.clientX - x) + 'px';
           y = position.clientY;
           x = position.clientX;
-          address.value = Number.parseInt(mapPinStyle.left + 32, 10) + ' ' + Number.parseInt(mapPinStyle.top + 32, 10);
+          address.value = parseFloat(mapPinStyle.left + 32) + ' ' + parseFloat(mapPinStyle.top + 32);
         } else if (position.clientX < -1) {
           mapPin.style.left = '-1px';
           y = position.clientY;
           x = position.clientX;
         }
 
-        if (Number.parseInt(mapPinStyle.left, 10) <= -3) {
-          mapPin.style.left = '-2px';
+        if (parseFloat(mapPinStyle.left) <= -one) {
+          mapPin.style.left = '0px';
           y = position.clientY;
           x = position.clientX;
         }
-        if (Number.parseInt(mapPinStyle.top, 10) <= 2) {
+        if (parseFloat(mapPinStyle.top) <= two) {
           mapPin.style.top = '3px';
         }
-        if (Number.parseInt(mapPinStyle.top, 10) > 626) {
-          mapPin.style.top = '626px';
+        if (parseFloat(mapPinStyle.top) > parseFloat(mapStyle.height)-parseFloat(mapPinStyle.height)) {
+          mapPin.style.top = String(parseFloat(mapPinStyle.height)-parseFloat(mapStyle.height))+'px';
         }
       }
 
@@ -96,10 +102,34 @@
   }
   function generateRandomFeatures() {
     var actualFeatures = [];
-    for (var i = 0; i < getRandomInRange(0,window.data.features.length); i++) {
-      if (getRandomInRange(0, 1)) {
-        actualFeatures[actualFeatures.length] = window.data.features[i];
-      }
+	var randomIcons=[];
+	var numberIcons=getRandomInRange(zero,window.data.features.length);
+
+    for (var i = 0; i <= numberIcons; i++) {
+	randomNumber=true;
+	  while(randomNumber===true)
+	  {
+		  console.log('randomNumber='+randomNumber);
+      var randomIcon = getRandomInRange(zero, numberIcons);
+		 randomNumber=false;
+		  for(t=0; t<=number; t++)
+			{
+				if(randomIcons[t]===randomIcon)
+			    {
+				  randomNumber=true;
+                }
+			}
+		 
+	  }
+		for(var t=1; t<=8; t++)
+		{
+		  if(randomIcon===t)
+		  {
+            actualFeatures[actualFeatures.length] = window.data.features[t];
+		  }
+		}
+		randomIcons[number]=randomIcon;
+		number++;
     }
     return actualFeatures;
   }
