@@ -94,8 +94,7 @@
       popupClone.style.display = 'none';
     }
   });
-  popupClose.addEventListener('mousedown',function ()
-	{
-	  popupClone.style.display='none';
+  popupClose.addEventListener('mousedown', function () {
+    popupClone.style.display = 'none';
   });
 })();

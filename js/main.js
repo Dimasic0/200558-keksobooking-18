@@ -63,32 +63,24 @@
       x = coordinate.clientX;
       document.addEventListener('mousemove', onLabelMousemove);
       function onLabelMousemove(position) {
-		var mapPinPosition={
-		 Y:parseFloat(mapPinStyle.top),
-	     X:parseFloat(mapPinStyle.left)
-		};
-		  
-		var mapPinsPosition={
-		 Y:parseFloat(mapPinsStyle.top),
-	     X:parseFloat(mapPinsStyle.left)
-		};
-		
-		var mapPinSize={
-		width:parseFloat(mapPinStyle.width),
-		height:parseFloat(mapPinStyle.height)
-		};
-		
-		var mapPinsSize={
-		width:parseFloat(mapPinsStyle.width),
-		height:parseFloat(mapPinsStyle.height)
-		};
-        
-		if (mapPinPosition.X > 1137) {
+        var mapPinPosition = {
+          Y: parseFloat(mapPinStyle.top),
+          X: parseFloat(mapPinStyle.left)
+        };
+        var mapPinSize = {
+          width: parseFloat(mapPinStyle.width),
+          height: parseFloat(mapPinStyle.height)
+        };
+        var mapPinsSize = {
+          width: parseFloat(mapPinsStyle.width),
+          height: parseFloat(mapPinsStyle.height)
+        };
+        if (mapPinPosition.X > 1137) {
           mapPin.style.left = '1137px';
           y = position.clientY;
           x = position.clientX;
         } else if (mapPinPosition.X > -3 && mapPinPosition.Y > 2 && mapPinPosition.Y < mapPinsSize.height - mapPinSize.height + 1 || (mapPinPosition.X <= -1 && position.clientX - x >= 0)) {
-		  mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
+          mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
           mapPin.style.left = mapPinPosition.X + (position.clientX - x) + 'px';
           y = position.clientY;
           x = position.clientX;
@@ -98,7 +90,6 @@
           y = position.clientY;
           x = position.clientX;
         }
-
         if (mapPinPosition.X <= -one) {
           mapPin.style.left = '0px';
           y = position.clientY;
