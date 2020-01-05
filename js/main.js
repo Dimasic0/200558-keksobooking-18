@@ -38,20 +38,19 @@
   var mapPin = window.data.mapPin;
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
-  var features=[];
+  var features = [];
   var number;
-  var randomNumber=true;
-  var zero=0;
-  var one=1;
-  var two=2;
-  var map=document.querySelector('.map');
-  var mapStyle = getComputedStyle(map);
+  var randomNumber = true;
+  var zero = 0;
+  var one = 1;
+  var two = 2;
+  var mapPins = document.querySelector('.map__pins');
+  var mapPinsStyle = getComputedStyle(mapPins);
   function getRandomInRange(min, max) { // генератор рандомных чисел
     return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
   }
-  for(var i=zero; i<window.data.features.lenght; i++)
-  {
-    features[i]=window.data.features;
+  for (var i = zero; i < window.data.features.lenght; i++) {
+    features[i] = window.data.features;
   }
   function makeMark(tagOptions) {
     window.data.label[i] = mapPin.cloneNode(true);
@@ -64,32 +63,52 @@
       x = coordinate.clientX;
       document.addEventListener('mousemove', onLabelMousemove);
       function onLabelMousemove(position) {
-        if (Number.parseInt(mapPinStyle.left, 10) > 1137) {
+		var mapPinPosition={
+		 Y:parseFloat(mapPinStyle.top),
+	     X:parseFloat(mapPinStyle.left)
+		};
+		  
+		var mapPinsPosition={
+		 Y:parseFloat(mapPinsStyle.top),
+	     X:parseFloat(mapPinsStyle.left)
+		};
+		
+		var mapPinSize={
+		width:parseFloat(mapPinStyle.width),
+		height:parseFloat(mapPinStyle.height)
+		};
+		
+		var mapPinsSize={
+		width:parseFloat(mapPinsStyle.width),
+		height:parseFloat(mapPinsStyle.height)
+		};
+        
+		if (mapPinPosition.X > 1137) {
           mapPin.style.left = '1137px';
           y = position.clientY;
           x = position.clientX;
-        } else if (parseFloat(mapPinStyle.left) > -3 && parseFloat(mapPinStyle.top) > 2 && parseFloat(mapPinStyle.top) < parseFloat(mapStyle.height)-parseFloat(mapPinStyle.height)+1 || (parseFloat(mapPinStyle.left) <= -1 && position.clientX - x >= 0)) {
-          mapPin.style.top = parseFloat(mapPinStyle.top) + (position.clientY - y) + 'px';
-          mapPin.style.left = parseFloat(mapPinStyle.left) + (position.clientX - x) + 'px';
+        } else if (mapPinPosition.X > -3 && mapPinPosition.Y > 2 && mapPinPosition.Y < mapPinsSize.height - mapPinSize.height + 1 || (mapPinPosition.X <= -1 && position.clientX - x >= 0)) {
+		  mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
+          mapPin.style.left = mapPinPosition.X + (position.clientX - x) + 'px';
           y = position.clientY;
           x = position.clientX;
-          address.value = parseFloat(mapPinStyle.left + 32) + ' ' + parseFloat(mapPinStyle.top + 32);
+          address.value = (mapPinPosition.X + 32) + ' ' + (mapPinPosition.Y + 32);
         } else if (position.clientX < -1) {
           mapPin.style.left = '-1px';
           y = position.clientY;
           x = position.clientX;
         }
 
-        if (parseFloat(mapPinStyle.left) <= -one) {
+        if (mapPinPosition.X <= -one) {
           mapPin.style.left = '0px';
           y = position.clientY;
           x = position.clientX;
         }
-        if (parseFloat(mapPinStyle.top) <= two) {
+        if (mapPinPosition.Y <= two) {
           mapPin.style.top = '3px';
         }
-        if (parseFloat(mapPinStyle.top) > parseFloat(mapStyle.height)-parseFloat(mapPinStyle.height)) {
-          mapPin.style.top = String(parseFloat(mapPinStyle.height)-parseFloat(mapStyle.height))+'px';
+        if (mapPinPosition.Y > mapPinsSize.height - mapPinSize.height) {
+          mapPin.style.top = String(mapPinsSize.height - mapPinSize.height) + 'px';
         }
       }
 
@@ -102,49 +121,42 @@
   }
   function generateRandomFeatures() {
     var actualFeatures = [];
-	var randomIcons=[];
-	var numberIcons=getRandomInRange(zero,window.data.features.length);
+    var randomIcons = [];
+    var numberIcons = getRandomInRange(zero, window.data.features.length);
 
-    for (var i = 0; i <= numberIcons; i++) {
-	randomNumber=true;
-	  while(randomNumber===true)
-	  {
-		  console.log('randomNumber='+randomNumber);
-      var randomIcon = getRandomInRange(zero, numberIcons);
-		 randomNumber=false;
-		  for(t=0; t<=number; t++)
-			{
-				if(randomIcons[t]===randomIcon)
-			    {
-				  randomNumber=true;
-                }
-			}
-		 
-	  }
-		for(var t=1; t<=8; t++)
-		{
-		  if(randomIcon===t)
-		  {
-            actualFeatures[actualFeatures.length] = window.data.features[t];
-		  }
-		}
-		randomIcons[number]=randomIcon;
-		number++;
+    for (i = 0; i <= numberIcons; i++) {
+      randomNumber = true;
+      while (randomNumber === true) {
+        var randomIcon = getRandomInRange(zero, numberIcons);
+        randomNumber = false;
+        for (var t = 0; t <= number; t++) {
+          if (randomIcons[t] === randomIcon) {
+            randomNumber = true;
+          }
+        }
+      }
+      for (t = 1; t <= 8; t++) {
+        if (randomIcon === t) {
+          actualFeatures[actualFeatures.length] = window.data.features[t];
+        }
+      }
+      randomIcons[number] = randomIcon;
+      number++;
     }
     return actualFeatures;
   }
-  for (var i = 0; i < TAGS_NUMBER; i++) { // записывает свойста меткам
+  for (var k = 0; k < TAGS_NUMBER; k++) { // записывает свойста меткам
     var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
     var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
     var checkTime = timeArrivals[getRandomInRange(0, 2)];
-    window.data.tags[i] = {
+    window.data.tags[k] = {
       author: {
-        avatar: 'img/avatars/user0' + (i + 1) + '.png' // адрес аватара
+        avatar: 'img/avatars/user0' + (k + 1) + '.png' // адрес аватара
       },
       offer: {
-        title: headers[i], // заголовок
+        title: headers[k], // заголовок
         address: randomLocationX + ', ' + randomLocationY, // адрес
-        price: prices[i], // цена
+        price: prices[k], // цена
         type: propertyTypes[getRandomInRange(0, 3)], // тип
         rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
         guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
@@ -152,13 +164,13 @@
         checkout: checkTime, // время выезда
         features: generateRandomFeatures(), // удобство
         description: description[getRandomInRange(0, 7)], // описание
-        photos: 'img/avatars/user0' + (i + 1) + '.png', // адрес фотографии
+        photos: 'img/avatars/user0' + (k + 1) + '.png', // адрес фотографии
       },
       location: {
         x: randomLocationX, // координата х
         y: randomLocationY //  координата у
       }
     };
-    makeMark(window.data.tags[i]); // создаем метки
-  }	
+    makeMark(window.data.tags[k]); // создаем метки
+  }
 })();

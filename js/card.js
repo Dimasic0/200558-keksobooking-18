@@ -6,8 +6,8 @@
   var ESC_KEYCODE = 27;
   var tagNumber;
   var features = [];
-  var coefficient=1;
-  var zero=0;
+  var coefficient = 1;
+  var zero = 0;
   for (var i = 0; i < window.data.features.length; i++) {
     features[i] = window.data.features[i];
   }
@@ -15,7 +15,6 @@
     window.data.activatePage(false);
     popupClone.style.display = 'block';
     popupCloneFeaturesContainer.innerHTML = null;
-
     var popupCloneTitle = popupClone.querySelector('.popup__title'); // заголовок в карточке
     var tags = window.data.tags;
     popupCloneTitle.innerHTML = tags[tagNumber - coefficient].offer.title; // Заголовок в карточке
@@ -94,5 +93,9 @@
       document.removeEventListener('keydown', onDocumentPressEnter);
       popupClone.style.display = 'none';
     }
+  });
+  popupClose.addEventListener('mousedown',function ()
+	{
+	  popupClone.style.display='none';
   });
 })();
