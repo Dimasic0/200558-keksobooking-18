@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
   var popupClone = window.data.popupClone;
   var popupCloneFeaturesContainer = popupClone.querySelector('.popup__features'); // список типов

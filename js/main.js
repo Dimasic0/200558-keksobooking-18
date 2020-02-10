@@ -1,8 +1,8 @@
 'use strict';
 (function () {
+  var main = document.querySelector('main');
+  var error = document.querySelector('#error').content.querySelector('.error');
   var TAGS_NUMBER = 8; // колличество меток
-  var MIN_COORDINATE = 130; // минимальная координата
-  var MAX_COORDINATE = 630; // максимальная координата
   var prices = [125, 250, 375, 500, 625, 750, 875, 1000];
   var MIN_ROOMS = 2; // минимальное количество комнат
   var MAX_ROOMS = 7; // максимальное количество комнат
@@ -35,6 +35,7 @@
   var timeArrivals = [12, 13, 14];
   var x = 0;
   var y = 0;
+  var k;
   var mapPin = window.data.mapPin;
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
@@ -53,11 +54,11 @@
     features[i] = window.data.features;
   }
   function makeMark(tagOptions) {
-    window.data.label[i] = mapPin.cloneNode(true);
-    window.data.label[i].dataset.index = i + one;
-    window.data.label[i].setAttribute('style', 'left:' + tagOptions.location.x + 'px; top:' + tagOptions.location.y + 'px;');
-    window.data.label[i].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
-    window.data.label[i].querySelector('img').dataset.index = i + one;
+    window.data.label[k] = mapPin.cloneNode(true);
+    window.data.label[k].dataset.index = k + one;
+    window.data.label[k].setAttribute('style', 'top:' + tagOptions.location.y + 'px; left:' + tagOptions.location.x + 'px;');
+    window.data.label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
+    window.data.label[k].querySelector('img').dataset.index = k + one;
     mapPin.addEventListener('mousedown', function (coordinate) {
       y = coordinate.clientY;
       x = coordinate.clientX;
@@ -108,14 +109,13 @@
       });
     });
     var fragment = window.data.fragment;
-    fragment.appendChild(window.data.label[i]); // вставляем метку в
+    fragment.appendChild(window.data.label[k]); // вставляем метку в
   }
   function generateRandomFeatures() {
     var actualFeatures = [];
     var randomIcons = [];
     var numberIcons = getRandomInRange(zero, window.data.features.length);
-
-    for (i = 0; i <= numberIcons; i++) {
+    for (var i = 0; i <= numberIcons; i++) {
       randomNumber = true;
       while (randomNumber === true) {
         var randomIcon = getRandomInRange(zero, numberIcons);
@@ -136,32 +136,43 @@
     }
     return actualFeatures;
   }
-  for (var k = 0; k < TAGS_NUMBER; k++) { // записывает свойста меткам
-    var randomLocationX = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату х
-    var randomLocationY = getRandomInRange(MIN_COORDINATE, MAX_COORDINATE); // создает рандомную координату у
-    var checkTime = timeArrivals[getRandomInRange(0, 2)];
-    window.data.tags[k] = {
-      author: {
-        avatar: 'img/avatars/user0' + (k + 1) + '.png' // адрес аватара
-      },
-      offer: {
-        title: headers[k], // заголовок
-        address: randomLocationX + ', ' + randomLocationY, // адрес
-        price: prices[k], // цена
-        type: propertyTypes[getRandomInRange(0, 3)], // тип
-        rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS), // количество комнат
-        guests: getRandomInRange(1, 5), // количество гостей которых можно разместить
-        checkin: checkTime, // время заезда
-        checkout: checkTime, // время выезда
-        features: generateRandomFeatures(), // удобство
-        description: description[getRandomInRange(0, 7)], // описание
-        photos: 'img/avatars/user0' + (k + 1) + '.png', // адрес фотографии
-      },
-      location: {
-        x: randomLocationX, // координата х
-        y: randomLocationY //  координата у
-      }
-    };
-    makeMark(window.data.tags[k]); // создаем метки
+  function load(onLoad, onError) {
+    window.backend.load(onLoad, onError);
+  }
+  function send(data, onLoad, onError) {
+    window.backend.send(data, onLoad, onError);
+  }
+  load(positive, mistake);
+  function positive(data) {
+    for (k = 0; k < data.length; k++) { // записывает свойста меткам
+      var checkTime = timeArrivals[getRandomInRange(0, 2)];
+      window.data.tags[k] = {
+        author: {
+          avatar: data[k].author.avatar // адрес аватара
+        },
+        offer: {
+          title:data[k].offer.title, // заголовок
+          address: data[k].offer.address, // адрес
+          price: data[k].offer.price, // цена
+          type: data[k].offer.type, // тип
+          rooms: data[k].offer.rooms, // количество комнат
+          guests: data[k].offer.guests, // количество гостей которых можно разместить
+          checkin: data[k].offer.checkin, // время заезда
+          checkout: data[k].offer.checkout, // время выезда
+          features: data[k].offer.features, // удобство
+          description: data[k].offer.description, // описание
+          photos: 'img/avatars/user0' + (k + 1) + '.png', // адрес фотографии
+        },
+        location: {
+          x: data[k].location.x, // координата х
+          y: data[k].location.y //  координата у
+        }
+      };
+      makeMark(window.data.tags[k]); // создаем метки
+    }
+  }
+  function mistake() {
+    var errorClone = error.cloneNode(true);
+    main.appendChild(errorClone);
   }
 })();

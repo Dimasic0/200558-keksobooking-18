@@ -10,7 +10,6 @@
   var mapPins = window.data.mapPins;
   mapPins.appendChild(popupClone); // вставляет клон
   activatePage(true);
-
   var mapPinMain = document.querySelector('.map__pin--main');
   mapPinMain.addEventListener('keydown', onMapPinMainPressEnter); // если нажимаю enter
   function onMapPinMainPressEnter(evt) {
