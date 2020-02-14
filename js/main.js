@@ -161,7 +161,7 @@
           checkout: data[k].offer.checkout, // время выезда
           features: data[k].offer.features, // удобство
           description: data[k].offer.description, // описание
-          photos: 'img/avatars/user0' + (k + 1) + '.png', // адрес фотографии
+          photos: data[k].offer.photos, // адрес фотографии
         },
         location: {
           x: data[k].location.x, // координата х

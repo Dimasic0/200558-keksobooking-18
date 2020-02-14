@@ -1,5 +1,8 @@
 'use strict';
 (function () {
+  var formData=window.formData;
+  var adForm=window.adForm;
+  var type=window.type;
   var capacity = document.querySelector('#capacity');
   var roomNumber = document.querySelector('#room_number');
   var singleGuest = capacity.querySelector('option[value="1"]');
@@ -9,6 +12,9 @@
   var maximumRooms = 100;
   var roomsMinimum = 0;
   var twoRooms = 2;
+  var price=window.price;
+  var title=adForm.querySelector('#title');
+  var description=adForm.querySelector('#description');
   roomNumber.addEventListener('change', function () {
     dataValidation();
     if (+roomNumber.value < maximumRooms && +roomNumber.value > roomsMinimum) {
@@ -44,9 +50,11 @@
       twoGuests.disabled = true;
       threeGuests.disabled = true;
     }
+    formData.set('rooms',roomNumber.value);
   });
   capacity.addEventListener('change', function () {
     dataValidation();
+    formData.set('capacity'+capacity.value);
   });
   function dataValidation() {
     if (+roomNumber.value < +capacity.value && +roomNumber.value !== 100) {
@@ -59,9 +67,18 @@
       capacity.setCustomValidity('');
     }
   }
-
   var adFormSubmit = document.querySelector('.ad-form__submit');
   adFormSubmit.addEventListener('mousedown', function () {
     dataValidation();
+    /* formData.set('title',title.value);
+    formData.set('price',price.value);
+    formData.set('description',description.value);*/
+  });
+  adForm.addEventListener('submit',function (evt) {
+    evt.preventDefault();
+    var formData = new FormData(adForm);
+    console.log([...formData.keys()]);
+    console.log([...formData.values()]);
+    
   });
 })();
