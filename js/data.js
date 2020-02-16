@@ -1,7 +1,7 @@
 'use strict';
 (function () {
   var adForm = document.querySelector('.ad-form'); // форма.
-   var price = document.querySelector('#price');
+  var price = document.querySelector('#price');
   var adFormFieldsets = adForm.querySelectorAll('fieldset');
   var mapPin = document.querySelector('.map__pin');
   var mapPinStyle = getComputedStyle(mapPin);
@@ -47,7 +47,6 @@
     }
   };
   window.ENTER_KEYCODE = 13;
-  window.adForm=adForm;
-  // window.formData=new FormData(adForm);
-  window.price=price;
+  window.adForm = adForm;
+  window.price = price;
 })();

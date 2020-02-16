@@ -22,7 +22,6 @@
     var popupCloneTextPrice = popupClone.querySelector('.popup__text--price'); // цена
     popupCloneTextPrice.textContent = tags[tagNumber - coefficient].offer.price + '₽/ночь'; // цена в карточке
     var popupCloneType = popupClone.querySelector('.popup__type'); // тип в карточке
-    console.log(popupCloneType);
     switch (tags[tagNumber - coefficient].offer.type) { // тип жилья
       case 'flat': // если жилью квартира то
         popupCloneType.textContent = 'Квартира'; // выводим в метку слово <квартира>
@@ -43,7 +42,7 @@
     popupCloneTextTime.textContent = 'Заезд после ' + tags[tagNumber - coefficient].offer.checkin + ' выезд до ' + tags[tagNumber - 1].offer.checkout; // врема заезда и выезда
 
     for (var j = 0; j < tags[zero].offer.features.length; j++) {
-      for (var i = 0; i < features.length; i++) {
+      for (i = 0; i < features.length; i++) {
         if (tags[tagNumber - coefficient].offer.features[j] === features[i]) {
           popupCloneFeaturesContainer.insertAdjacentHTML('beforeEnd', '<li class="popup__feature popup__feature--' + features[i] + ' width="45" height="40"></li>');
         }
@@ -54,10 +53,9 @@
     var popupCloneAvatar = popupClone.querySelector('.popup__avatar'); // аватар
     popupCloneAvatar.src = tags[tagNumber - coefficient].author.avatar; // аватарка на карте
     var popupClonePhotos = popupClone.querySelector('.popup__photos');
-    popupClonePhotos.innerHTML=null;
-    for(i=0; i<tags[tagNumber-coefficient].offer.photos.length; i++)
-    {
-      popupClonePhotos.insertAdjacentHTML('beforeEnd','<img class="popup__photo" src='+tags[tagNumber-coefficient].offer.photos[i]+' width="45" height="40" alt="Фотография жилья">')
+    popupClonePhotos.innerHTML = null;
+    for (i = 0; i < tags[tagNumber - coefficient].offer.photos.length; i++) {
+      popupClonePhotos.insertAdjacentHTML('beforeEnd', '<img class="popup__photo" src=' + tags[tagNumber - coefficient].offer.photos[i] + ' width="45" height="40" alt="Фотография жилья">');
     }
   }
 

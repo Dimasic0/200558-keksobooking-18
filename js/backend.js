@@ -8,7 +8,6 @@
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       information = xhr.response;
-      console.log(information);
       window.information = information;
       if (xhr.status === CODE_OK) {
         onLoad(information);

@@ -2,37 +2,6 @@
 (function () {
   var main = document.querySelector('main');
   var error = document.querySelector('#error').content.querySelector('.error');
-  var TAGS_NUMBER = 8; // колличество меток
-  var prices = [125, 250, 375, 500, 625, 750, 875, 1000];
-  var MIN_ROOMS = 2; // минимальное количество комнат
-  var MAX_ROOMS = 7; // максимальное количество комнат
-  var propertyTypes = [
-    'flat',
-    'bungalo',
-    'house',
-    'palace'
-  ];
-  var headers = [
-    'Квартира в центре Москвы',
-    'Квартира на улице Севастопольской',
-    'Квартира на улице Бабушкиной',
-    'Дом на улице Севастопольской',
-    'Дом на улице Гаврирова ',
-    'Квартира на улице Яблоновской',
-    'Квартира на улице Рашпилевской',
-    'Квартира на улице Белозёрной'
-  ];
-  var description = [
-    'Есть телевизор, газовая плита, стиральная машина.',
-    'Есть диван, мебельная стенка, микроволновая печь.',
-    'Есть телевизор, кровать, шкаф для одежды',
-    'Есть кухонный гарнитур, холодильник, электрическая плита.',
-    'Есть кровать, тумба, микроволновая печь.',
-    'Есть стиральная машина, телевизор',
-    'Есть диван, шкаф для одежды',
-    'Есть холодильник, микроволновая печь'
-  ];
-  var timeArrivals = [12, 13, 14];
   var x = 0;
   var y = 0;
   var k;
@@ -40,16 +9,11 @@
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
   var features = [];
-  var number;
-  var randomNumber = true;
   var zero = 0;
   var one = 1;
   var two = 2;
   var mapPins = document.querySelector('.map__pins');
   var mapPinsStyle = getComputedStyle(mapPins);
-  function getRandomInRange(min, max) { // генератор рандомных чисел
-    return Math.floor(Math.random() * (max - min + 1)) + min; // переводит в нужный деапозон рандомное число
-  }
   for (var i = zero; i < window.data.features.lenght; i++) {
     features[i] = window.data.features;
   }
@@ -111,47 +75,18 @@
     var fragment = window.data.fragment;
     fragment.appendChild(window.data.label[k]); // вставляем метку в
   }
-  function generateRandomFeatures() {
-    var actualFeatures = [];
-    var randomIcons = [];
-    var numberIcons = getRandomInRange(zero, window.data.features.length);
-    for (var i = 0; i <= numberIcons; i++) {
-      randomNumber = true;
-      while (randomNumber === true) {
-        var randomIcon = getRandomInRange(zero, numberIcons);
-        randomNumber = false;
-        for (var t = 0; t <= number; t++) {
-          if (randomIcons[t] === randomIcon) {
-            randomNumber = true;
-          }
-        }
-      }
-      for (t = 1; t <= 8; t++) {
-        if (randomIcon === t) {
-          actualFeatures[actualFeatures.length] = window.data.features[t];
-        }
-      }
-      randomIcons[number] = randomIcon;
-      number++;
-    }
-    return actualFeatures;
-  }
   function load(onLoad, onError) {
     window.backend.load(onLoad, onError);
-  }
-  function send(data, onLoad, onError) {
-    window.backend.send(data, onLoad, onError);
   }
   load(positive, mistake);
   function positive(data) {
     for (k = 0; k < data.length; k++) { // записывает свойста меткам
-      var checkTime = timeArrivals[getRandomInRange(0, 2)];
       window.data.tags[k] = {
         author: {
           avatar: data[k].author.avatar // адрес аватара
         },
         offer: {
-          title:data[k].offer.title, // заголовок
+          title: data[k].offer.title, // заголовок
           address: data[k].offer.address, // адрес
           price: data[k].offer.price, // цена
           type: data[k].offer.type, // тип
