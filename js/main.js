@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var main = document.querySelector('main');
+  var ESC_KEYCODE = 27;
   var error = document.querySelector('#error').content.querySelector('.error');
   var x = 0;
   var y = 0;
@@ -8,21 +9,29 @@
   var mapPin = window.data.mapPin;
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
+  var adForm=document.querySelector('.ad-form');
   var features = [];
   var zero = 0;
   var one = 1;
   var two = 2;
   var mapPins = document.querySelector('.map__pins');
+  var mapPin=document.querySelector('.map__pin');
   var mapPinsStyle = getComputedStyle(mapPins);
+  var errorClone = error.cloneNode(true);
+  var errorButton=errorClone.querySelector('.error__button');
+  var success=document.querySelector('#success').content.querySelector('.success');
+  var successClone=success.cloneNode(true);
+  main.appendChild(successClone);
+  main.appendChild(errorClone);
   for (var i = zero; i < window.data.features.lenght; i++) {
     features[i] = window.data.features;
   }
   function makeMark(tagOptions) {
     window.data.label[k] = mapPin.cloneNode(true);
-    window.data.label[k].dataset.index = k + one;
+    window.data.label[k].dataset.id = k + one;
     window.data.label[k].setAttribute('style', 'top:' + tagOptions.location.y + 'px; left:' + tagOptions.location.x + 'px;');
     window.data.label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
-    window.data.label[k].querySelector('img').dataset.index = k + one;
+    window.data.label[k].querySelector('img').dataset.id = k + one;
     mapPin.addEventListener('mousedown', function (coordinate) {
       y = coordinate.clientY;
       x = coordinate.clientX;
@@ -80,6 +89,7 @@
   }
   load(positive, mistake);
   function positive(data) {
+    errorClone.classList.remove('visible');
     for (k = 0; k < data.length; k++) { // записывает свойста меткам
       window.data.tags[k] = {
         author: {
@@ -107,7 +117,24 @@
     }
   }
   function mistake() {
-    var errorClone = error.cloneNode(true);
-    main.appendChild(errorClone);
+    errorClone.classList.add('visible');
+    console.log('mistake');
   }
+  errorButton.addEventListener('mousedown',function () {
+
+    load(positive,mistake);
+    console.log('errorButton');
+  console.log('adForm='+adForm);
+  });
+    adForm.addEventListener('submit',function () {
+    successClone.classList.add('visible');
+    document.addEventListener('keydown',onDocumentKeydownEsc);
+    function onDocumentKeydownEsc(key)
+    {
+     if(key.keyCode===ESC_KEYCODE)
+       {
+         successClone.classList.remove('visible');
+       }
+    }
+  });
 })();

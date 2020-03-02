@@ -1006,7 +1006,7 @@ fieldset {
   z-index: 2;
   top: 150px;
   left: 20px;
-
+  display: none;
   padding: 10px 10px 20px;
   width: 230px;
 
@@ -1167,6 +1167,7 @@ fieldset {
 
 .success,
 .error {
+  display:none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1247,4 +1248,8 @@ fieldset {
 .error__button:active {
   outline: none;
   opacity: 0.6;
+}
+
+.visible {
+  display:block;
 }

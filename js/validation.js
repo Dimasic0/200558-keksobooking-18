@@ -7,12 +7,9 @@
   var twoGuests = capacity.querySelector('option[value="2"]');
   var threeGuests = capacity.querySelector('option[value="3"]');
   var zeroGuests = capacity.querySelector('option[value="0"]');
-  var maximumRooms = 100;
-  var roomsMinimum = 0;
-  var twoRooms = 2;
   roomNumber.addEventListener('change', function () {
     dataValidation();
-    if (+roomNumber.value < maximumRooms && +roomNumber.value > roomsMinimum) {
+    if (+roomNumber.value < 100 && +roomNumber.value > 100) {
       zeroGuests.disabled = true;
       singleGuest.selected = true;
       twoGuests.disabled = false;
@@ -52,9 +49,7 @@
   function dataValidation() {
     if (+roomNumber.value < +capacity.value && +roomNumber.value !== 100) {
       capacity.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
-    } else if (roomNumber.value !== '100') {
-      capacity.setCustomValidity('');
-    } else if ((capacity.value === '0' && +roomNumber.value === 1) || (capacity.value === '0' && +roomNumber.value === twoRooms) || (capacity.value === '0' && +roomNumber.value === twoRooms)) {
+    } else if ((capacity.value === '0' && +roomNumber.value === 1) || (capacity.value === '0' && +roomNumber.value === 2) || (capacity.value === '0' && +roomNumber.value === 2)) {
       capacity.setCustomValidity('Не для гостей.');
     } else {
       capacity.setCustomValidity('');
@@ -66,5 +61,6 @@
   });
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
+    
   });
 })();

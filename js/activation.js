@@ -6,7 +6,6 @@
   }
 
   var popupClone = window.data.popupClone;
-  popupClone.style.display = 'none';
   var mapPins = window.data.mapPins;
   mapPins.appendChild(popupClone); // вставляет клон
   activatePage(true);
