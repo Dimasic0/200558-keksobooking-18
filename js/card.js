@@ -85,7 +85,7 @@
   function onDocumentKeydownEsc(evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       popupClone.classList.remove('visible');
-      //document.removeEventListener('keydown',onDocumentKeydownEsc);
+      // document.removeEventListener('keydown',onDocumentKeydownEsc);
     }
   }
   var popupClose = popupClone.querySelector('.popup__close');

@@ -37,7 +37,6 @@
         address.disabled = true;
         adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
         map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
-        var mapFiltersContainer = document.querySelector('.map__filters-container');
         mapPin.parentNode.insertBefore(fragment, mapPin.nextSibling);
         mapPins.appendChild(popupClone); // вставляет карточку
         coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2) + positiveError).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) + parseFloat(mapPinStyle.height) - negativeError);
