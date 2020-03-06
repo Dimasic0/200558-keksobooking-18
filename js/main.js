@@ -9,17 +9,14 @@
   var mapPin = window.data.mapPin;
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
-  var adForm = window.adForm;
   var features = [];
   var zero = 0;
   var mapPins = document.querySelector('.map__pins');
   var mapPinsStyle = getComputedStyle(mapPins);
   var errorClone = error.cloneNode(true);
   var errorButton = errorClone.querySelector('.error__button');
-  var success = document.querySelector('#success').content.querySelector('.success');
-  var successClone = success.cloneNode(true);
-  main.appendChild(successClone);
   main.appendChild(errorClone);
+  
   for (var i = zero; i < window.data.features.lenght; i++) {
     features[i] = window.data.features;
   }
@@ -118,14 +115,5 @@
   }
   errorButton.addEventListener('mousedown', function () {
     load(positive, mistake);
-  });
-  adForm.addEventListener('submit', function () {
-    successClone.classList.add('visible');
-    document.addEventListener('keydown', onDocumentKeydownEsc);
-    function onDocumentKeydownEsc(key) {
-      if (key.keyCode === ESC_KEYCODE) {
-        successClone.classList.remove('visible');
-      }
-    }
   });
 })();

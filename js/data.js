@@ -2,7 +2,7 @@
 (function () {
   var adForm = document.querySelector('.ad-form');
   var price = document.querySelector('#price');
-  var adFormFieldsets = adForm.querySelectorAll('fieldset');
+  var fieldset = adForm.querySelectorAll('fieldset');
   var mapPin = document.querySelector('.map__pin');
   var mapPinStyle = getComputedStyle(mapPin);
   var address = document.querySelector('#address');
@@ -28,8 +28,8 @@
     fragment: fragment,
     mapPins: mapPins,
     activatePage: function (isActive) { // функция выдает состояние сайта.
-      for (var i = 0; i < adFormFieldsets.length; i++) {
-        adFormFieldsets[i].disabled = isActive; // разрешает или запрещает изменять форму.
+      for (var i = 0; i < fieldset.length; i++) {
+        fieldset[i].disabled = isActive; // разрешает или запрещает изменять форму.
       }
       if (isActive) {
         coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2) + positiveError).toFixed(decimalPlaces) + ' ' + (parseFloat(mapPinStyle.top) + (parseFloat(mapPinStyle.height) / 2) - negativeError).toFixed(decimalPlaces);
@@ -47,4 +47,5 @@
   window.data.ENTER_KEYCODE = 13;
   window.adForm = adForm;
   window.price = price;
+  window.fieldset=fieldset;
 })();
