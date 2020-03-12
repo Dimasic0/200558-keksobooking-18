@@ -1,7 +1,8 @@
 'use strict';
 (function () {
-  var main = document.querySelector('main');
   var ESC_KEYCODE = 27;
+  var maximumCoordinateY=628;
+  var main = document.querySelector('main');
   var error = document.querySelector('#error').content.querySelector('.error');
   var x = 0;
   var y = 0;
@@ -43,32 +44,16 @@
           width: parseFloat(mapPinsStyle.width),
           height: parseFloat(mapPinsStyle.height)
         };
-        if (mapPinPosition.X > 1137) {
-          mapPin.style.left = '1137px';
-          y = position.clientY;
-          x = position.clientX;
-        } else if (mapPinPosition.X > -3 && mapPinPosition.Y > 2 && mapPinPosition.Y < mapPinsSize.height - mapPinSize.height + 1 || (mapPinPosition.X <= -1 && position.clientX - x >= 0)) {
+       if ((mapPinPosition.X<=33 && position.clientX>x && (( mapPinPosition.Y>38) || ( mapPinPosition.Y<=38 && position.clientY>y))) || (mapPinPosition.X<1170 && ((mapPinPosition.Y>38) || (mapPinPosition.Y<=38 && position.clientY>y)))) {
           mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
           mapPin.style.left = mapPinPosition.X + (position.clientX - x) + 'px';
-          y = position.clientY;
-          x = position.clientX;
           address.value = (mapPinPosition.X + 32) + ' ' + (mapPinPosition.Y + 32);
-        } else if (position.clientX < -1) {
-          mapPin.style.left = '-1px';
-          y = position.clientY;
-          x = position.clientX;
         }
-        if (mapPinPosition.X <= -1) {
-          mapPin.style.left = '0px';
-          y = position.clientY;
-          x = position.clientX;
+        if (mapPinPosition.Y > maximumCoordinateY) {
+          mapPin.style.top = maximumCoordinateY+'px';
         }
-        if (mapPinPosition.Y <= 2) {
-          mapPin.style.top = '3px';
-        }
-        if (mapPinPosition.Y > mapPinsSize.height - mapPinSize.height) {
-          mapPin.style.top = String(mapPinsSize.height - mapPinSize.height) + 'px';
-        }
+         y = position.clientY;
+         x = position.clientX;
       }
 
       document.addEventListener('mouseup', function () {
