@@ -44,10 +44,11 @@
           width: parseFloat(mapPinsStyle.width),
           height: parseFloat(mapPinsStyle.height)
         };
-       if ((mapPinPosition.X<=33 && position.clientX>x && (( mapPinPosition.Y>38) || ( mapPinPosition.Y<=38 && position.clientY>y))) || (mapPinPosition.X<1170 && ((mapPinPosition.Y>38) || (mapPinPosition.Y<=38 && position.clientY>y))) && (mapPinPosition.X>=1170 && position.clientX<x && (mapPinPosition.Y>38 || mapPinPosition.Y<=38 && position.clientY>y))) {
           mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
           mapPin.style.left = mapPinPosition.X + (position.clientX - x) + 'px';
-          address.value = (mapPinPosition.X + 32) + ' ' + (mapPinPosition.Y + 32);
+        console.log('mapPinPosition.X='+mapPinPosition.X+' mapPinPosition.Y='+mapPinPosition.Y);
+        if(mapPinPosition.X<-33) {
+         mapPin.style.marginLeft='-33px';
         }
         if (mapPinPosition.Y > maximumCoordinateY) {
           mapPin.style.top = maximumCoordinateY+'px';
