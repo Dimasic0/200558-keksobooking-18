@@ -19,7 +19,7 @@
   var errorClone = error.cloneNode(true);
   var errorButton = errorClone.querySelector('.error__button');
   var label = window.data.label;
-  var labelStyle=[];
+  var labelStyle=[]; 
   for(var i=0; i<label.length; i++) {
     labelStyle[i] = getComputedStyle(label[i]);
   }
