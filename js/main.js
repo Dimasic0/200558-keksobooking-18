@@ -1,7 +1,10 @@
 'use strict';
 (function () {
   var ESC_KEYCODE = 27;
-  var maximumCoordinateY=628;
+  var MINIMUM_COORDINATE_Y=3;
+  var MAXIMUM_COORDINATE_Y=628;
+  var MINIMUM_COORDINATE_X=0;
+  var MAXIMUM_COORDINATE_X=1139;
   var main = document.querySelector('main');
   var error = document.querySelector('#error').content.querySelector('.error');
   var x = 0;
@@ -11,22 +14,26 @@
   var mapPinStyle = window.data.mapPinStyle;
   var address = window.data.address;
   var features = [];
-  var zero = 0;
   var mapPins = document.querySelector('.map__pins');
   var mapPinsStyle = getComputedStyle(mapPins);
   var errorClone = error.cloneNode(true);
   var errorButton = errorClone.querySelector('.error__button');
+  var label = window.data.label;
+  for(var i=0; i<label.length; i++)
+  {
+      var labelStyle[i] = getComputedStyle(label[i]);
+  }
   main.appendChild(errorClone);
   
-  for (var i = zero; i < window.data.features.lenght; i++) {
+  for (var i = 0; i < window.data.features.lenght; i++) {
     features[i] = window.data.features;
   }
   function makeMark(tagOptions) {
-    window.data.label[k] = mapPin.cloneNode(true);
-    window.data.label[k].dataset.id = k+1;
-    window.data.label[k].setAttribute('style', 'top:' + tagOptions.location.y + 'px; left:' + tagOptions.location.x + 'px;');
-    window.data.label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
-    window.data.label[k].querySelector('img').dataset.id = k+1;
+    label[k] = mapPin.cloneNode(true);
+    label[k].dataset.id = k+1;
+    label[k].setAttribute('style', 'top:' + (tagOptions.location.y + labelStyle.height) + 'px; left:' + (tagOptions.location.x + labelStyle.width / 2) + 'px;');
+    label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
+    label[k].querySelector('img').dataset.id = k+1;
     mapPin.addEventListener('mousedown', function (coordinate) {
       y = coordinate.clientY;
       x = coordinate.clientX;
@@ -47,11 +54,17 @@
           mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
           mapPin.style.left = mapPinPosition.X + (position.clientX - x) + 'px';
         console.log('mapPinPosition.X='+mapPinPosition.X+' mapPinPosition.Y='+mapPinPosition.Y);
-        if(mapPinPosition.X<-33) {
-         mapPin.style.marginLeft='-33px';
+        if(mapPinPosition.X<MINIMUM_COORDINATE_X) {
+          mapPin.style.left=MINIMUM_COORDINATE_X+'px';
         }
-        if (mapPinPosition.Y > maximumCoordinateY) {
-          mapPin.style.top = maximumCoordinateY+'px';
+        if(mapPinPosition.X>MAXIMUM_COORDINATE_X) {
+          mapPin.style.left=MAXIMUM_COORDINATE_X+'px';
+        }
+        if (mapPinPosition.Y > MAXIMUM_COORDINATE_Y) {
+          mapPin.style.top = MAXIMUM_COORDINATE_Y+'px';
+        }
+        if(mapPinPosition.Y<MINIMUM_COORDINATE_Y) {
+          mapPin.style.top=MINIMUM_COORDINATE_Y+'px';
         }
          y = position.clientY;
          x = position.clientX;
@@ -62,7 +75,7 @@
       });
     });
     var fragment = window.data.fragment;
-    fragment.appendChild(window.data.label[k]); // вставляем метку в
+    fragment.appendChild(label[k]); // вставляем метку в
   }
   function load(onLoad, onError) {
     window.backend.load(onLoad, onError);

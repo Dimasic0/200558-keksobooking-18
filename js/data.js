@@ -39,7 +39,7 @@
         map.classList.remove('map--faded'); // убирает круг вокруг метки и текст
         mapPin.parentNode.insertBefore(fragment, mapPin.nextSibling);
         mapPins.appendChild(popupClone); // вставляет карточку
-        coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2) + positiveError).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) + parseFloat(mapPinStyle.height) - negativeError);
+        coordinates = (parseFloat(mapPinStyle.left) - (parseFloat(mapPinStyle.width) / 2) + positiveError).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) - parseFloat(mapPinStyle.height) - negativeError);
       }
       address.value = coordinates;
     }
