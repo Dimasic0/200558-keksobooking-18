@@ -19,10 +19,7 @@
   var errorClone = error.cloneNode(true);
   var errorButton = errorClone.querySelector('.error__button');
   var label = window.data.label;
-  var labelStyle=[]; 
-  for(var i=0; i<label.length; i++) {
-    labelStyle[i] = getComputedStyle(label[i]);
-  }
+  var labelStyle; 
   main.appendChild(errorClone);
   
   for (var i = 0; i < window.data.features.lenght; i++) {
@@ -30,9 +27,11 @@
   }
   function makeMark(tagOptions) {
     label[k] = mapPin.cloneNode(true);
+    labelStyle = label[k];
     label[k].dataset.id = k+1;
-    label[k].setAttribute('style', 'top:' + (tagOptions.location.y + Number.parseInt(labelStyle[k].height)) + 'px; left:' + (tagOptions.location.x + Number.parseInt(labelStyle[k].width) / 2) + 'px;');
-    label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записаваем адрес аватара
+    console.log('labelStyle'+labelStyle);
+    label[k].setAttribute('style', 'top:' + (tagOptions.location.y - Number.parseInt(labelStyle.height)) + 'px; left:' + (tagOptions.location.x - Number.parseInt(labelStyle.width) / 2) + 'px;');
+    label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записываем адрес аватара
     label[k].querySelector('img').dataset.id = k+1;
     mapPin.addEventListener('mousedown', function (coordinate) {
       y = coordinate.clientY;
