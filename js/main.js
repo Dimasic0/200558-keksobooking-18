@@ -27,10 +27,11 @@
   }
   function makeMark(tagOptions) {
     label[k] = mapPin.cloneNode(true);
-    labelStyle = label[k];
+    labelStyle = getComputedStyle(label[k]);
     label[k].dataset.id = k+1;
-    console.log('labelStyle'+labelStyle);
-    label[k].setAttribute('style', 'top:' + (tagOptions.location.y - Number.parseInt(labelStyle.height)) + 'px; left:' + (tagOptions.location.x - Number.parseInt(labelStyle.width) / 2) + 'px;');
+    console.log('tagOptions.location.y='+tagOptions.location.y+' tagOptions.location.x='+tagOptions.location.x);
+    label[k].style.top = tagOptions.location.y - Number.parseInt(labelStyle.height) + 'px';
+    label[k].style.left = tagOptions.location.x - Number.parseInt(labelStyle.width) / 2 + 'px';
     label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записываем адрес аватара
     label[k].querySelector('img').dataset.id = k+1;
     mapPin.addEventListener('mousedown', function (coordinate) {
