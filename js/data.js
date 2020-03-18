@@ -15,8 +15,13 @@
   var decimalPlaces = 0;
   var positiveError = 2;
   var negativeError = 3;
+  var error = document.querySelector('#error').content.querySelector('.error');
+  var errorClone=error.cloneNode(true);
+  var type = document.querySelector('#type');
   window.data = {
     map: map,
+    type: type,
+    error: error,
     popup: popup,
     popupClone: popupClone,
     features: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
@@ -42,7 +47,10 @@
         coordinates = (parseFloat(mapPinStyle.left) - (parseFloat(mapPinStyle.width) / 2) + positiveError).toFixed(decimalPlaces) + ' ' + String(parseFloat(mapPinStyle.top) - parseFloat(mapPinStyle.height) - negativeError);
       }
       address.value = coordinates;
-    }
+    },
+    mistake: function () {
+    errorClone.classList.add('visible');
+  }
   };
   window.data.ENTER_KEYCODE = 13;
   window.adForm = adForm;

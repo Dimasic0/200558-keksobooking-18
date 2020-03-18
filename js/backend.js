@@ -38,6 +38,7 @@
       onError();
     });
     xhr.addEventListener('error', function () {
+      console.log('error');
       onError();
     });
     xhr.timeout = TIME;

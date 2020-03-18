@@ -7,7 +7,7 @@
   var twoGuests = capacity.querySelector('option[value="2"]');
   var threeGuests = capacity.querySelector('option[value="3"]');
   var zeroGuests = capacity.querySelector('option[value="0"]');
-  roomNumber.addEventListener('change', function () {
+  roomNumber.addEventListener('change', function (evt) {
     dataValidation();
     if (+roomNumber.value < 100 && +roomNumber.value > 100) {
       zeroGuests.disabled = true;
@@ -42,8 +42,9 @@
       twoGuests.disabled = true;
       threeGuests.disabled = true;
     }
+   console.log('roomNumber='+evt.target.value);
   });
-  capacity.addEventListener('change', function () {
+  capacity.addEventListener('change', function (evt) {
     dataValidation();
   });
   function dataValidation() {

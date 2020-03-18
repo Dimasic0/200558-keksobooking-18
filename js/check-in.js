@@ -4,6 +4,7 @@
   var timeout = document.querySelector('#timeout');
   timein.addEventListener('change', function (evt) {
     timeout.value = evt.target.value;
+    console.log('timein='+evt.target.value);
   });
 
   timeout.addEventListener('change', function (evt) {

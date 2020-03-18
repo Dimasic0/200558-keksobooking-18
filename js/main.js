@@ -6,7 +6,7 @@
   var MINIMUM_COORDINATE_X=0;
   var MAXIMUM_COORDINATE_X=1139;
   var main = document.querySelector('main');
-  var error = document.querySelector('#error').content.querySelector('.error');
+  var error = window.data.error;
   var x = 0;
   var y = 0;
   var k;
@@ -27,9 +27,9 @@
   }
   function makeMark(tagOptions) {
     label[k] = mapPin.cloneNode(true);
-    labelStyle = getComputedStyle(label[k]);
+    labelStyle = getComputedStyle(mapPin);
     label[k].dataset.id = k+1;
-    console.log('tagOptions.location.y='+tagOptions.location.y+' tagOptions.location.x='+tagOptions.location.x);
+    //console.log('tagOptions.location.y='+tagOptions.location.y+' tagOptions.location.x='+tagOptions.location.x+' labelStyle.width='+labelStyle.width);
     label[k].style.top = tagOptions.location.y - Number.parseInt(labelStyle.height) + 'px';
     label[k].style.left = tagOptions.location.x - Number.parseInt(labelStyle.width) / 2 + 'px';
     label[k].querySelector('img').src = tagOptions.author.avatar; // в картинку записываем адрес аватара
@@ -37,7 +37,7 @@
     mapPin.addEventListener('mousedown', function (coordinate) {
       y = coordinate.clientY;
       x = coordinate.clientX;
-      document.addEventListener('mousemove', onLabelMousemove);
+      mapPins.addEventListener('mousemove', onLabelMousemove);
       function onLabelMousemove(position) {
         var mapPinPosition = {
           Y: parseFloat(mapPinStyle.top),
@@ -54,24 +54,23 @@
           mapPin.style.top = mapPinPosition.Y + (position.clientY - y) + 'px';
           mapPin.style.left = mapPinPosition.X + (position.clientX - x) + 'px';
         console.log('mapPinPosition.X='+mapPinPosition.X+' mapPinPosition.Y='+mapPinPosition.Y);
-        if(mapPinPosition.X<MINIMUM_COORDINATE_X) {
+        if(mapPinPosition.X < MINIMUM_COORDINATE_X) {
           mapPin.style.left=MINIMUM_COORDINATE_X+'px';
         }
-        if(mapPinPosition.X>MAXIMUM_COORDINATE_X) {
+        if(mapPinPosition.X > MAXIMUM_COORDINATE_X) {
           mapPin.style.left=MAXIMUM_COORDINATE_X+'px';
         }
         if (mapPinPosition.Y > MAXIMUM_COORDINATE_Y) {
           mapPin.style.top = MAXIMUM_COORDINATE_Y+'px';
         }
-        if(mapPinPosition.Y<MINIMUM_COORDINATE_Y) {
+        if(mapPinPosition.Y < MINIMUM_COORDINATE_Y) {
           mapPin.style.top=MINIMUM_COORDINATE_Y+'px';
         }
          y = position.clientY;
          x = position.clientX;
       }
-
       document.addEventListener('mouseup', function () {
-        document.removeEventListener('mousemove', onLabelMousemove);
+        mapPins.removeEventListener('mousemove', onLabelMousemove);
       });
     });
     var fragment = window.data.fragment;
@@ -112,6 +111,7 @@
   function mistake() {
     errorClone.classList.add('visible');
   }
+  
   errorButton.addEventListener('mousedown', function () {
     load(positive, mistake);
   });
