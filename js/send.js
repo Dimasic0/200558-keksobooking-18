@@ -20,10 +20,6 @@
     window.backend.load(onLoad, onError);
   }
   
-  function positive () {
-    window.data.positive();
-  } 
-  
   var adFormSubmit=adForm.querySelector('.ad-form__submit');
   var formData = new FormData();
   adFormSubmit.addEventListener('mousedown',function () {
@@ -55,7 +51,6 @@
       }  
       mapPinMain.addEventListener('mousedown', function () {
     activatePage(false);
-     positive();
   });
     }
   }
