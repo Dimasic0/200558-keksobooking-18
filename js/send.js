@@ -16,6 +16,14 @@
   function send(data, onLoad, onError) {
     window.backend.send(data,onLoad,onError);
   }
+  function load (onLoad, onError) {
+    window.backend.load(onLoad, onError);
+  }
+  
+  function positive () {
+    window.data.positive();
+  } 
+  
   var adFormSubmit=adForm.querySelector('.ad-form__submit');
   var formData = new FormData();
   adFormSubmit.addEventListener('mousedown',function () {
@@ -45,6 +53,10 @@
          adForm.classList.add('ad-form--disabled');
         }
       }  
+      mapPinMain.addEventListener('mousedown', function () {
+    activatePage(false);
+     positive();
+  });
     }
   }
   var successClone = success.cloneNode(true);
@@ -53,6 +65,8 @@
     console.log('mouseup');
     title.value=null;
     price.value=null;
+    map.classList.add('map--faded');
+    window.data.activatePage(true);
     for (var i=0; i<label.length; i++) {
       label[i].style.display='none';
     }

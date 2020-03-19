@@ -116,4 +116,5 @@
   errorButton.addEventListener('mousedown', function () {
     load(positive, mistake);
   });
+  window.data.positive = positive;
 })();

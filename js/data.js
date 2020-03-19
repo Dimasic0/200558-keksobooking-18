@@ -38,6 +38,7 @@
       }
       if (isActive) {
         coordinates = (parseFloat(mapPinStyle.left) + (parseFloat(mapPinStyle.width) / 2) + positiveError).toFixed(decimalPlaces) + ' ' + (parseFloat(mapPinStyle.top) + (parseFloat(mapPinStyle.height) / 2) - negativeError).toFixed(decimalPlaces);
+        adForm.classList.add('ad-form--disabled');
       } else { // если нужно активировать сайт то
         address.disabled = true;
         adForm.classList.remove('ad-form--disabled'); // разрешает изменять форму
