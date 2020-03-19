@@ -31,6 +31,9 @@
     window.data.mistake();
       document.addEventListener('keydown', onDocumentKeypressEsc);
     function onDocumentKeypressEsc(key) {
+       for(var i=0; i<label.length; i++) {
+          label[i].parentNode.removeChild(label[i]);
+        }
       console.log('клавиша='+key.key);
       if (key.key === 'Escape') {
         console.log('ESC');

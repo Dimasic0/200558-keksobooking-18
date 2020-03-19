@@ -2,6 +2,7 @@
 (function () {
   var TIME = 10000;
   var CODE_OK = 200;
+  var thereIsData=4;
   var information;
   var xhr = new XMLHttpRequest();
   xhr.responseType = 'json';
@@ -27,12 +28,7 @@
   }
   function send(data,onLoad,onError) {
     xhr.addEventListener('load', function () {
-      if(xhr.status===CODE_OK)
-      {
       onLoad();
-      } else {
-      onError();
-      }
     });
     xhr.addEventListener('timeout', function () {
       onError();

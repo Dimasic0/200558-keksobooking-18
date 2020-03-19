@@ -75,6 +75,7 @@
     });
     var fragment = window.data.fragment;
     fragment.appendChild(label[k]); // вставляем метку в
+    window.data.label = label;
   }
   function load(onLoad, onError) {
     window.backend.load(onLoad, onError);
