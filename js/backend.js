@@ -3,9 +3,9 @@
   var TIME = 10000;
   var CODE_OK = 200;
   var information;
+  var xhr = new XMLHttpRequest();
+  xhr.responseType = 'json';
   function load(onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       information = xhr.response;
       window.information = information;
@@ -25,13 +25,13 @@
     xhr.open('GET', 'https://js.dump.academy/keksobooking/data');
     xhr.send();
   }
-  function send(data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
+  function send(data,onLoad,onError) {
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad();
+      if(xhr.status===CODE_OK)
+      {
+      onLoad();
       } else {
-        onError();
+      onError();
       }
     });
     xhr.addEventListener('timeout', function () {

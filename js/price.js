@@ -4,11 +4,6 @@
   var mapFilter = document.querySelector('.map__filter');
   var minimumPrices = [0, 10000, 1000, 5000];
   var typesHousing = ['any', 'palace', 'flat', 'house', 'bungalo'];
-  var facilities = document.querySelector('.features');
-  
-  console.log('facilities='+facilities);
-  facilities.addEventListener('mousedown',function (evt) {
-  });
   
   mapFilter.addEventListener('change', function onMapFilterChange(evt) {
     for (var i = 0; i < typesHousing.length; i++) {
