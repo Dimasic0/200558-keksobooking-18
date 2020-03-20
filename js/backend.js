@@ -28,7 +28,8 @@
   }
   function send(data,onLoad,onError) {
     xhr.addEventListener('load', function () {
-      onLoad();
+      information = xhr.response;
+      onLoad(information);
     });
     xhr.addEventListener('timeout', function () {
       onError();

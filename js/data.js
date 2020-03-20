@@ -21,6 +21,7 @@
   window.data = {
     map: map,
     type: type,
+    errorClone:errorClone,
     error: error,
     popup: popup,
     popupClone: popupClone,
@@ -56,5 +57,6 @@
   window.data.ENTER_KEYCODE = 13;
   window.adForm = adForm;
   window.price = price;
-  window.fieldset=fieldset;
+  window.fieldset = fieldset;
+  window.mapPinMain: document.querySelector('.map__pin--main');
 })();
