@@ -69,9 +69,11 @@
          y = position.clientY;
          x = position.clientX;
       }
-      document.addEventListener('mouseup', function () {
+      document.addEventListener('mouseup', onDocumentMouseup);
+      function onDocumentMouseup () {
         mapPins.removeEventListener('mousemove', onLabelMousemove);
-      });
+        document.removeEventListener('mouseup',onDocumentMouseup);
+      }
     });
     var fragment = window.data.fragment;
     fragment.appendChild(label[k]); // вставляем метку в

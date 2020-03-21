@@ -37,6 +37,7 @@
       successClone.classList.remove('visible');   
       mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
       document.removeEventListener('keydown',onDocumentKeydownEsc);
+      console.log('Esc');
     }    
   }
    for(var i=0; i<label.length; i++) {
@@ -79,5 +80,4 @@
       label[i].style.display='none';
     }
     load(onLoad,mistake);
-    
   });
