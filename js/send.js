@@ -31,16 +31,17 @@
   successClone.classList.add('visible');
   console.log('lok');
   positive(data);
-  document.addEventListener('keydown', documentKeydownEsc);
-  function documentKeydownEsc(evt) {
+  document.addEventListener('keydown', onDocumentKeydownEsc);
+  function onDocumentKeydownEsc(evt) {
     if(evt.key === 'Escape') {
       successClone.classList.remove('visible');   
       mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
+      document.removeEventListener('keydown',onDocumentKeydownEsc);
     }    
   }
    for(var i=0; i<label.length; i++) {
      label[i].parentNode.removeChild(label[i]);
-     console.log('label['+i+']');
+     console.log('label['+i+']='+label[i]);
    }
   }
   var adFormSubmit=adForm.querySelector('.ad-form__submit');

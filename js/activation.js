@@ -31,7 +31,7 @@
   function onMapPinMainMousedown() {
     activatePage(false);
     load(positive,mistake);
-    mapPinMain.removeEventListener('mousedown',onMapPinMainMousedown);
+    mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
   }
   window.onMapPinMainMousedown=onMapPinMainMousedown;
 })();
