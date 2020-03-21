@@ -58,5 +58,5 @@
   window.adForm = adForm;
   window.price = price;
   window.fieldset = fieldset;
-  window.mapPinMain: document.querySelector('.map__pin--main');
+  window.mapPinMain = document.querySelector('.map__pin--main');
 })();

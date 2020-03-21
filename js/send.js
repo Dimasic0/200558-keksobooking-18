@@ -1,14 +1,13 @@
 'use strict';
-(function() {
-  var main=document.querySelector('main');
+  var main = document.querySelector('main');
   var adForm = window.adForm;
-  var title=adForm.querySelector('#title');
+  var title = adForm.querySelector('#title');
   var error = window.data.error;
-  var price=document.getElementById('price');
+  var price = document.getElementById('price');
   var success = document.querySelector('#success').content.querySelector('.success');
   var label = window.data.label;
-  var map=window.data.map;
-  var fieldset=window.fieldset;
+  var map = window.data.map;
+  var fieldset = window.fieldset;
   var mapPins = window.data.mapPins;
   var mapPinMain = window.mapPinMain;
   function activatePage(state) {
@@ -28,8 +27,7 @@
   function positive(data) {
     window.data.positive(data);
   }
-  function onLoad(data)
-  {
+  function onLoad(data) {
   successClone.classList.add('visible');
   console.log('lok');
   positive(data);
@@ -37,11 +35,11 @@
   function documentKeydownEsc(evt) {
     if(evt.key === 'Escape') {
       successClone.classList.remove('visible');   
-      mapPinMain.addEventListener('mousedown', );
+      mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
     }    
   }
    for(var i=0; i<label.length; i++) {
-     mapPins.removeChild(label[i]);
+     label[i].parentNode.removeChild(label[i]);
      console.log('label['+i+']');
    }
   }
@@ -53,7 +51,7 @@
       document.addEventListener('keydown', onDocumentKeypressEsc);
     function onDocumentKeypressEsc(key) {
        for(var i=0; i<label.length; i++) {
-          label[i].parentNode.removeChild(label[i]);
+          mapPins.removeChild(label[i]);
         }
       console.log('клавиша='+key.key);
       if (key.key === 'Escape') {
@@ -82,4 +80,3 @@
     load(onLoad,mistake);
     
   });
-})();
