@@ -46,14 +46,14 @@
    }
   }
   var adFormSubmit=adForm.querySelector('.ad-form__submit');
-  var formData = new FormData();
+  var formData = new FormData(adForm);
  
   function mistake () {
     window.data.mistake();
       document.addEventListener('keydown', onDocumentKeypressEsc);
     function onDocumentKeypressEsc(key) {
        for(var i=0; i<label.length; i++) {
-          mapPins.removeChild(label[i]);
+          label[i].parentNode.removeChild(label[i]);
         }
       console.log('клавиша='+key.key);
       if (key.key === 'Escape') {
@@ -71,7 +71,6 @@
   var successClone = success.cloneNode(true);
   main.appendChild(successClone);
   adForm.addEventListener('submit', function () {
-    console.log('mouseup');
     title.value=null;
     price.value=null;
     map.classList.add('map--faded');
@@ -79,5 +78,6 @@
     for (var i=0; i<label.length; i++) {
       label[i].style.display='none';
     }
-    load(onLoad,mistake);
+    send(formData,onLoad,mistake);
+    console.log('submit');
   });

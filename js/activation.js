@@ -30,6 +30,9 @@
   mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
   function onMapPinMainMousedown() {
     activatePage(false);
+    var mapPin = window.data.mapPin;
+    var fragment = window.data.fragment;
+    mapPin.parentNode.insertBefore(fragment, mapPin.nextSibling);
     load(positive,mistake);
     mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
   }
