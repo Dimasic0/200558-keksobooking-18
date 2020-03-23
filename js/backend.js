@@ -30,7 +30,9 @@
   function send(data,onLoad,onError) {
     xhr.addEventListener('load', function () {
       information = xhr.response;
+      if(xhr.readyState===thereIsData) {
       onLoad(information);
+      }  
     });
     xhr.addEventListener('timeout', function () {
       onError();
