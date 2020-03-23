@@ -11,6 +11,7 @@
       information = xhr.response;
       window.information = information;
       if (xhr.status === CODE_OK) {
+        console.log('information='+information);
         onLoad(information);
       } else {
         onError();

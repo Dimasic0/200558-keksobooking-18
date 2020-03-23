@@ -60,7 +60,4 @@
   adFormSubmit.addEventListener('mousedown', function () {
     dataValidation();
   });
-  adForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-  });
 })();

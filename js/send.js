@@ -71,6 +71,7 @@
   var successClone = success.cloneNode(true);
   main.appendChild(successClone);
   adForm.addEventListener('submit', function () {
+    evt.preventDefault();
     title.value=null;
     price.value=null;
     map.classList.add('map--faded');
