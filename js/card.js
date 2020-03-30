@@ -8,6 +8,11 @@
   for (var i = 0; i < window.data.features.length; i++) {
     features[i] = window.data.features[i];
   }
+  function onDocumentPressEnter(evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      popupClone.classList.add('visible');
+    }
+  }
   function openCardAnnouncement() {
     cardId--;
     window.data.activatePage(false);
@@ -38,7 +43,7 @@
     var popupCloneTextCapacity = popupClone.querySelector('.popup__text--capacity'); // комнаты
     popupCloneTextCapacity.textContent = tags[cardId].offer.rooms + ' комнаты для ' + tags[cardId].offer.guests + ' гостей';
     var popupCloneTextTime = popupClone.querySelector('.popup__text--time'); // время заезда и выезда
-    popupCloneTextTime.textContent = 'Заезд после ' + tags[cardId].offer.checkin + ' выезд до ' + tags[cardId].offer.checkout; // врема заезда и выезда
+    popupCloneTextTime.textContent = 'Заезд после ' + tags[cardId].offer.checkin + ' выезд до ' + tags[cardId].offer.checkout;// врема заезда и выезда
     for (var j = 0; j < tags[0].offer.features.length; j++) {
       for (i = 0; i < features.length; i++) {
         if (tags[cardId].offer.features[j] === features[i]) {
@@ -74,20 +79,14 @@
     }
   });
   var mark = map.querySelector('.map__pin');
-  for(var s=0; s<=mark.length; s++) {
+  for (var s = 0; s <= mark.length; s++) {
     mark[s].addEventListener('keydown', onDocumentPressEnter);
-    function onDocumentPressEnter(evt) {
-      if (evt.keyCode === ENTER_KEYCODE) {
-        popupClone.classList.add('visible');
-        console.log('ok');
-      }
-    }
   }
   document.addEventListener('keydown', onDocumentKeydownEsc);
   function onDocumentKeydownEsc(evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       popupClone.classList.remove('visible');
-      document.removeEventListener('keydown',onDocumentKeydownEsc);
+      document.removeEventListener('keydown', onDocumentKeydownEsc);
     }
   }
   var popupClose = popupClone.querySelector('.popup__close');

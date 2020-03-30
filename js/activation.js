@@ -1,15 +1,14 @@
 'use strict';
 
 (function () {
-  var errorClone = window.data.errorClone;
   function activatePage(property) {
     window.data.activatePage(property);
   }
-  function load (onLoad,onError) {
-  window.backend.load(onLoad,onError);
+  function load(onLoad, onError) {
+    window.backend.load(onLoad, onError);
   }
-  function positive (data) {
-    window.data.positive (data);
+  function positive(data) {
+    window.data.positive(data);
   }
   function mistake() {
     window.data.mistake();
@@ -29,12 +28,11 @@
 
   mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
   function onMapPinMainMousedown() {
-    activatePage(false);
     var mapPin = window.data.mapPin;
     var fragment = window.data.fragment;
     mapPin.parentNode.insertBefore(fragment, mapPin.nextSibling);
-    load(positive,mistake);
+    load(positive, mistake);
     mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
   }
-  window.onMapPinMainMousedown=onMapPinMainMousedown;
+  window.onMapPinMainMousedown = onMapPinMainMousedown;
 })();

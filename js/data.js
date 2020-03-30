@@ -16,12 +16,12 @@
   var positiveError = 2;
   var negativeError = 3;
   var error = document.querySelector('#error').content.querySelector('.error');
-  var errorClone=error.cloneNode(true);
+  var errorClone = error.cloneNode(true);
   var type = document.querySelector('#type');
   window.data = {
     map: map,
     type: type,
-    errorClone:errorClone,
+    errorClone: errorClone,
     error: error,
     popup: popup,
     popupClone: popupClone,
@@ -50,8 +50,8 @@
       address.value = coordinates;
     },
     mistake: function () {
-    errorClone.classList.add('visible');
-  }
+      errorClone.classList.add('visible');
+    }
   };
   window.data.ENTER_KEYCODE = 13;
   window.adForm = adForm;

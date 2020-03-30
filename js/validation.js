@@ -1,13 +1,12 @@
 'use strict';
 (function () {
-  var adForm = window.adForm;
   var capacity = document.querySelector('#capacity');
   var roomNumber = document.querySelector('#room_number');
   var singleGuest = capacity.querySelector('option[value="1"]');
   var twoGuests = capacity.querySelector('option[value="2"]');
   var threeGuests = capacity.querySelector('option[value="3"]');
   var zeroGuests = capacity.querySelector('option[value="0"]');
-  roomNumber.addEventListener('change', function (evt) {
+  roomNumber.addEventListener('change', function () {
     dataValidation();
     if (+roomNumber.value < 100 && +roomNumber.value > 100) {
       zeroGuests.disabled = true;
@@ -42,9 +41,8 @@
       twoGuests.disabled = true;
       threeGuests.disabled = true;
     }
-   console.log('roomNumber='+evt.target.value);
   });
-  capacity.addEventListener('change', function (evt) {
+  capacity.addEventListener('change', function () {
     dataValidation();
   });
   function dataValidation() {
@@ -56,8 +54,4 @@
       capacity.setCustomValidity('');
     }
   }
-  var adFormSubmit = document.querySelector('.ad-form__submit');
-  adFormSubmit.addEventListener('mousedown', function () {
-    dataValidation();
-  });
 })();
